@@ -1,0 +1,29 @@
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = Dennis Frommknecht
+	email = dfrommi@users.noreply.github.com
+[push]
+	default = simple
+[pull]
+	rebase = true
+[alias]
+	st = status -sb
+	undo = reset --soft HEAD~
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate -20
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --numstat -20
+	lds = log --pretty=format:"%C(yellow)%h\\ %C(white)%ad%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --date=short -20
+	ld = log --pretty=format:"%C(yellow)%h\\ %C(white)%ad%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --date=relative -20
+	le = log --oneline --decorate
+#	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+#	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	xld = log --pretty=format:"%C(bold\\ blue)%h\\ %Creset%C(bold\\ green)%ad%Creset%Cred%d\\ %Creset%C(white)%s%Cblue\\ [%an]" --decorate --date=relative -20
+	kanban = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --all --author dennis --since \"last tuesday\"
+[commit]
+	template = /Users/dennis/.config/git/commit_template
+[github]
+	user = dfrommi
+[ghi]
+	token = !security find-internet-password -a dfrommi -s github.com -l 'ghi token' -w
