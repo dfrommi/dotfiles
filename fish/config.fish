@@ -18,3 +18,4 @@ set -x PATH $PATH $HOME/tado/bin /Library/TeX/texbin
 
 alias g git
 alias mysql-docker "mysql -u root -h (docker-machine ip default)"
+rvm default
