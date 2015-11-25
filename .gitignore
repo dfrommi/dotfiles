@@ -1,4 +1,7 @@
-configstore/
-fish/fishd.acbc32a49253
+*/
+!fish
+!iTerm
+!git
+fish/fishd.*
 fish/fish_history
 
