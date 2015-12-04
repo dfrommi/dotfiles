@@ -6,7 +6,7 @@
 	name = Dennis Frommknecht
 	email = dfrommi@users.noreply.github.com
 [push]
-	default = simple
+	default = current
 [pull]
 	rebase = true
 [alias]
