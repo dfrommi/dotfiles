@@ -1,8 +1,9 @@
-*/
-!fish
-!iTerm
-!git
+#*/
+#!fish
+#!iTerm
+#!git
+configstore/
 fish/fishd.*
 fish/fish_history
 fish/config.local.fish
-
+aws-tunnel.fish
