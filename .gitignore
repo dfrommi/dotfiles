@@ -4,4 +4,5 @@
 !git
 fish/fishd.*
 fish/fish_history
+fish/config.local.fish
 
