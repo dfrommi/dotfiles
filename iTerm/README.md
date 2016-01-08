@@ -3,8 +3,11 @@
 - <kbd>Alt</kbd> <kbd>Backspace</kbd> to hex sequence `0x17`
 - <kbd>Cmd</kbd> <kbd>Backspace</kbd> to hex sequence `0x15`
 
-# Common Keyboard settings
+Remove keyboard bindings:
+- <kbd>Alt</kbd> <kbd>left</kbd>
+- <kbd>Alt</kbd> <kbd>right</kbd>
 
+# Common Keyboard settings
 - Deleting a word: 
   - Alt + Backspace
   - 0x17
