@@ -5,9 +5,9 @@ function fish_title
 	
 	switch $PWD
 		case "$HOME/tado/repo/TadoGrailsApp*"
-			set dir (echo $PWD | sed "s#^$HOME/tado/repo/TadoGrailsApp#tga#")
+			set dir (echo $PWD | sed "s#^$HOME/tado/repo/TadoGrailsApp#📡#")
 		case "$HOME/tado/repo/webapp*"
-			set dir (echo $PWD | sed "s#^$HOME/tado/repo/TadoGrailsApp#webapp#")
+			set dir (echo $PWD | sed "s#^$HOME/tado/repo/webapp#🌐#")
 		case "$HOME*"
 			set dir (echo $PWD | sed "s#^$HOME#~#")
 		case "*"
@@ -16,9 +16,12 @@ function fish_title
 
 	if [ $_ = 'fish' ]
 		set cmd ''
+	else if [ $_ = 'grc' -o $_ = 'grails' -o $_ = 'grunt' ]
+		set cmd '📶'
 	else
-		set cmd $_ '|'
+		set cmd $_ '•'
 	end
 	
 	echo $cmd $dir
 end
+
