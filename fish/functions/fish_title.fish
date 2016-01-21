@@ -1,4 +1,6 @@
 function fish_title
+	# Disable all setting in iTerm under "Appearence -> Window & Tab titles"
+
 	# $_ = command
 	# $argv = commandline
 	# $PWD = directory
