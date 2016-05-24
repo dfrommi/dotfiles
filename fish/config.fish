@@ -14,10 +14,8 @@ set -x JAVA_HOME (/usr/libexec/java_home -v 1.7)
 
 set -x GRADLE_HOME /usr/local/Cellar/gradle/2.8/libexec
 
-set -x PATH $PATH $HOME/tado/bin /Library/TeX/texbin $HOME/Applications/bin $HOME/Coding/Scripts
-
 alias g git
-alias mysql-docker "mysql -u root -h (docker-machine ip default)"
+
 rvm default
 
 test -e ~/.config/fish/config.local.fish ; and source ~/.config/fish/config.local.fish
