@@ -7,6 +7,7 @@ fish/fishd.*
 fish/fish_history
 fish/config.local.fish
 aws-tunnel.fish
+*-token.fish
 fotobuch.de AG/
 inkscape/
 libimobiledevice/
