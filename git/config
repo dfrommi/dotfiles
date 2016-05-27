@@ -11,7 +11,26 @@
 	rebase = true
 [alias]
 	st = status -sb
-	undo = reset --soft HEAD~
+	unstash = stash pop	
+	
+	branches = branch -a
+	tags = tag
+	stashes = stash list
+	aliases = config --get-regexp alias
+	conflicts = diff --name-only --diff-filter=U
+
+	unstage = reset -q HEAD --
+	discard = checkout --
+	uncommit = reset --mixed HEAD~
+	nevermind = !git reset --hard HEAD && git clean -d -f
+	amend = commit --amend
+#	undo = reset --soft HEAD~
+
+	prestage = diff --diff-algorithm=minimal -w
+	precommit = diff --cached --diff-algorithm=minimal -w
+	
+	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+	
 	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate -20
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --numstat -20
 	lds = log --pretty=format:"%C(yellow)%h\\ %C(white)%ad%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --date=short -20
@@ -19,8 +38,6 @@
 	le = log --oneline --decorate
 #	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 #	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	xld = log --pretty=format:"%C(bold\\ blue)%h\\ %Creset%C(bold\\ green)%ad%Creset%Cred%d\\ %Creset%C(white)%s%Cblue\\ [%an]" --decorate --date=relative -20
-	kanban = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --all --author dennis --since \"last tuesday\"
 [commit]
 	template = /Users/dennis/.config/git/commit_template
 [github]
