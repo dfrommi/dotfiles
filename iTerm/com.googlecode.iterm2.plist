@@ -455,9 +455,13 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>976 -747 860 306 605 -900 1440 877 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>974 -573 606 456 605 -900 1440 877 </string>
+	<string>50 298 606 456 0 0 1440 877 </string>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>412 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 403 570 474 0 0 1440 877 </string>
+	<string>4 102 962 763 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>781 -830 570 474 605 -900 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_AF706188-6996-4629-91C9-4CD86D59ADD5</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -630,6 +634,19 @@
 			<false/>
 			<key>Background Image Location</key>
 			<string></string>
+			<key>Badge Color</key>
+			<dict>
+				<key>Alpha Component</key>
+				<real>0.588531494140625</real>
+				<key>Blue Component</key>
+				<real>0.02743418887257576</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
+				<key>Green Component</key>
+				<real>0.0071207880973815918</real>
+				<key>Red Component</key>
+				<real>0.98624604940414429</real>
+			</dict>
 			<key>Badge Text</key>
 			<string>\(user.pwd)</string>
 			<key>Blend</key>
@@ -1183,10 +1200,18 @@
 			<string>/Users/dennis</string>
 		</dict>
 	</array>
+	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
+	<true/>
+	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
+	<integer>0</integer>
 	<key>NoSyncHaveShownPromoWithId_4</key>
 	<true/>
+	<key>NoSyncInstallationId</key>
+	<string>8432B2D0-0E0D-4813-B583-D9B61E005266</string>
 	<key>NoSyncNeverRemindPrefsChangesLost</key>
 	<true/>
+	<key>NoSyncPermissionToShowTip</key>
+	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>477820213.30534202</real>
 	<key>NoSyncTimeOfLastPromo</key>
@@ -1194,7 +1219,7 @@
 	<key>NoSyncTimeOfLastPromoDownload</key>
 	<real>477589501.08030498</real>
 	<key>OnlyWhenMoreTabs</key>
-	<true/>
+	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
 	<key>OpenBookmark</key>
@@ -1243,7 +1268,7 @@
 	<key>PrefsCustomFolder</key>
 	<string>/Users/dennis/.config/iTerm</string>
 	<key>PromptOnQuit</key>
-	<true/>
+	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
 	<false/>
 	<key>RightCommand</key>
@@ -1255,11 +1280,11 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/testing3.xml</string>
+	<string>https://iterm2.com/appcasts/testing3.xml?shard=81</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-02-22T07:50:12Z</date>
+	<date>2016-05-23T19:42:03Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -1278,6 +1303,8 @@
 	<integer>4</integer>
 	<key>SwitchWindowModifier</key>
 	<integer>6</integer>
+	<key>TabStyle</key>
+	<integer>1</integer>
 	<key>TabViewType</key>
 	<integer>1</integer>
 	<key>ThreeFingerEmulates</key>
@@ -3712,6 +3739,10 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>2.9.20160206</string>
+	<string>2.9.20160510</string>
+	<key>kCPKSelectionViewPreferredModeKey</key>
+	<integer>0</integer>
+	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+	<false/>
 </dict>
 </plist>
