@@ -255,6 +255,8 @@
 	<false/>
 	<key>EnableRendezvous</key>
 	<false/>
+	<key>FlashTabBarInFullscreen</key>
+	<false/>
 	<key>FocusFollowsMouse</key>
 	<false/>
 	<key>FsTabDelay</key>
@@ -386,6 +388,8 @@
 	<false/>
 	<key>HideTab</key>
 	<false/>
+	<key>HideTabCloseButton</key>
+	<false/>
 	<key>HideTabNumber</key>
 	<true/>
 	<key>HighlightTabLabels</key>
@@ -439,7 +443,7 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>322</string>
+		<string>307</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
@@ -455,15 +459,19 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>976 -747 860 306 605 -900 1440 877 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>50 298 606 456 0 0 1440 877 </string>
+	<string>159 893 606 456 0 0 2560 1417 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>412 363 620 392 0 0 1440 877 </string>
+	<string>972 768 620 392 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 102 962 763 0 0 1440 877 </string>
+	<string>4 402 570 474 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>781 -830 570 474 605 -900 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_AF706188-6996-4629-91C9-4CD86D59ADD5</key>
 	<true/>
+	<key>NeverWarnAboutShortLivedSessions_CF531E9C-FD27-43CB-BFF4-A5C3712ACAB8</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_CF531E9C-FD27-43CB-BFF4-A5C3712ACAB8_selection</key>
+	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1267,6 +1275,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/dennis/.config/iTerm</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
@@ -1280,11 +1290,11 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/testing3.xml?shard=81</string>
+	<string>https://iterm2.com/appcasts/testing.xml?shard=81</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-05-23T19:42:03Z</date>
+	<date>2016-06-15T13:15:55Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -1299,6 +1309,12 @@
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.40000000596046448</real>
+	<key>SuppressShellIntegrationUpgradeAnnouncementForHost_dennis@Denniss-MBP</key>
+	<true/>
+	<key>SuppressShellIntegrationUpgradeAnnouncementForHost_dennis@Denniss-MacBook-Pro.local</key>
+	<true/>
+	<key>SuppressShellIntegrationUpgradeAnnouncementForHost_dennis@dennis.lab.tado.com</key>
+	<true/>
 	<key>SwitchTabModifier</key>
 	<integer>4</integer>
 	<key>SwitchWindowModifier</key>
@@ -3739,7 +3755,7 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>2.9.20160510</string>
+	<string>3.0.0</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
