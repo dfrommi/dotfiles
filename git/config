@@ -44,3 +44,12 @@
 	user = dfrommi
 [ghi]
 	token = !security find-internet-password -a dfrommi -s github.com -l 'ghi token' -w
+[pager]
+	log = diff-so-fancy | less
+	show = diff-so-fancy | less
+	diff = diff-so-fancy | less
+[interactive]
+	diffFilter = diff-so-fancy
+[diff]
+	compactionHeuristic = true
+
