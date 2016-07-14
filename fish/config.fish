@@ -17,6 +17,9 @@ set -x GRADLE_HOME /usr/local/Cellar/gradle/2.8/libexec
 
 alias g git
 
+abbr brwe brew
+abbr cask brew cask
+
 rvm default
 
 test -e ~/.config/fish/config.local.fish ; and source ~/.config/fish/config.local.fish
