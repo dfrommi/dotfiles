@@ -1,10 +1,19 @@
-# remove date, color time
-regexp=^\d{4}-\d{2}-\d{2}\s
-replace=
+#regexp=^(\{.*)
+#command=echo HALLO $1
+#======
+
+# remove dynamic loading warnings
+regexp=^GRAILS-7799
+skip=yes
 ======
 
+# remove date, color time
+#regexp=^\d{4}-\d{2}-\d{2}\s
+#replace=
+#======
+
 # remove thread
-regexp=\[localhost.+\]\s
+regexp=^\[.+?\]\s
 replace=
 ======
 
@@ -14,18 +23,18 @@ colours=magenta
 count=once
 ======
 
-regexp=^.*\sDEBUG\s.*
+regexp=^DEBUG\s.*
 colours=bright_green
 ======
 
-regexp=\sINFO\s
+regexp=^INFO\s
 colours=green
 ======
 regexp=(?<=INFO)\s.*
 colours=cyan
 ======
 
-regexp=\sERROR\s
+regexp=^ERROR\s
 colours=red
 ======
 regexp=(?<=ERROR)\s.*
@@ -37,7 +46,7 @@ colours=white
 #======
 
 # move class to end
-regexp=([a-zA-Z.]+)\s\s-\s(.*)
+regexp=([a-zA-Z.]+)\s-\s(.*)
 replace=\2 [\1]
 ======
 
