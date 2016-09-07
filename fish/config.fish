@@ -15,10 +15,11 @@ set -x JAVA_HOME (/usr/libexec/java_home -v 1.7)
 
 set -x GRADLE_HOME /usr/local/Cellar/gradle/2.8/libexec
 
-alias g git
-
 abbr brwe brew
 abbr cask brew cask
+
+alias g git
+abbr gcm git commit -m
 
 rvm default
 
