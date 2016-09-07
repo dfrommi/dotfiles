@@ -443,7 +443,7 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>307</string>
+		<string>322</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
@@ -459,11 +459,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>976 -747 860 306 605 -900 1440 877 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>159 893 606 456 0 0 2560 1417 </string>
+	<string>159 952 606 456 0 0 2560 1417 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>972 768 620 392 0 0 2560 1417 </string>
+	<string>1015 -519 620 392 605 -900 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 402 570 474 0 0 1440 877 </string>
+	<string>342 333 570 474 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>781 -830 570 474 605 -900 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_AF706188-6996-4629-91C9-4CD86D59ADD5</key>
@@ -1208,6 +1208,8 @@
 			<string>/Users/dennis</string>
 		</dict>
 	</array>
+	<key>NoSyncConfirmBeta</key>
+	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
@@ -1294,7 +1296,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-06-15T13:15:55Z</date>
+	<date>2016-07-26T07:46:21Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -3754,8 +3756,12 @@
 	<integer>0</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>findIgnoreCase_iTerm</key>
+	<true/>
+	<key>findRegex_iTerm</key>
+	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.0</string>
+	<string>3.0.4</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
