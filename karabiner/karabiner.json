@@ -1,0 +1,13 @@
+{
+    "profiles": [
+        {
+            "devices": [],
+            "name": "Default profile",
+            "selected": true,
+            "simple_modifications": {
+                "caps_lock": "f19",
+                "non_us_backslash": "escape"
+            }
+        }
+    ]
+}
