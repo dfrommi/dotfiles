@@ -1,0 +1,27 @@
+"*":
+  core:
+    audioBeep: false
+    disabledPackages: [
+      "language-toml"
+      "language-ruby-on-rails"
+      "language-ruby"
+      "language-perl"
+      "language-objective-c"
+      "language-make"
+      "language-csharp"
+      "language-clojure"
+      "language-c"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+  editor:
+    fontFamily: "Fira Code"
+    fontSize: 12
+  "exception-reporting":
+    userId: "797a3006-f5a6-919a-1905-29cfaeabf28f"
+  "one-dark-ui": {}
+  welcome:
+    showOnStartup: false
