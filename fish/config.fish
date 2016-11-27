@@ -21,8 +21,5 @@ abbr cask brew cask
 alias g git
 abbr gcm git commit -m
 
-rvm default
-
 test -e ~/.config/fish/config.local.fish ; and source ~/.config/fish/config.local.fish
-test -e ~/.config/fish/iterm2_shell_integration.fish ; and source ~/.config/fish/iterm2_shell_integration.fish
-source ~/.config/fish/functions/iterm2_print_user_vars.fish
+test -e ~/.config/fish/functions/iterm2_print_user_vars.fish ; and source ~/.config/fish/functions/iterm2_print_user_vars.fish
