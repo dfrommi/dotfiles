@@ -11,9 +11,9 @@ set -g -x fish_greeting ''
 set -x GRAILS_OPTS '-Dfile.encoding=UTF8 -Xmx4096m -Xms512m -XX:PermSize=256M -XX:MaxPermSize=4096M'
 
 set -x GROOVY_HOME '/usr/local/opt/groovy/libexec'
-set -x JAVA_HOME (/usr/libexec/java_home -v 1.7)
+set -x JAVA_HOME (/usr/libexec/java_home)
 
-set -x GRADLE_HOME /usr/local/Cellar/gradle/2.8/libexec
+set -x PATH ~/my/bin /Applications/Docker.app/Contents/Resources/bin $PATH
 
 abbr brwe brew
 abbr cask brew cask

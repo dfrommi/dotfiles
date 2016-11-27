@@ -1,3 +1,3 @@
 function ff
-  command find . -name $argv
+  command find . -name "*${argv}*"
 end
