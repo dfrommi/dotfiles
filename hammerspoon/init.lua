@@ -1,22 +1,26 @@
 --
 -- Umlaut
 --
-function keyCode(text)
+function keyStroke(text)
   return function() hs.eventtap.keyStrokes(text) end
 end
 
-hs.hotkey.bind({'alt'},          'a', nil, keyCode('ä'), nil, nil)
-hs.hotkey.bind({'shift', 'alt'}, 'a', nil, keyCode('Ä'), nil, nil)
-hs.hotkey.bind({'alt'},          'u', nil, keyCode('ü'), nil, nil)
-hs.hotkey.bind({'shift', 'alt'}, 'u', nil, keyCode('Ü'), nil, nil)
-hs.hotkey.bind({'alt'},          'o', nil, keyCode('ö'), nil, nil)
-hs.hotkey.bind({'shift', 'alt'}, 'o', nil, keyCode('Ö'), nil, nil)
-hs.hotkey.bind({'alt'},          's', nil, keyCode('ß'), nil, nil)
-hs.hotkey.bind({'alt'},          'e', nil, keyCode('€'), nil, nil)
+hs.hotkey.bind({'alt'},          'a', nil, keyStroke('ä'), nil, nil)
+hs.hotkey.bind({'alt', 'shift'}, 'a', nil, keyStroke('Ä'), nil, nil)
+hs.hotkey.bind({'alt'},          'u', nil, keyStroke('ü'), nil, nil)
+hs.hotkey.bind({'alt', 'shift'}, 'u', nil, keyStroke('Ü'), nil, nil)
+hs.hotkey.bind({'alt'},          'o', nil, keyStroke('ö'), nil, nil)
+hs.hotkey.bind({'alt', 'shift'}, 'o', nil, keyStroke('Ö'), nil, nil)
+hs.hotkey.bind({'alt'},          's', nil, keyStroke('ß'), nil, nil)
+hs.hotkey.bind({'alt'},          'e', nil, keyStroke('€'), nil, nil)
 
 --
 -- CapsLock as Hyper
 --
+function launch(appname, modal)
+  hs.application.launchOrFocus(appname)
+  modal.triggered = true
+end
 
 -- A global variable for the Hyper Mode
 hyper_k = hs.hotkey.modal.new()
@@ -53,20 +57,18 @@ hs.hotkey.bind({}, 'F19', pressedHyper, releasedHyper)
 ---
 cmdR_k = hs.hotkey.modal.new()
 
-function launch(appname)
-  hs.application.launchOrFocus(appname)
-  cmdR_k.triggered = true
-end
-
 singleapps = {
   {'e', 'Atom'},
-  {'b', 'Google Chrome'},
+  {'b', 'Safari'},
   {'t', 'iTerm'}
 }
 
 for i,app in ipairs(singleapps) do
-  cmdR_k:bind({}, app[1], function() launch(app[2]); cmdR_k:exit(); end)
+  cmdR_k:bind({}, app[1], function() launch(app[2], cmdR_k); cmdR_k.triggered = true; end)
 end
+
+-- 1Password shortcut
+cmdR_k:bind({}, '\\', function() hs.eventtap.keyStroke({'cmd'}, '\\'); cmdR_k.triggered = true; end)
 
 pressedCmdR = function()
   cmdR_k.triggered = false
@@ -77,7 +79,7 @@ releasedCmdR = function()
   cmdR_k:exit()
   if not cmdR_k.triggered then
     --hs.eventtap.keyStroke({}, 'F16')
-    launch('iTerm')
+    launch('iTerm', cmdR_k)
   end
 end
 
