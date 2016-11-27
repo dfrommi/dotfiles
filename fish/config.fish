@@ -7,9 +7,6 @@ set -g -x fish_greeting ''
 #set -x ___fish_git_prompt_char_cleanstate '👍 '
 #set -x ___fish_git_prompt_char_dirtystate '⚡️ '
 
-#set -x GRAILS_OPTS '-Dfile.encoding=UTF8 -Xmx4096m -Xms256m -XX:PermSize=256M -XX:MaxPermSize=4096M -Xdebug -Xnoagent  -Dgrails.full.stacktrace=true -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006'
-set -x GRAILS_OPTS '-Dfile.encoding=UTF8 -Xmx4096m -Xms512m -XX:PermSize=256M -XX:MaxPermSize=4096M'
-
 set -x GROOVY_HOME '/usr/local/opt/groovy/libexec'
 set -x JAVA_HOME (/usr/libexec/java_home)
 
