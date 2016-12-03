@@ -70,6 +70,10 @@ end
 -- 1Password shortcut
 cmdR_k:bind({}, '\\', function() hs.eventtap.keyStroke({'cmd'}, '\\'); cmdR_k.triggered = true; end)
 
+-- lock screen shortcut
+cmdR_k:bind({}, 'l', function() hs.caffeinate.lockScreen(); cmdR_k.triggered = true; end)
+
+
 pressedCmdR = function()
   cmdR_k.triggered = false
   cmdR_k:enter()
