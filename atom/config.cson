@@ -1,4 +1,8 @@
 "*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "ca4b2afe-3f08-45b2-81cf-5f935c3dc52e"
+      analytics: false
   core:
     audioBeep: false
     disabledPackages: [
@@ -22,6 +26,8 @@
     fontSize: 12
   "exception-reporting":
     userId: "797a3006-f5a6-919a-1905-29cfaeabf28f"
+  "file-types":
+    ".*/roles/.*.yml$": "source.ansible"
   "one-dark-ui": {}
   welcome:
     showOnStartup: false
