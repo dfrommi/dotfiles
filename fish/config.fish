@@ -13,6 +13,7 @@ set -x JAVA_HOME (/usr/libexec/java_home)
 
 set -x PATH ~/my/bin /Applications/Docker.app/Contents/Resources/bin $HOME/.sdkman/candidates/*/current/bin $PATH
 
+set -x FZF_LEGACY_KEYBINDINGS 0
 set -x FZF_FIND_FILE_COMMAND "ag -l -g '' --ignore .git --ignore Library"
 
 set -x EDITOR micro
@@ -42,10 +43,10 @@ set fish_complete_path $fish_config/completions $fish_complete_path
 # install missing packages
 fisher -q
 
+# Fisherman conf.d is not detected
+for file in $fish_config/conf.d/*.fish
+  source $file
+end
+
 test -e ~/.config/fish/config.local.fish ; and source ~/.config/fish/config.local.fish
 test -e ~/.config/fish/functions/iterm2_print_user_vars.fish ; and source ~/.config/fish/functions/iterm2_print_user_vars.fish
-
-# Install event handlers
-__git_status
-__touchbar_git_root_display
-__touchbar_git_branch_display

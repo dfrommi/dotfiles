@@ -1,4 +1,4 @@
-function __git_status --on-event fish_prompt --on-variable PWD
+function __git_status_event_handler --on-event fish_prompt --on-variable PWD
   set branch_name (git_branch_name)
   if [ "$branch_name" != "$GIT_BRANCH" ]
     set -g GIT_BRANCH "$branch_name"
