@@ -55,3 +55,5 @@ test -e ~/.config/fish/functions/iterm2_print_user_vars.fish ; and source ~/.con
 
 # AWS CLI completion
 test -x (which aws_completer); and complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
+
+echo -ne "\033]1337;SetKeyLabel=F1=📖\a"
