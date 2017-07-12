@@ -4,26 +4,23 @@ function fish_title
 	# $_ = command
 	# $argv = commandline
 	# $PWD = directory
-	
-	switch $PWD
-		case "$HOME/tado/repo/TadoGrailsApp*"
-			set dir (echo $PWD | sed "s#^$HOME/tado/repo/TadoGrailsApp#📡#")
-		case "$HOME/tado/repo/webapp*"
-			set dir (echo $PWD | sed "s#^$HOME/tado/repo/webapp#🌐#")
-		case "$HOME*"
-			set dir (echo $PWD | sed "s#^$HOME#~#")
-		case "*"
-			set dir $PWD
-	end
 
-	if [ $_ = 'fish' ]
-		set cmd ''
-	else if [ $_ = 'grc' -o $_ = 'grails' -o $_ = 'grunt' ]
-		set cmd '📶'
-	else
-		set cmd $_ '•'
-	end
-	
-	echo $cmd $dir
+  if [ "$PWD" = "$HOME" ]
+    echo "~"
+    return 0
+  end
+
+  set dir "$PWD"
+
+  if [ "$GIT_ROOT" ]
+    set dir (string replace (dirname "$GIT_ROOT")/ "" "$dir")
+  else
+    set dir (string replace "$HOME" "~" "$dir")
+  end
+
+  if [ (basename "$PWD") = "$dir" ]
+    echo (basename "$PWD")
+  else
+    echo (basename "$PWD") '•' (dirname "$dir")
+  end
 end
-
