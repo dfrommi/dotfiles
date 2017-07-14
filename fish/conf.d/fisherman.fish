@@ -17,7 +17,7 @@ set fish_function_path $fish_config/functions $fish_function_path
 set fish_complete_path $fish_config/completions $fish_complete_path
 
 # install missing packages
-fisher -q
+#fisher -q
 
 # Fisherman conf.d is not detected
 for file in $fish_config/conf.d/*.fish
