@@ -1,5 +1,5 @@
 function __touchbar_git_root_action
   echo
-  git ls
+  cdg
   commandline -f repaint
 end
