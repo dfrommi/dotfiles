@@ -28,8 +28,8 @@
     "statusline": true,
     "syntax": true,
     "tabmovement": false,
-    "tabsize": 4,
-    "tabstospaces": false,
-    "termtitle": false,
+    "tabsize": 2,
+    "tabstospaces": true,
+    "termtitle": true,
     "useprimary": true
 }
