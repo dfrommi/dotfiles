@@ -1,6 +1,17 @@
 {
+    "global": {
+        "check_for_updates_on_startup": true,
+        "show_in_menu_bar": true,
+        "show_profile_name_in_menu_bar": false
+    },
     "profiles": [
         {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 1000
+                },
+                "rules": []
+            },
             "devices": [],
             "fn_function_keys": {
                 "f1": "vk_consumer_brightness_down",
@@ -23,6 +34,10 @@
                 "non_us_backslash": "escape",
                 "right_command": "f17",
                 "right_option": "delete_forward"
+            },
+            "virtual_hid_keyboard": {
+                "caps_lock_delay_milliseconds": 0,
+                "keyboard_type": "ansi"
             }
         }
     ]
