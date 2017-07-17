@@ -6,7 +6,7 @@
 configstore/
 fish/fishd.*
 fish/fish_history
-fish/config.local.fish
+fish/conf.d/*.local.fish
 fisherman
 aws-tunnel.fish
 *-token.fish
