@@ -1,4 +1,11 @@
 --
+-- Environment setup
+--
+local log=hs.logger.new('init','verbose')
+local browser = hs.urlevent.getDefaultHandler("http")
+local browserName = browser == 'com.google.chrome' and 'Google Chrome' or 'Safari'
+
+--
 -- Umlaut
 --
 function keyStroke(text)
@@ -59,7 +66,7 @@ cmdR_k = hs.hotkey.modal.new()
 
 singleapps = {
   {'e', 'Atom'},
-  {'b', 'Safari'},
+  {'b', browserName},
   {'t', 'iTerm'}
 }
 
