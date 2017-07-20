@@ -67,7 +67,10 @@ cmdR_k = hs.hotkey.modal.new()
 singleapps = {
   {'e', 'Atom'},
   {'b', browserName},
-  {'t', 'iTerm'}
+  {'t', 'iTerm'},
+  {'s', 'Slack'},
+  {'m', 'Spotify'},
+  {'i', 'IntelliJ IDEA'}
 }
 
 for i,app in ipairs(singleapps) do
@@ -75,7 +78,7 @@ for i,app in ipairs(singleapps) do
 end
 
 -- 1Password shortcut
-cmdR_k:bind({}, '\\', function() hs.eventtap.keyStroke({'cmd'}, '\\'); cmdR_k.triggered = true; end)
+cmdR_k:bind({}, '\\', function() hs.eventtap.keyStroke({'cmd', 'alt'}, '\\'); cmdR_k.triggered = true; end)
 
 -- lock screen shortcut
 cmdR_k:bind({}, 'l', function() hs.caffeinate.lockScreen(); cmdR_k.triggered = true; end)
