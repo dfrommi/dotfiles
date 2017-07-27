@@ -13,6 +13,6 @@ set -x FZF_FIND_FILE_COMMAND "ag -l -g '' --ignore .git --ignore Library"
 set -x EDITOR micro
 set -x MICRO_TRUECOLOR 1
 
-set -x GIT_REPOS_BASE_PATHS $HOME/{my,thirdparty,thirdparty/openhab2/git,tado/repo}
+set -x GIT_REPOS_BASE_PATHS $HOME/{my,thirdparty,thirdparty/openhab2/git,tado/repo} $HOME
 
 nvm use --silent default
