@@ -1,7 +1,7 @@
 fisherman/await
 edc/bass
 fisherman/docker-completion
-dfrommi/fzf
+fisherman/fzf
 fisherman/get
 fisherman/getopts
 fisherman/git_util
