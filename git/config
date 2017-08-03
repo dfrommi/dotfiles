@@ -39,6 +39,8 @@
 #	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 #	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
 	ai = !git add -- $(git ls-files -dom --exclude-standard $(git rev-parse --show-toplevel) | fzf -m --height=10 --no-sort --reverse)
+
+  pr = !open "https://github.com/$(git config --get remote.origin.url | sed 's/git@github.com:\\(.*\\).git/\\1/')/compare/$(git symbolic-ref --short HEAD 2> /dev/null)?expand=1"
 [commit]
 	template = /Users/dennis/.config/git/commit_template
 [github]
