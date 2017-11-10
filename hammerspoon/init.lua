@@ -69,6 +69,7 @@ singleapps = {
   {'b', browserName},
   {'t', 'iTerm'},
   {'s', 'Slack'},
+  {'f', 'Franz'},
   {'m', 'Spotify'},
   {'i', 'IntelliJ IDEA'}
 }
