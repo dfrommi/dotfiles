@@ -4,7 +4,6 @@
       _analyticsUserId: "ca4b2afe-3f08-45b2-81cf-5f935c3dc52e"
       analytics: false
   core:
-    audioBeep: false
     disabledPackages: [
       "language-toml"
       "language-ruby-on-rails"
