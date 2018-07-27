@@ -1,7 +1,0 @@
-editorconfig@2.0.5
-highlight-selected@0.11.2
-intellij-idea-keymap@0.2.3
-language-fish-shell@1.0.5
-language-groovy@0.6.0
-language-lua@0.9.11
-minimap@4.25.6
