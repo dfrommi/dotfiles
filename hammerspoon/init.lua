@@ -52,7 +52,7 @@ end
 releasedHyper = function()
   hyper_k:exit()
   if not hyper_k.triggered then
-    hs.eventtap.keyStroke({}, 'F18')
+    hs.eventtap.keyStroke({"cmd","alt","shift","ctrl"}, 'SPACE')
   end
 end
 
