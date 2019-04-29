@@ -55,4 +55,5 @@
 # 	diffFilter = diff-so-fancy
 [diff]
 	compactionHeuristic = true
-
+[branch]
+	autoSetupMerge = false
