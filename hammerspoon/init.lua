@@ -65,10 +65,9 @@ hs.hotkey.bind({}, 'F19', pressedHyper, releasedHyper)
 cmdR_k = hs.hotkey.modal.new()
 
 singleapps = {
-  {'e', 'Atom'},
+  {'e', 'Visual Studio Code'},
   {'b', browserName},
-  {'t', 'iTerm'},
-  {'s', 'Slack'},
+  {'t', 'Trello'},
   {'f', 'Franz'},
   {'m', 'Spotify'},
   {'i', 'IntelliJ IDEA'}
