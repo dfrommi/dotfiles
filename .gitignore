@@ -2,12 +2,14 @@
 #!fish
 #!iTerm
 #!git
+
 *.bak
 configstore/
 fish/fishd.*
 fish/fish_history
 fish/conf.d/*.local.fish
-fisherman
+fish-deps
+
 aws-tunnel.fish
 *-token.fish
 fotobuch.de AG/
