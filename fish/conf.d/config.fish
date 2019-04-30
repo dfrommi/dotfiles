@@ -15,4 +15,4 @@ set -x MICRO_TRUECOLOR 1
 
 set -x GIT_REPOS_BASE_PATHS $HOME/{my,thirdparty,thirdparty/openhab2/git,tado/repo} $HOME
 
-nvm use --silent default
+#nvm use --silent default
