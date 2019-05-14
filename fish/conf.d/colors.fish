@@ -1,0 +1,1 @@
+set fish_color_error brmagenta
