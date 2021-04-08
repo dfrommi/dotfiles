@@ -4,6 +4,6 @@ function ql -a input
   end
 
   if [ "$input" ]
-    command qlmanage -p $input >/dev/null ^&1
+    command qlmanage -p $input &>/dev/null
   end
 end
