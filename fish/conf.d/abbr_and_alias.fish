@@ -9,3 +9,5 @@ abbr gr gradle
 
 alias e micro
 alias cat ccat
+
+functions -e gh
