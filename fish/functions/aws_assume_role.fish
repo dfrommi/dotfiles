@@ -50,7 +50,10 @@ function aws_assume_role -d "interactive AWS assume role"
     set -gx AWS_SESSION_TOKEN (echo $credentials | jq -r ".Credentials.SessionToken")
     set -gx AWS_SESSION_EXPIRATION (echo $credentials | jq -r ".Credentials.Expiration")
 
-    eval (aws ecr get-login --no-include-email) 2> /dev/null
+    set region (echo "$profileConfig" | grep -e '^region' | cut -d '=' -f 2 | xargs)
+    set accountId (echo "$role" | cut -d ":" -f 5)
+
+    aws ecr get-login-password | docker login --username AWS --password-stdin "$accountId.dkr.ecr.$region.amazonaws.com"
 
     # activate expiration event handler
     __aws_session_monitor
