@@ -3,7 +3,7 @@
 --
 local log=hs.logger.new('init','verbose')
 local browser = hs.urlevent.getDefaultHandler("http")
-local browserName = browser == 'com.google.chrome' and 'Google Chrome' or 'Safari'
+local browserName = browser == 'com.google.Chrome' and 'Google Chrome' or 'Safari'
 
 --
 -- Umlaut
