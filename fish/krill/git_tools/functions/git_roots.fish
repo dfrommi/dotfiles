@@ -1,4 +1,4 @@
-function git_repos -d 'find all git repositories'
+function git_roots -d 'find all git repositories'
   set dirs $HOME
   if set -q GIT_REPOS_BASE_PATHS
     set dirs $GIT_REPOS_BASE_PATHS

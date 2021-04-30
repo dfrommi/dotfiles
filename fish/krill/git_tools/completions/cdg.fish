@@ -1,1 +1,1 @@
-complete -c cdg -f -a '(git_repos)'
+complete -c cdg -f -a '(git_roots)'
