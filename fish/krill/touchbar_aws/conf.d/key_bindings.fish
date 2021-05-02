@@ -1,1 +1,3 @@
-bind -k f2 '__touchbar_aws_assume_role_action'
+if [ -d $HOME/.aws ]
+    bind -k f4 '__touchbar_aws_assume_role_action'
+end
