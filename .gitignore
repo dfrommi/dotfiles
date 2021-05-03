@@ -20,3 +20,8 @@ mkvtoolnix/
 LibreELEC/
 micro/buffers
 jenkins_jobs/jenkins_jobs.ini
+
+karabiner/automatic_backups/
+gh/
+iterm2/
+
