@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+FILE=$1
+
+# Don't touch fixup commits, or the lose their reference to the real commit
+[ "$(sed -n "/^!fixup/p;q" "$FILE")" ] && exit 0
+
+# Skip when merging
+[ ! -f "$(dirname "$msg")/MERGE_HEAD" ] || exit 0
+
+
+###
+# Spell checking
+###
+aspell --master=en_US --lang=en_US --personal=$HOME/.config/git/aspell-personal.dict -x check $FILE
+# TODO abort when spell checker is aborted, but it requires https://github.com/GNUAspell/aspell/pull/610
+
+
+###
+# Add ticket ID
+###
+TICKET_REGEXP="^([A-Za-z]+/)?([A-Za-z]+-[0-9]+)-.+$"
+BRANCH_NAME=$(git symbolic-ref --short HEAD 2>/dev/null || git describe --tags --exact-match HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+
+if [[ "$BRANCH_NAME" =~ $TICKET_REGEXP ]]; then
+  TICKET=$(echo "${BASH_REMATCH[2]}" | tr '[:lower:]' '[:upper:]')
+
+  MESSAGE=$(cat $FILE)
+  if [[ $TICKET != "" && "$MESSAGE" != "$TICKET"* ]]; then
+    echo "$TICKET $MESSAGE" > $FILE
+  fi
+fi
+
+
+###
+# Reformat
+###
+# commitmsgfmt: https://gitlab.com/mkjeldsen/commitmsgfmt
+MESSAGE=$(cat $FILE)
+echo "$MESSAGE" | commitmsgfmt > $FILE
