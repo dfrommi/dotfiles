@@ -67,9 +67,9 @@ cmdR_k = hs.hotkey.modal.new()
 singleapps = {
   {'e', 'Visual Studio Code'},
   {'b', browserName},
-  {'t', 'Trello'},
-  {'f', 'Franz'},
-  {'m', 'Spotify'},
+  {'t', 'Microsoft Teams'},
+  {'o', 'Microsoft Outlook'},
+  {'n', 'Microsoft OneNote'},
   {'i', 'IntelliJ IDEA'}
 }
 
