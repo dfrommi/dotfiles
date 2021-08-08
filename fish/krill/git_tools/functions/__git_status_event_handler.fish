@@ -20,8 +20,16 @@ function __git_status_event_handler --on-event fish_prompt --on-variable PWD
   if [ "$branch_name" != "$GIT_BRANCH" ]
     if [ -n "$branch_name" ]
       set -g GIT_BRANCH "$branch_name"
+
+      set -l ticket_id_from_branch (string match -r "^([A-Za-z]+/)?([A-Za-z]+-[0-9]+)-.+" $branch_name)[3]
+      if [ -n "$ticket_id_from_branch" ]
+        set -g JIRA_TICKET_ID (string upper "$ticket_id_from_branch")
+      else
+        set -e JIRA_TICKET_ID
+      end
     else
       set -e GIT_BRANCH
+      set -e JIRA_TICKET_ID
     end
   end
 end
