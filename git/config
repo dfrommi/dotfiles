@@ -7,7 +7,6 @@
 	rebase = true
 [alias]
 	st = status -sb
-	unstash = stash pop	
 	
 	branches = branch -a
 	tags = tag
@@ -35,6 +34,9 @@
 
 	ai = !git add -- $(git ls-files -dom --exclude-standard $(git rev-parse --show-toplevel) | fzf -m --height=10 --no-sort --reverse)
 
+  gdiff=difftool --dir-diff -y -t intellij
+  resolve=mergetool -t intellij --prompt
+
 [branch]
 	autoSetupMerge = false
 
@@ -52,8 +54,20 @@
 	diff = diff-so-fancy | less
 [interactive]
 # 	diffFilter = diff-so-fancy
+
 [diff]
 	compactionHeuristic = true
+  tool = intellij
+[difftool "intellij"]
+  cmd = /Applications/IntelliJ*.app/Contents/MacOS/idea diff $(realpath "$LOCAL") $(realpath "$REMOTE") 2>/dev/null
+
+[merge]
+	tool = intellij
+[mergetool]
+	keepBackup = false
+[mergetool "intellij"]
+  cmd = /Applications/IntelliJ*.app/Contents/MacOS/idea merge $(realpath "$LOCAL") $(realpath "$REMOTE") $(realpath "$BASE") $(realpath "$MERGED") 2>/dev/null
+  trustExitCode = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
