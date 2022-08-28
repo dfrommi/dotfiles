@@ -12,9 +12,10 @@ function __git_status_event_handler --on-event fish_prompt --on-variable PWD
 
   set -l branch_name
   if set -q GIT_ROOT
-    set branch_name (command git symbolic-ref --short HEAD 2>/dev/null \
-        || command git describe --tags --exact-match HEAD 2>/dev/null \
-        || command git rev-parse --short HEAD 2>/dev/null)
+    #set branch_name (command git symbolic-ref --short HEAD 2>/dev/null \
+    #    || command git describe --tags --exact-match HEAD 2>/dev/null \
+    #    || command git rev-parse --short HEAD 2>/dev/null)
+    set branch_name (command git branch --show-current 2>/dev/null)
   end
 
   if [ "$branch_name" != "$GIT_BRANCH" ]
