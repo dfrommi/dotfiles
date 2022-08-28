@@ -4,7 +4,7 @@ set -x DEFAULT_USER dennis
 
 set -x JAVA_HOME (/usr/libexec/java_home)
 
-set -x PATH ~/my/bin ~/thirdparty/bin /Applications/Docker.app/Contents/Resources/bin $PATH
+set -x PATH ~/my/bin ~/thirdparty/bin $PATH /Applications/Docker.app/Contents/Resources/bin
 
 set -x FZF_LEGACY_KEYBINDINGS 0
 set -x FZF_FIND_FILE_COMMAND "ag -l -g '' --ignore .git --ignore Library"
