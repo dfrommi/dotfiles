@@ -4,5 +4,5 @@ function git_roots -d 'find all git repositories'
     set dirs $GIT_REPOS_BASE_PATHS
   end
 
-  find $dirs -name .git -type d -maxdepth 2 -prune ^/dev/null | sed -e "s#$HOME/\(.*\)/\.git#\1#"
+  find $dirs -name .git -type d -maxdepth 2 -prune 2>/dev/null | sed -e "s#$HOME/\(.*\)/\.git#\1#"
 end
