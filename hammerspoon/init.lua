@@ -99,3 +99,39 @@ end
 
 -- Bind the Hyper key (as mapped in Karabiner)
 hs.hotkey.bind({}, 'F17', pressedCmdR, releasedCmdR)
+
+
+--
+-- AviDemux special hotkeys
+--
+avidemuxHotkeys = {
+  hs.hotkey.new(nil, "z", nil, function()
+    hs.application.find("Avidemux2.8.app"):selectMenuItem({"Edit", "Set Marker A"})
+  end),
+  hs.hotkey.new(nil, "x", nil, function()
+    hs.application.find("Avidemux2.8.app"):selectMenuItem({"Edit", "Delete"})
+  end),
+  hs.hotkey.new(nil, "c", nil, function()
+    local app = hs.application.find("Avidemux2.8.app")
+    app:selectMenuItem({"Edit", "Set Marker B"})
+    app:selectMenuItem({"Edit", "Delete"})
+  end)  
+}
+
+function enableAviDemuxBinds()
+  for k,v in pairs(avidemuxHotkeys) do
+    v:enable()
+  end
+end
+
+function disableAviDemuxBinds()
+  for k,v in pairs(avidemuxHotkeys) do
+    v:disable()
+  end
+end
+
+local wf=hs.window.filter
+
+wf_terminal = wf.new{'Avidemux2.8.app'}
+wf_terminal:subscribe(wf.windowFocused, enableAviDemuxBinds)
+wf_terminal:subscribe(wf.windowUnfocused, disableAviDemuxBinds)
