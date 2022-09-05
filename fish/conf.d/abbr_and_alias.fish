@@ -7,7 +7,6 @@ abbr gca git commit --amend --no-edit
 
 abbr gr gradle
 
-alias e micro
 alias cat ccat
 
 functions -e gh
