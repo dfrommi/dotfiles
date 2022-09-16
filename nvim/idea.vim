@@ -1,52 +1,85 @@
-sourstractionFreeModstractionFreeModee
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+source ~/.config/nvim/init.vim
 
 set clipboard+=ideaput
 
 set ideajoin
 set ideaput
-set idearefactormode=keep
-
+set ideastatusicon=gray
 set showmode
 
 " Don't use Ex mode, use Q for formatting.
 map Q gq
 
-" Find more examples here: https://jb.gg/share-ideavimrc
-
 " set easymotion
-map , <Plug>(easymotion-s2)
+" map , <Plug>(easymotion-s2)
+
+"
+" TODO
+" - Duplicate line in normal and insert mode also in plain vim = M-d
+" - Movements also in insert-mode
 
 " Zen mode
 map <c-z> <Action>(ToggleDistractionFreeMode)
+map <M-m> <Action>(FileStructurePopup)
 
-nnoremap <Leader>r <Action>(Refactorings.QuickListPopupAction)
+" nmap <Leader><Leader> <Action>(ShowIntentionActions)
+nmap <Leader>r <Action>(RenameElement)
+nmap <Leader>R <Action>(Refactorings.QuickListPopupAction)
+nmap <Leader>u <Action>(FindUsages)
+nmap <Leader>U <Action>(FindUsagesInFile)
+nmap <Leader>h <Action>(CallHierarchy)
 
-nnoremap ge <Action>(GotoNextError)
-nnoremap gE <Action>(GotoPreviousError)
+"
+" CODE
+"
+nmap <Leader>cc <Action>(ReformatCode)<Action>(OptimizeImports)
+nmap <Leader>cf <Action>(ReformatCode)
+nmap <Leader>co <Action>(OptimizeImports)
 
-nnoremap [[ <Action>(MethodUp)
-nnoremap ]] <Action>(MethodDown)
+nmap <Leader>/ <Action>(FindInPath)
 
-nnoremap <Leader>l <Action>(ReformatCode)
-nnoremap <leader>o <Action>(OptimizeImports)
+"
+" MOVEMENTS 
+"
+" nmap <Leader>gg <Action>(RecentFiles)
 
-nnoremap <c-r> :action RecentFiles<CR>
-nnoremap <leader>l :action RecentLocations<CR>
-nnoremap <leader>h  :action LocalHistory.ShowHistory<CR>
+nmap <Leader>ge <Action>(GotoNextError)
+nmap <Leader>gE <Action>(GotoPreviousError)
 
-nnoremap <c-/> :action FindInPath<CR>
-nnoremap <c-a> :action GotoAction<CR>
-nnoremap <c-f> :action GotoFile<CR>
-nnoremap <leader>u :action FindUsages<CR>
-nnoremap <leader>s :action GotoRelated<CR>
-nnoremap <leader>h :action CallHierarchy<CR>
-" nnoremap <leader>b :action ShowNavBar<CR>
-nnoremap <c-s> :action FileStructurePopup<CR>
-nnoremap <c-o> :action GotoSymbol<CR>
-nnoremap gc :action GotoClass<CR>
-nnoremap gi :action GotoImplementation<CR>
-nnoremap gd :action GotToDeclaration<CR>
-nnoremap gp :action GotToSuperMethod<CR>
-nnoremap gt :action GotoTest<CR>
-nnoremap gb :action Back<CR>
-nnoremap gf :action Forward<CR>
+nmap <Leader>gh <Action>(Back)
+nmap <Leader>gl <Action>(Forward)
+nmap <Leader>gH <Action>(JumpToLastChange)
+nmap <Leader>gL <Action>(JumpToNextChange)
+
+nmap <Leader>gk <Action>(MethodUp)
+nmap <Leader>gj <Action>(MethodDown)
+nmap <Leader>gK <Action>(GotoSuperMethod)
+nmap <Leader>gJ <Action>(GotoImplementation)
+
+" <Leader>* ???
+nmap <Leader>gd <Action>(GotoDeclaration)
+nmap <Leader>gt <Action>(GotoTest)
+
+" nmap <Leader>ga <Action>(GotoAction)
+" nmap <Leader>gs <Action>(GotoSymbol)
+" nmap <Leader>gc <Action>(GotoClass)
+" nmap <Leader>gf <Action>(GotoFile)
+" nmap <Leader>gF <Action>(ShowNavBar)
+
+nmap <Leader>gm <Action>(FileStructurePopup)
+
+"
+" EXEXUTE
+"
+" x = execute
+" X = execute in debug mode
+nmap <Leader>xx <Action>(Rerun)
+nmap <Leader>x/ <Action>(RunConfiguration)
+nmap <Leader>X/ <Action>(ChooseDebugConfiguration)
+nmap <Leader>xc <Action>(RunClass)
+nmap <Leader>Xc <Action>(DebugClass)
+" kill
+nmap <Leader>xk <Action>(Stop)
+

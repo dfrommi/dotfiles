@@ -17,7 +17,17 @@ set hlsearch
 set number
 set relativenumber
 
+set visualbell
+set noerrorbells
+
+set scrolloff=5
+
 call plug#begin()
+
+" TODO 
+"   https://github.com/nvim-telescope/telescope.nvim
+"   https://github.com/folke/trouble.nvim
+
 
 Plug 'preservim/nerdtree'
 Plug 'preservim/tagbar'
@@ -34,6 +44,13 @@ call plug#end()
 
 colorscheme nord
 
+" Test if one of this works well
+inoremap <silent> <Up> <ESC><Up>
+inoremap <silent> <Down> <ESC><Down>
+imap jj <Esc>
+imap jk <Esc>
+imap kj <Esc>
+
 nnoremap <C-f> :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
@@ -41,24 +58,25 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 " 'structure'
 nnoremap <C-s> :TagbarToggle<CR> 
 
-" Easymotion
-nnoremap , <Plug>(easymotion-s)
+" Easymotion (jump)
+nnoremap <leader><leader> <Plug>(easymotion-s2)
 hi EasyMotionShade  ctermbg=none ctermfg=blue
 hi EasyMotionTarget ctermbg=none ctermfg=white cterm=bold
 hi EasyMotionTarget2First ctermbg=none ctermfg=white cterm=bold
 hi EasyMotionTarget2Second ctermbg=none ctermfg=white cterm=bold
 
-" quicker commands
-nnoremap ; :
-
 " Redo
 nnoremap U <C-R>
 
-" buffer switch
+" forward-delete should not add to default register
+nmap x "_dl
+
+" TODO buffer switch
 nnoremap <C-[> :bprevious<CR>
 nnoremap <C-]> :bnext<CR>
-nnoremap <s-TAB> :bprevious<CR>
-nnoremap <TAB>   :bnext<CR>
+" nnoremap <s-TAB> :bprevious<CR>
+" noremap <TAB>   :bnext<CR>
+" nnoremap <TAB>  :ls<CR>
 
 " Movements
 nnoremap L $
@@ -74,6 +92,7 @@ vnoremap K 5k
 nnoremap <leader>j J
 
 " Move lines/selection around
+" TODO use IntelliJ's CMS-SHIFT-UP/DOWN
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
 inoremap <C-j> <ESC>:m .+1<CR>==gi
@@ -82,9 +101,9 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Window management
-nnoremap <c-\> :vsplit
-nnoremap <c--> :split
-nnoremap <c-=> :only
+nnoremap <c-\> :vsplit<CR>
+nnoremap <c--> :split<CR>
+nnoremap <c-=> :only<CR>
 
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
@@ -102,3 +121,5 @@ let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline_powerline_fonts = 1
 
+" no highlight of search matches until next search
+map <esc> :noh<CR>
