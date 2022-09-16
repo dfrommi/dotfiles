@@ -2,7 +2,7 @@
 FILE=$1
 
 # Don't touch fixup commits, or the lose their reference to the real commit
-[ "$(sed -n "/^!fixup/p;q" "$FILE")" ] && exit 0
+[ "$(sed -n "/^fixup\!/p;q" "$FILE")" ] && exit 0
 
 # Skip when merging
 [ ! -f "$(dirname "$msg")/MERGE_HEAD" ] || exit 0
