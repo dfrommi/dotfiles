@@ -1,7 +1,28 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format="""$all$kubernetes$fill$cmd_duration$line_break$status$character"""
+
+[fill]
+symbol = " "
+
+[directory]
+repo_root_style = "green bold"
+
 [java]
 disabled = true
 
 [kotlin]
 disabled = true
+
+[python]
+disabled = true
+
+[kubernetes]
+disabled = false
+format = '[\[$context\]]($style)'
+
+[aws]
+disabled = true
+
+[status]
+disabled = false
