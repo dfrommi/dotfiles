@@ -2,8 +2,7 @@
 -- Environment setup
 --
 local log=hs.logger.new('init','verbose')
-local browser = hs.urlevent.getDefaultHandler("http")
-local browserName = browser == 'com.google.Chrome' and 'Google Chrome' or 'Safari'
+local intellijName = hs.application.nameForBundleID('com.jetbrains.intellij.ce') == nil and 'IntelliJ IDEA' or 'IntelliJ IDEA CE'
 
 --
 -- Umlaut
@@ -65,12 +64,10 @@ hs.hotkey.bind({}, 'F19', pressedHyper, releasedHyper)
 cmdR_k = hs.hotkey.modal.new()
 
 singleapps = {
-  {'e', 'Visual Studio Code'},
-  {'b', browserName},
+  {'b', 'Safari'},
+  {'i', intellijName},
   {'t', 'Microsoft Teams'},
-  {'o', 'Microsoft Outlook'},
-  {'n', 'Microsoft OneNote'},
-  {'i', 'IntelliJ IDEA'}
+  {'o', 'Microsoft Outlook'}
 }
 
 for i,app in ipairs(singleapps) do

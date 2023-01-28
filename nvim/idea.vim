@@ -9,13 +9,6 @@ set ideaput
 set ideastatusicon=gray
 set showmode
 
-" Don't use Ex mode, use Q for formatting.
-map Q gq
-
-" set easymotion
-" map , <Plug>(easymotion-s2)
-
-"
 " TODO
 " - Duplicate line in normal and insert mode also in plain vim = M-d
 " - Movements also in insert-mode
@@ -61,12 +54,6 @@ nmap <Leader>gJ <Action>(GotoImplementation)
 " <Leader>* ???
 nmap <Leader>gd <Action>(GotoDeclaration)
 nmap <Leader>gt <Action>(GotoTest)
-
-" nmap <Leader>ga <Action>(GotoAction)
-" nmap <Leader>gs <Action>(GotoSymbol)
-" nmap <Leader>gc <Action>(GotoClass)
-" nmap <Leader>gf <Action>(GotoFile)
-" nmap <Leader>gF <Action>(ShowNavBar)
 
 nmap <Leader>gm <Action>(FileStructurePopup)
 

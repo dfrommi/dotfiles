@@ -1,0 +1,161 @@
+<scheme name="My Nord" version="142" parent_scheme="Nord">
+  <metaInfo>
+    <property name="created">2023-01-28T19:55:40</property>
+    <property name="ide">Idea</property>
+    <property name="ideVersion">2022.3.2.0.0</property>
+    <property name="modified">2023-01-28T19:55:47</property>
+    <property name="originalScheme">My Nord</property>
+  </metaInfo>
+  <colors>
+    <option name="CARET_ROW_COLOR" value="161b25" />
+    <option name="CONSOLE_BACKGROUND_KEY" value="e1116" />
+    <option name="GUTTER_BACKGROUND" value="171b21" />
+  </colors>
+  <attributes>
+    <option name="CSS.COLON">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="DIFF_CONFLICT">
+      <value>
+        <option name="FOREGROUND" value="e1116" />
+        <option name="BACKGROUND" value="374355" />
+        <option name="ERROR_STRIPE_COLOR" value="5e81ac" />
+      </value>
+    </option>
+    <option name="DIFF_DELETED">
+      <value>
+        <option name="FOREGROUND" value="e1116" />
+        <option name="BACKGROUND" value="4b3d48" />
+        <option name="ERROR_STRIPE_COLOR" value="bf616a" />
+      </value>
+    </option>
+    <option name="DIFF_INSERTED">
+      <value>
+        <option name="FOREGROUND" value="e1116" />
+        <option name="BACKGROUND" value="3f4a5a" />
+        <option name="ERROR_STRIPE_COLOR" value="81a1c1" />
+      </value>
+    </option>
+    <option name="DIFF_MODIFIED">
+      <value>
+        <option name="FOREGROUND" value="e1116" />
+        <option name="BACKGROUND" value="54524f" />
+        <option name="ERROR_STRIPE_COLOR" value="ebcb8b" />
+      </value>
+    </option>
+    <option name="GO_COLON">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="HAML_TEXT">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="HTML_CODE">
+      <value />
+    </option>
+    <option name="KOTLIN_LABEL">
+      <value />
+    </option>
+    <option name="LESS_COLON">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="LESS_INJECTED_CODE">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="MARKDOWN_HTML_BLOCK">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="MARKDOWN_LIST_ITEM">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="MARKDOWN_TEXT">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="MATCHED_BRACE_ATTRIBUTES">
+      <value>
+        <option name="BACKGROUND" value="3b514d" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="SASS_COLON">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="TEXT">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="XML_TAG_DATA">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="XPATH.XPATH_PREFIX">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="XPATH.XPATH_TEXT">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="YAML_SCALAR_LIST">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+    <option name="YAML_TEXT">
+      <value>
+        <option name="FOREGROUND" value="d8dee9" />
+        <option name="BACKGROUND" value="e1116" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
