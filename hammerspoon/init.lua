@@ -32,7 +32,7 @@ end
 hyper_k = hs.hotkey.modal.new()
 
 -- create binding for all externally used Hyper key bindings
-mappedHyperKeys = {'i', 'v', '/'}
+mappedHyperKeys = {'i', 'v', '/', 'd'}
 for k,v in ipairs(mappedHyperKeys) do
   hyper_k:bind({}, v, nil, function()
     hs.eventtap.keyStroke({"cmd","alt","shift","ctrl"}, v)
@@ -67,7 +67,8 @@ singleapps = {
   {'b', 'Safari'},
   {'i', intellijName},
   {'t', 'Microsoft Teams'},
-  {'o', 'Microsoft Outlook'}
+  {'o', 'Microsoft Outlook'},
+  {'r', 'Rocket.Chat'}
 }
 
 for i,app in ipairs(singleapps) do
@@ -75,7 +76,11 @@ for i,app in ipairs(singleapps) do
 end
 
 -- 1Password shortcut
-cmdR_k:bind({}, '\\', function() hs.eventtap.keyStroke({'cmd', 'alt'}, '\\'); cmdR_k.triggered = true; end)
+-- cmdR_k:bind({}, '\\', function() hs.eventtap.keyStroke({'cmd', 'alt'}, '\\'); cmdR_k.triggered = true; end)
+-- cmdR_k:bind({}, 'p', function() hs.eventtap.keyStroke({'cmd', 'alt'}, 'p'); cmdR_k.triggered = true; end)
+for i,key in ipairs({'p','v','k'}) do
+  cmdR_k:bind({}, key, function() hs.eventtap.keyStroke({'cmd','alt','shift','ctrl'}, key); cmdR_k.triggered = true; end)
+end
 
 -- lock screen shortcut
 cmdR_k:bind({}, 'l', function() hs.caffeinate.lockScreen(); cmdR_k.triggered = true; end)
@@ -94,7 +99,7 @@ releasedCmdR = function()
   end
 end
 
--- Bind the Hyper key (as mapped in Karabiner)
+-- Bind the right command-key (as mapped in Karabiner)
 hs.hotkey.bind({}, 'F17', pressedCmdR, releasedCmdR)
 
 
@@ -129,6 +134,6 @@ end
 
 local wf=hs.window.filter
 
-wf_terminal = wf.new{'Avidemux2.8.app'}
-wf_terminal:subscribe(wf.windowFocused, enableAviDemuxBinds)
-wf_terminal:subscribe(wf.windowUnfocused, disableAviDemuxBinds)
+wf_avidemux = wf.new{'Avidemux2.8.app'}
+wf_avidemux:subscribe(wf.windowFocused, enableAviDemuxBinds)
+wf_avidemux:subscribe(wf.windowUnfocused, disableAviDemuxBinds)
