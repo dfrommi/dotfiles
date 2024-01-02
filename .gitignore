@@ -25,6 +25,8 @@ karabiner/automatic_backups/
 gh/
 iterm2/
 
+kitty/*.conf.local
+
 git/aspell-personal.dict
 
 op/
