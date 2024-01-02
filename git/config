@@ -1,10 +1,12 @@
 [user]
 	name = Dennis Frommknecht
 	email = dfrommi@users.noreply.github.com
+
 [push]
 	default = current
 [pull]
 	rebase = true
+
 [alias]
 	st = status -sb
 	
@@ -48,21 +50,33 @@
 [ghi]
 	token = !security find-internet-password -a dfrommi -s github.com -l 'ghi token' -w
 
-[pager]
-	log = diff-so-fancy | less
-	show = diff-so-fancy | less
-	diff = diff-so-fancy | less
+
+[core]
+	pager = delta
+
+#[pager]
+#	log = diff-so-fancy | less
+#	show = diff-so-fancy | less
+#	diff = diff-so-fancy | less
+
 [interactive]
+	diffFilter = delta --color-only
 # 	diffFilter = diff-so-fancy
 
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
 [diff]
-	compactionHeuristic = true
-  tool = intellij
+	colorMoved = default
+#	compactionHeuristic = true
+    tool = intellij
 [difftool "intellij"]
   cmd = /Applications/IntelliJ*.app/Contents/MacOS/idea diff $(realpath "$LOCAL") $(realpath "$REMOTE") 2>/dev/null
 
 [merge]
 	tool = intellij
+	conflictstyle = diff3
 [mergetool]
 	keepBackup = false
 [mergetool "intellij"]
