@@ -24,7 +24,14 @@ hs.hotkey.bind({'alt'},          'e', nil, keyStroke('€'), nil, nil)
 -- CapsLock as Hyper
 --
 function launch(appname, modal)
-  hs.application.launchOrFocus(appname)
+  local app = hs.application.find(appname)
+  
+  if app then
+    app:mainWindow():focus()
+  else
+    hs.application.launchOrFocus(appname)
+  end
+
   modal.triggered = true
 end
 
@@ -64,7 +71,7 @@ hs.hotkey.bind({}, 'F19', pressedHyper, releasedHyper)
 cmdR_k = hs.hotkey.modal.new()
 
 singleapps = {
-  {'b', 'Safari'},
+  {'b', 'Arc'},
   {'i', intellijName},
   {'t', 'Microsoft Teams'},
   {'o', 'Microsoft Outlook'},
@@ -95,7 +102,7 @@ releasedCmdR = function()
   cmdR_k:exit()
   if not cmdR_k.triggered then
     --hs.eventtap.keyStroke({}, 'F16')
-    launch('Kitty', cmdR_k)
+    launch('Warp', cmdR_k)
   end
 end
 
