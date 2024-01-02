@@ -22,6 +22,11 @@ set noerrorbells
 
 set scrolloff=5
 
+" Install plugin manager with
+"   curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" Then run nvim and install plugin with
+"   :PlugInstall
+
 call plug#begin()
 
 " TODO 
