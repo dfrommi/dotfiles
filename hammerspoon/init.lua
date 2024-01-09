@@ -102,7 +102,7 @@ releasedCmdR = function()
   cmdR_k:exit()
   if not cmdR_k.triggered then
     --hs.eventtap.keyStroke({}, 'F16')
-    launch('Warp', cmdR_k)
+    launch('Kitty', cmdR_k)
   end
 end
 
