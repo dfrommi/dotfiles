@@ -36,3 +36,6 @@ op/
 
 lazygit/state.yml
 *.lock
+nvim/lazy-lock.json
+nvim/lazyvim.json
+
