@@ -1,0 +1,18 @@
+
+reporting: "off"
+update:
+    method: never
+gui:
+  showFileTree: true
+  nerdFontsVersion: 3
+os:
+  edit: 'nvim {{filename}}'
+  editAtLine: 'nvim +{{line}} {{filename}}'
+  editAtLineAndWait: 'nvim --remote-wait +{{line}} {{filename}}'
+  editInTerminal: true
+git:
+  autoFetch: false
+  autoRefresh: false
+  paging:
+    colorArg: always
+    pager: delta --paging=never

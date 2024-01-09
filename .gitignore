@@ -33,3 +33,6 @@ kitty/*.conf.local
 git/aspell-personal.dict
 
 op/
+
+lazygit/state.yml
+*.lock

@@ -1,4 +1,3 @@
-alias ls="ls -G"
-alias ll="ls -lhG"
-alias la="ls -lahG"
-alias lsd="ls -d */"
+function ls -w eza
+  eza --group-directories-first --icons --time-style long-iso -o --no-permissions --no-quotes $argv
+end
