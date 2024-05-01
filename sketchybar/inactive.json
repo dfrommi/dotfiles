@@ -1,0 +1,305 @@
+[
+  {
+    "background_opacity": 1.0,
+    "id": 1,
+    "is_active": true,
+    "is_focused": false,
+    "last_focused": true,
+    "platform_window_id": 4192,
+    "tabs": [
+      {
+        "active_window_history": [
+          1
+        ],
+        "enabled_layouts": [
+          "splits"
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "windows": [
+              1
+            ]
+          }
+        ],
+        "id": 1,
+        "is_active": false,
+        "is_focused": false,
+        "layout": "splits",
+        "layout_opts": {
+          "default_axis_is_horizontal": true
+        },
+        "layout_state": {
+          "pairs": {
+            "bias": 0.5,
+            "horizontal": true,
+            "one": 1
+          }
+        },
+        "title": "hammerspoon \u2022 .config",
+        "windows": [
+          {
+            "at_prompt": false,
+            "cmdline": [
+              "/opt/homebrew/bin/fish",
+              "-l"
+            ],
+            "columns": 225,
+            "cwd": "/Users/dennis",
+            "env": {
+              "KITTY_WINDOW_ID": "1"
+            },
+            "foreground_processes": [
+              {
+                "cmdline": [
+                  "nvim"
+                ],
+                "cwd": "/Users/dennis/.config/hammerspoon",
+                "pid": 36325
+              }
+            ],
+            "id": 1,
+            "is_active": true,
+            "is_focused": false,
+            "is_self": false,
+            "lines": 60,
+            "pid": 71369,
+            "title": "hammerspoon \u2022 .config",
+            "user_vars": {}
+          }
+        ]
+      },
+      {
+        "active_window_history": [
+          2
+        ],
+        "enabled_layouts": [
+          "splits"
+        ],
+        "groups": [
+          {
+            "id": 2,
+            "windows": [
+              2
+            ]
+          }
+        ],
+        "id": 2,
+        "is_active": false,
+        "is_focused": false,
+        "layout": "splits",
+        "layout_opts": {
+          "default_axis_is_horizontal": true
+        },
+        "layout_state": {
+          "pairs": {
+            "bias": 0.5,
+            "horizontal": true,
+            "one": 2
+          }
+        },
+        "title": "kanata \u2022 .config",
+        "windows": [
+          {
+            "at_prompt": false,
+            "cmdline": [
+              "/opt/homebrew/bin/fish",
+              "-l"
+            ],
+            "columns": 225,
+            "cwd": "/Users/dennis/.config/hammerspoon",
+            "env": {
+              "KITTY_WINDOW_ID": "2"
+            },
+            "foreground_processes": [
+              {
+                "cmdline": [],
+                "cwd": "/Users/dennis/.config/hammerspoon",
+                "pid": 84533
+              },
+              {
+                "cmdline": [],
+                "cwd": "/Users/dennis/.config/hammerspoon",
+                "pid": 84532
+              }
+            ],
+            "id": 2,
+            "is_active": true,
+            "is_focused": false,
+            "is_self": false,
+            "lines": 60,
+            "pid": 71564,
+            "title": "kanata \u2022 .config",
+            "user_vars": {}
+          }
+        ]
+      },
+      {
+        "active_window_history": [
+          5
+        ],
+        "enabled_layouts": [
+          "splits"
+        ],
+        "groups": [
+          {
+            "id": 5,
+            "windows": [
+              5
+            ]
+          }
+        ],
+        "id": 5,
+        "is_active": false,
+        "is_focused": false,
+        "layout": "splits",
+        "layout_opts": {
+          "default_axis_is_horizontal": true
+        },
+        "layout_state": {
+          "pairs": {
+            "bias": 0.5,
+            "horizontal": true,
+            "one": 5
+          }
+        },
+        "title": "sketchybar \u2022 .config",
+        "windows": [
+          {
+            "at_prompt": false,
+            "cmdline": [
+              "/opt/homebrew/bin/fish",
+              "-l"
+            ],
+            "columns": 225,
+            "cwd": "/Users/dennis/.config/hammerspoon",
+            "env": {
+              "KITTY_WINDOW_ID": "5"
+            },
+            "foreground_processes": [
+              {
+                "cmdline": [
+                  "sketchybar"
+                ],
+                "cwd": "/Users/dennis/.config/sketchybar",
+                "pid": 70247
+              }
+            ],
+            "id": 5,
+            "is_active": true,
+            "is_focused": false,
+            "is_self": false,
+            "lines": 60,
+            "pid": 78050,
+            "title": "sketchybar \u2022 .config",
+            "user_vars": {}
+          }
+        ]
+      },
+      {
+        "active_window_history": [
+          8,
+          7
+        ],
+        "enabled_layouts": [
+          "splits"
+        ],
+        "groups": [
+          {
+            "id": 7,
+            "windows": [
+              7
+            ]
+          },
+          {
+            "id": 8,
+            "windows": [
+              8
+            ]
+          }
+        ],
+        "id": 7,
+        "is_active": true,
+        "is_focused": false,
+        "layout": "splits",
+        "layout_opts": {
+          "default_axis_is_horizontal": true
+        },
+        "layout_state": {
+          "pairs": {
+            "bias": 0.5,
+            "horizontal": false,
+            "one": 7,
+            "two": 8
+          }
+        },
+        "title": "sketchybar \u2022 .config",
+        "windows": [
+          {
+            "at_prompt": false,
+            "cmdline": [
+              "/opt/homebrew/bin/fish",
+              "-l"
+            ],
+            "columns": 225,
+            "cwd": "/Users/dennis/.config/sketchybar",
+            "env": {
+              "KITTY_WINDOW_ID": "7"
+            },
+            "foreground_processes": [
+              {
+                "cmdline": [
+                  "nvim",
+                  "kittytabs.jq"
+                ],
+                "cwd": "/Users/dennis/.config/sketchybar",
+                "pid": 18598
+              }
+            ],
+            "id": 7,
+            "is_active": false,
+            "is_focused": false,
+            "is_self": false,
+            "lines": 30,
+            "pid": 16511,
+            "title": "sketchybar \u2022 .config",
+            "user_vars": {}
+          },
+          {
+            "at_prompt": false,
+            "cmdline": [
+              "/opt/homebrew/bin/fish",
+              "-l"
+            ],
+            "columns": 225,
+            "cwd": "/Users/dennis/.config/sketchybar",
+            "env": {
+              "KITTY_WINDOW_ID": "8"
+            },
+            "foreground_processes": [
+              {
+                "cmdline": [
+                  "kitten",
+                  "@",
+                  "ls"
+                ],
+                "cwd": "/Users/dennis/.config/sketchybar",
+                "pid": 76665
+              }
+            ],
+            "id": 8,
+            "is_active": true,
+            "is_focused": false,
+            "is_self": true,
+            "lines": 30,
+            "pid": 18377,
+            "title": "sketchybar \u2022 .config",
+            "user_vars": {}
+          }
+        ]
+      }
+    ],
+    "wm_class": "kitty",
+    "wm_name": "kitty"
+  }
+]

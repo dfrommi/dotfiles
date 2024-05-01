@@ -17,7 +17,7 @@ local log = hs.logger.new("main")
 require("keys.umlaut")
 require("keys.cmd_r")
 require("keys.trigger")
-require("menubar.init")
+-- require("menubar.init")
 
 -- Show minimized window when app receives focus
 hs.application.watcher
