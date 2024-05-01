@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Disabled</key>
+    <false/>
+    <key>Label</key>
+    <string>kanata</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/sudo</string>
+        <string>/Users/dennis/thirdparty/bin/kanata</string>
+        <string>-c</string>
+        <string>/Users/dennis/.config/kanata/kanata.kbd</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardErrorPath</key>
+    <string>/tmp/kanata_dennis.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/kanata_dennis.out</string>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+</dict>
+</plist>
