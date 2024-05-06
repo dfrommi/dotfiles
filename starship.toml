@@ -17,7 +17,27 @@ disabled = true
 
 [kubernetes]
 disabled = false
-format = '[\[$context\]]($style)'
+format = 'on [\[$context\]]($style) '
+
+[[kubernetes.contexts]]
+context_pattern = ".*\\.eu-central-1\\.prod\\..*"
+context_alias = "PROD EMEA"
+style = 'bold red'
+
+[[kubernetes.contexts]]
+context_pattern = ".*\\.eu-central-1\\.test\\..*"
+context_alias = "test EMEA"
+style = 'bold yellow'
+
+[[kubernetes.contexts]]
+context_pattern = ".*\\.us-east-1\\.prod\\..*"
+context_alias = "PROD NA"
+style = 'bold red'
+
+[[kubernetes.contexts]]
+context_pattern = ".*\\.us-east-1\\.test\\..*"
+context_alias = "test NA"
+style = 'bold yellow'
 
 [aws]
 disabled = true
