@@ -1,6 +1,7 @@
 [.[] | select(.is_focused == true) | .tabs[] |
   {
-    label: .title, 
+    label: (.title | split(" • ")[1]),
+    icon: (.title | split(" • ")[0]),
     drawing: "on", 
     "label.color": (if .is_active then "0xff8aadf4" else "0xff939ab7" end), 
     "icon.color": (if .is_active then "0xffcad3f5" else "0xff939ab7" end)

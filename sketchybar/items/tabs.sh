@@ -6,6 +6,7 @@ for tid in $(seq -s " " 9 1); do
 		icon=$tid
 		label.padding_left=20
 		label.padding_right=20
+		icon.font.style=medium
 	)
 
 	sketchybar --add item tab.$tid q \

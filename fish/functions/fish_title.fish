@@ -1,26 +1,35 @@
 function fish_title
-	# Disable all setting in iTerm under "Appearence -> Window & Tab titles"
+    # Disable all setting in iTerm under "Appearence -> Window & Tab titles"
 
-	# $_ = command
-	# $argv = commandline
-	# $PWD = directory
+    # $_ = command
+    # $argv = commandline
+    # $PWD = directory
 
-  if [ "$PWD" = "$HOME" ]
-    echo "~"
-    return 0
-  end
+    set base /
+    set dir "$PWD"
+    set cmd "$_"
 
-  set dir "$PWD"
+    if [ "$GIT_ROOT" ]
+        set base (basename "$GIT_ROOT")
+        set dir (string replace "$GIT_ROOT" "" "$dir")
+    else if string match -q -- "$HOME*" "$dir"
+        set base "~"
+        set dir (string replace "$HOME" "" "$dir")
+    end
 
-  if [ "$GIT_ROOT" ]
-    set dir (string replace (dirname "$GIT_ROOT")/ "" "$dir")
-  else
-    set dir (string replace "$HOME" "~" "$dir")
-  end
+    if string match -q -- "/*" "$dir"
+        set dir (string sub -s 2 "$dir")
+    end
 
-  if [ (basename "$PWD") = "$dir" ]
-    echo (basename "$PWD")
-  else
-    echo (basename "$PWD") '•' (dirname "$dir")
-  end
+    echo -n "$base • "
+
+    if [ "$dir" ]
+        prompt_pwd "$dir"
+    else
+        echo -n "."
+    end
+
+    if [ "$cmd" != fish ]
+        echo -n " [$cmd]"
+    end
 end
