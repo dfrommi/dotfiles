@@ -29,6 +29,7 @@ AutoDesk/
 jgit/
 
 kitty/*.conf.local
+sketchybar/*.local
 
 git/aspell-personal.dict
 

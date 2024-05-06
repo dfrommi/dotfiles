@@ -70,4 +70,8 @@ sketchybar --hotload on
 # Forcing all item scripts to run (never do this outside of sketchybarrc)
 sketchybar --update
 
+if [[ -e "$CONFIG_DIR/sketchybarrc.local" ]]; then
+	source "$CONFIG_DIR/sketchybarrc.local"
+fi
+
 echo "sketchybar configuation loaded.."
