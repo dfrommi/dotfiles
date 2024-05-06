@@ -62,21 +62,30 @@
  
   ,;   (template-expand new-shift , (unshift ;))
   .:   (template-expand new-shift . @:)
-  ?!   (tap-hold-release 200 200
-          (template-expand new-shift @? @!)
-          (layer-while-held symleft)
-       )
+  ?!   (template-expand new-shift @? @!)
+
+  cw   (caps-word 5000)
+
+  ;;?!   (tap-hold-release 200 200
+  ;;        (template-expand new-shift @? @!)
+  ;;        (layer-while-held symleft)
+  ;;     )
 
   ;;macro for no repeat
   /\   (tap-hold-release 200 200 / (macro \))
   -_   (tap-hold-release 200 200 - (macro @_))
   ^0   (tap-hold-release 200 200 @^ (macro kp0))
 
+  boc  (tap-hold-release 200 200 S-9 (macro S-9 S-0 lft))
+  {}   (tap-hold-release 200 200 @{  (macro @{ @} lft))
+  []   (tap-hold-release 200 200 [   (macro [ ] lft))
+
   lalt  (tap-hold-release 200 200 del  lalt)
   lmet  (tap-hold-release 200 200 tab  lmet)
   ret   (tap-hold-release 200 200 ret  (layer-while-held number))
   spc   (tap-hold-release 200 200 spc  (layer-while-held nav))
   q     (tap-hold-release 200 200 q    (layer-while-held symright))
+  x     (tap-hold-release 200 200 x    (layer-while-held symright))
 
   rsft (tap-hold-release 200 200 (caps-word 5000) rsft)
 
@@ -88,7 +97,6 @@
           (lmet)  (tap-hold-release 200 250 c C-S-A-c) break
           ()      c break
        )
-
 )
 
 ;; TODO special control keys:
@@ -104,7 +112,7 @@
   grv  _    _     _     _    _         _    _    _    _    _    _    _     _
   _    @q   w     f     p    b         j    l    @u   y    @?!  _    _
   esc  @a   r     @s    t    g         m    n    @e   i    @o   /    _     _
-  _    @z   x     @c    d    @v   XX   k    h    @,;  @.:  @'   @rsft _
+  _    @z   @x    @c    d    @v   XX   k    h    @,;  @.:  @'   @rsft _
   _    _    @lalt @lmet           @spc           @ret bspc  _    _    _
 )
 
@@ -125,38 +133,29 @@
   _    _       _      _                    _               rmet  ralt _     _    _
 )
 
-(deflayer symleft
-  _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    [    ]    _    _    _    _    _    _    _    _
-  _    _    @{   S-9  S-0  @}   _    _    _    _    _    _    _    _
-  _    _    _    @&   @|   _    _    _    _    _    _    _    _    _
-  _    _    _    _              _              _    _    _    _    _
-)
-
 (deflayer symright
   _    _    _    _    _    _         _    _    _    _    _    _    _
   _    _    _    _    _    _         _    _    _    _    _    _    _    _
-  _    _    _    _    _    _         @^0  @+   @*   @$   _    _    _
-  _    _    _    _    _    _         @<   @-_  @/\  =    @>   _    _    _
-  _    _    _    _    _    _    _    @~   @@   @%   @#   `    _    _
+  _    _    _    _    _    _         @^0  @*   @%   @$   @+    _    _
+  _    _    _    _    _    _         @<   -    @_   =    @>   _    _    _
+  _    _    _    _    _    _    _    @#   @/\  @~   @|   @&   _    _
   _    _    _    _              _              _    _    _    _    _
 )
 
 (deflayer number
-  _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    9    8    _    _    _    _    _    _    _    _
-  _    3    2    1    0    4    _    _    _    _    _    _    _    _
-  _    _    7    6    5    _    _    _    _    _    _    _    _    _
-  _    _    _    0              _              _    _    _    _    _
+  _    _    _    _    _    _         _    _    _    _    _    _    _
+  _    _    _    _    _    _         _    _    _    _    _    _    _    _
+  _    1    2    3    4    5         6    7    8    9    0    _    _
+  _    @[]  @{}  @boc 0    _         _    1    S-0  @}   ]    _    _    _
+  _    @cw  _    _    @@   _    _    _    _    _    _    `    _    _
+  _    _    _    _              _              _    _    _    _    _
 )
 
 ;; (deflayer default
-;;   _    _    _    _    _    _    _    _    _    _    _    _    _
-;;   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-;;   _    _    _    _    _    _    _    _    _    _    _    _    _
-;;   _    _    _    _    _    _    _    _    _    _    _    _    _    _
+;;   _    _    _    _    _    _         _    _    _    _    _    _    _
+;;   _    _    _    _    _    _         _    _    _    _    _    _    _    _
+;;   _    _    _    _    _    _         _    _    _    _    _    _    _
+;;   _    _    _    _    _    _         _    _    _    _    _    _    _    _
 ;;   _    _    _    _    _    _    _    _    _    _    _    _    _    _
 ;;   _    _    _    _              _              _    _    _    _    _
 ;; )
