@@ -30,6 +30,7 @@ jgit/
 
 kitty/*.conf.local
 sketchybar/*.local
+git/config.*
 
 git/aspell-personal.dict
 

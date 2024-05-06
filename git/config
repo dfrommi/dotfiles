@@ -1,9 +1,13 @@
 [user]
-	name = Dennis Frommknecht
-	email = dfrommi@users.noreply.github.com
+  name = Dennis Frommknecht
+  email = dfrommi@users.noreply.github.com
+
+[includeIf "gitdir:~/jambit/"]
+  path = ~/.config/git/config.jambit
 
 [push]
 	default = current
+	autoSetupRemote = true
 [pull]
 	rebase = true
 
@@ -89,3 +93,5 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	required = true
+[rebase]
+	autoStash = true
