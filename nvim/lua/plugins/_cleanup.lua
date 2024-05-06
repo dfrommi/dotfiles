@@ -23,6 +23,9 @@ local disabled = {
   -- no dashboard needed
   "nvimdev/dashboard-nvim",
 
+  -- auto-closing bracketr
+  "echasnovski/mini.pairs",
+
   -- experimental UI stuff
   -- "stevearc/dressing.nvim",
   -- "folke/noice.nvim",
