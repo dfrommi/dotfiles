@@ -58,6 +58,7 @@
 
 (defalias
   '     (tap-hold-release 200 200 '    rsft)
+  /     (tap-hold-release 200 200 /    rsft)
   z     (tap-hold-release 200 200 z    lsft)
  
   ,;   (template-expand new-shift , (unshift ;))
@@ -79,6 +80,7 @@
   boc  (tap-hold-release 200 200 S-9 (macro S-9 S-0 lft))
   {}   (tap-hold-release 200 200 @{  (macro @{ @} lft))
   []   (tap-hold-release 200 200 [   (macro [ ] lft))
+  <>   (tap-hold-release 200 200 S-, (macro S-, S-. lft))
 
   lalt  (tap-hold-release 200 200 del  lalt)
   lmet  (tap-hold-release 200 200 tab  lmet)
@@ -109,11 +111,11 @@
 
 (deflayer default
   C-c  brdn brup  _     _    bldn      blup prev pp   next mute vold volu
-  grv  _    _     _     _    _         _    _    _    _    _    _    _     _
-  _    @q   w     f     p    b         j    l    @u   y    @?!  _    _
-  esc  @a   r     @s    t    g         m    n    @e   i    @o   /    _     _
-  _    @z   @x    @c    d    @v   XX   k    h    @,;  @.:  @'   @rsft _
-  _    _    @lalt @lmet           @spc           @ret bspc  _    _    _
+  grv  _    _     _     _    _         _    _    _    _    _    _     _     _
+  _    q    w     f     p    b         j    l    @u   y    ;    _     _
+  esc  @a   r     @s    t    g         m    n    @e   i    @o   _     _     _
+  _    @z   x     @c    d    @v   ;    k    h    _    _    @/   @rsft _
+  _    _    @lalt @lmet          @spc            ret  bspc       _    _    _
 )
 
 (defalias
@@ -127,7 +129,7 @@
 (deflayer nav   ;; space
   _    _       _      _      _      _      _    _    _     _     _    _    _
   _    _       _      _      _      _      _    _    _     _     _    _     _    _
-  _    @yspc1  @yspc2 @yspc3 @yspc4 @yspc5  @und @prv @nxt @new  _    _     _
+  _    @spc1   @spc2  @spc3  @spc4  @spc5  @und @prv @nxt  @new  _    _     _
   _    @alfred _      @web   @term  _      _    left down  up    rght _     _    _
   _    @ystk   @yequ  @yrot  @yprev _      _    _    @ylft @ydwn @yup @yrgt _    _
   _    _       _      _                    _               rmet  ralt _     _    _
@@ -137,7 +139,7 @@
   _    _    _    _    _    _         _    _    _    _    _    _    _
   _    _    _    _    _    _         _    _    _    _    _    _    _    _
   _    _    _    _    _    _         @^0  @*   @%   @$   @+    _    _
-  _    _    _    _    _    _         @<   -    @_   =    @>   _    _    _
+  _    _    _    _    _    _         @<>  -    @_   =    @>   _    _    _
   _    _    _    _    _    _    _    @#   @/\  @~   @|   @&   _    _
   _    _    _    _              _              _    _    _    _    _
 )
@@ -168,27 +170,14 @@
             C-S-A-M-g
          )
 
+  ;; System-Preferences -> Keyboard -> Mission Control
+  spc1   C-A-M-1
+  spc2   C-A-M-2
+  spc3   C-A-M-3
+  spc4   C-A-M-4
+  spc5   C-A-M-5
+
   yprev  (cmd $yabai -m space --focus recent)
-  yspc1  (tap-hold-release 200 200 
-            (cmd $yabai -m space --focus 1)
-            (cmd $yabai -m window --space 1; $yabai -m space --focus 1)
-         )
-  yspc2  (tap-hold-release 200 200 
-            (cmd $yabai -m space --focus 2)
-            (cmd $yabai -m window --space 2; $yabai -m space --focus 2)
-         )
-  yspc3  (tap-hold-release 200 200 
-            (cmd $yabai -m space --focus 3)
-            (cmd $yabai -m window --space 3; $yabai -m space --focus 3)
-         )
-  yspc4  (tap-hold-release 200 200 
-            (cmd $yabai -m space --focus 4)
-            (cmd $yabai -m window --space 4; $yabai -m space --focus 4)
-         )
-  yspc5  (tap-hold-release 200 200 
-            (cmd $yabai -m space --focus 5)
-            (cmd $yabai -m window --space 5; $yabai -m space --focus 1)
-         )
   yequ   (tap-hold-release 200 200 
             (cmd $yabai -m space --balance)
             (cmd $yabai -m window --toggle float; $yabai window --grid 4:4:1:1:2:2)
