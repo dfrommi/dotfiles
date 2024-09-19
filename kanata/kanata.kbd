@@ -3,6 +3,12 @@
   danger-enable-cmd yes
 )
 
+(environment (LAPTOP work)
+  (defoverrides
+    (grv) (nubs)
+  )
+)
+
 (defvar
   tap-time 200
   hold-time 150
@@ -36,7 +42,7 @@
   {   S-[
   }   S-]
   |   S-\
-  ~   S-`
+  ~   S-grv
   :   S-;
   ?   S-/
 )
@@ -57,39 +63,38 @@
 )
 
 (defalias
-  '     (tap-hold-release 200 200 '    rsft)
-  /     (tap-hold-release 200 200 /    rsft)
-  z     (tap-hold-release 200 200 z    lsft)
- 
   ,;   (template-expand new-shift , (unshift ;))
   .:   (template-expand new-shift . @:)
-  ?!   (template-expand new-shift @? @!)
-
-  cw   (caps-word 5000)
-
-  ;;?!   (tap-hold-release 200 200
-  ;;        (template-expand new-shift @? @!)
-  ;;        (layer-while-held symleft)
-  ;;     )
-
+  ?!   (tap-hold-release 200 200 (template-expand new-shift @? @!) rsft)
+  z     (tap-hold-release 200 200 z    lsft)
+  
   ;;macro for no repeat
-  /\   (tap-hold-release 200 200 / (macro \))
-  -_   (tap-hold-release 200 200 - (macro @_))
-  ^0   (tap-hold-release 200 200 @^ (macro kp0))
-
+  ^0   (tap-hold-release 200 200 @^  (macro kp0))
   boc  (tap-hold-release 200 200 S-9 (macro S-9 S-0 lft))
   {}   (tap-hold-release 200 200 @{  (macro @{ @} lft))
   []   (tap-hold-release 200 200 [   (macro [ ] lft))
   <>   (tap-hold-release 200 200 S-, (macro S-, S-. lft))
 
-  lalt  (tap-hold-release 200 200 del  lalt)
-  lmet  (tap-hold-release 200 200 tab  lmet)
-  ret   (tap-hold-release 200 200 ret  (layer-while-held number))
-  spc   (tap-hold-release 200 200 spc  (layer-while-held nav))
-  q     (tap-hold-release 200 200 q    (layer-while-held symright))
-  x     (tap-hold-release 200 200 x    (layer-while-held symright))
+  spc   (tap-hold-release 200 200 spc   (layer-while-held nav))
+  ret   (tap-hold-release 200 200 ret   (layer-while-held symbol))
+  tab   (tap-hold-release 200 200 tab   (layer-while-held symbol))
+  bspc  (tap-hold-release 200 200 bspc  (layer-while-held number))
+  del   (tap-hold-release 200 200 del   (layer-while-held number))
 
-  rsft (tap-hold-release 200 200 (caps-word 5000) rsft)
+  lalt   (tap-hold-release 200 200 tab lalt)
+  lctl   (tap-hold-release 200 200 esc lctl)
+
+  ralt   (tap-hold-release 200 200 [ ralt)
+  rctl   (tap-hold-release 200 200 ' rctl)
+
+  lmet   (one-shot-release 2000 lmet)
+  rmet   (one-shot-release 2000 rmet)
+  loalt  (one-shot-release 2000 lalt)
+  roalt  (one-shot-release 2000 ralt)
+
+  cw (caps-word 5000)
+
+  ;; rsft (tap-hold-release 200 200 (caps-word 5000) rsft)
 
   v    (switch
           (lmet)  (tap-hold-release 200 250 v C-S-A-v) break
@@ -110,47 +115,57 @@
 
 
 (deflayer default
-  C-c  brdn brup  _     _    bldn      blup prev pp   next mute vold volu
-  grv  _    _     _     _    _         _    _    _    _    _    _     _     _
-  _    q    w     f     p    b         j    l    @u   y    ;    _     _
-  esc  @a   r     @s    t    g         m    n    @e   i    @o   _     _     _
-  _    @z   x     @c    d    @v   ;    k    h    _    _    @/   @rsft _
-  _    _    @lalt @lmet          @spc            ret  bspc       _    _    _
+  C-c   brdn brup  _     _    bldn      blup prev pp   next mute vold volu
+  grv   _    _     _     _    _         _    _    _    _    _    _     _     _
+  @lalt q    w     f     p    b         j    l    @u   y    -    @ralt _
+  @lctl @a   r     @s    t    g         m    n    @e   i    @o   @rctl _     _
+  @lmet @z   x     @c    d    @v  @lmet k    h    @,;  @.:  @?!  @rmet _
+  _     _    @del  @tab           @spc            @ret @bspc _    _    _
 )
 
-(defalias
-  prv  (macro M-[)
-  nxt  (macro M-])
-  new  (macro M-t)
-  und  (macro M-S-t)
-)
-
-;;shifted hjkl for convenience
-(deflayer nav   ;; space
-  _    _       _      _      _      _      _    _    _     _     _    _    _
-  _    _       _      _      _      _      _    _    _     _     _    _     _    _
-  _    @spc1   @spc2  @spc3  @spc4  @spc5  @und @prv @nxt  @new  _    _     _
-  _    @alfred _      @web   @term  _      _    left down  up    rght _     _    _
-  _    @ystk   @yequ  @yrot  @yprev _      _    _    @ylft @ydwn @yup @yrgt _    _
-  _    _       _      _                    _               rmet  ralt _     _    _
-)
-
-(deflayer symright
+(deflayer symbol
   _    _    _    _    _    _         _    _    _    _    _    _    _
   _    _    _    _    _    _         _    _    _    _    _    _    _    _
-  _    _    _    _    _    _         @^0  @*   @%   @$   @+    _    _
-  _    _    _    _    _    _         @<>  -    @_   =    @>   _    _    _
-  _    _    _    _    _    _    _    @#   @/\  @~   @|   @&   _    _
-  _    _    _    _              _              _    _    _    _    _
+  _    _    _    @[]  ]    _         _    @<>  @>   =    @+   _    _
+  _    @^0  @$   @{}  @}   @@        @&   @boc S-0  @#   @*   grv  _    _
+  _    @cw  _    _    @%   _    _    @|   /    @~   _    \    _    _
+  _    _    @loalt @lmet        _              @rmet @roalt  _    _    _
 )
 
 (deflayer number
   _    _    _    _    _    _         _    _    _    _    _    _    _
   _    _    _    _    _    _         _    _    _    _    _    _    _    _
-  _    1    2    3    4    5         6    7    8    9    0    _    _
-  _    @[]  @{}  @boc 0    _         _    1    S-0  @}   ]    _    _    _
-  _    @cw  _    _    @@   _    _    _    _    _    _    `    _    _
-  _    _    _    _              _              _    _    _    _    _
+  _    _    9    8    7    6         _    _    _    @top _    _    _
+  _    3    2    1    0    5         @lwd left down up   rght @rwd _    _
+  _    _    .    ,    _    4    _    _    _    @eop _    _    _    _
+  _    _    @loalt @lmet       _              @rmet @roalt  _    _    _
+)
+
+(defalias
+  prvt  (macro M-[)
+  nxtt  (macro M-])
+  prvg  (macro M-S-[)
+  nxtg  (macro M-S-])
+
+  loc   (macro M-l)
+  newt  (macro M-n)
+  newg  (macro M-S-n)
+  cls   (tap-hold-release 200 200 (macro M-w) (macro M-S-t))
+  
+  lwd (tap-hold-release 200 200 A-left home)
+  rwd (tap-hold-release 200 200 A-right end)
+  top (macro M-up)
+  eop (macro M-down)
+)
+
+;;shifted hjkl for convenience
+(deflayer nav
+  _    _       _      _      _      _      _    _     _     _     _     _     _
+  _    _       _      _      _      _      _    _     _     _     _     _     _    _
+  _    @spc1   @spc2  @spc3  @spc4  @spc5  @loc @newt @newg _     @cls  _     _
+  _    @alfred _      @web   @term  _      _    @prvt @prvg @nxtg @nxtt _     _    _
+  _    @ystk   @yequ  @yrot  @yprev _      _    _     @ylft @ydwn @yup  @yrgt _    _
+  _    _       _      _                    _                _     _     _     _    _
 )
 
 ;; (deflayer default
