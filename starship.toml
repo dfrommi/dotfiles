@@ -6,9 +6,6 @@ palette = "catppuccin_mocha"
 [fill]
 symbol = " "
 
-[directory]
-repo_root_style = "green bold"
-
 [java]
 disabled = true
 
@@ -27,6 +24,14 @@ disabled = true
 
 [status]
 disabled = false
+
+[git_branch]
+style = "bold mauve"
+
+[directory]
+truncation_length = 4
+style = "bold lavender"
+repo_root_style = "green bold"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
