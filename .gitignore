@@ -39,3 +39,4 @@ lazygit/state.yml
 nvim/lazy-lock.json
 nvim/lazyvim.json
 
+tmux/plugins/

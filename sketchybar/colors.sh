@@ -33,8 +33,10 @@ export BG2=0x60494d64
 # General bar colors
 export BAR_COLOR=0xff000000
 export BAR_BORDER_COLOR=$BG2
-export BACKGROUND_1=$BG1
-export BACKGROUND_2=$BG2
+#export BACKGROUND_1=$BG1
+#export BACKGROUND_2=$BG2
+export BACKGROUND_1=0xff1e1e2e
+export BACKGROUND_2=0xff181825
 export ICON_COLOR=$GREY  # Color of all icons
 export LABEL_COLOR=$GREY # Color of all labels
 export POPUP_BACKGROUND_COLOR=$BAR_COLOR

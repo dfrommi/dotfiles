@@ -9,45 +9,45 @@ PLUGIN_DIR="$CONFIG_DIR/plugins" # Directory where all the plugin scripts are st
 FONT="SF Pro" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
 
 bar=(
-	height=40
-	color=$BAR_COLOR
-	border_width=0
-	border_color=$BAR_BORDER_COLOR
-	shadow=off
-	position=top
-	sticky=on
-	padding_right=5
-	padding_left=5
-	y_offset=-5
-	margin=-2
-	topmost=window
-	blur_radius=0
-	corner_radius=0
+  height=38
+  color=$BAR_COLOR
+  border_width=0
+  border_color=$BAR_BORDER_COLOR
+  shadow=off
+  position=top
+  sticky=on
+  padding_right=5
+  padding_left=5
+  y_offset=-5
+  margin=-2
+  topmost=window
+  blur_radius=0
+  corner_radius=0
 )
 
 sketchybar --bar "${bar[@]}"
 
 # Setting up default values
 defaults=(
-	updates=when_shown
-	icon.font="$FONT:Bold:14.0"
-	icon.color=$ICON_COLOR
-	icon.background.color=$BG1
-	icon.padding_left=10
-	icon.padding_right=10
-	label.font="$FONT:Semibold:13.0"
-	label.color=$LABEL_COLOR
-	label.padding_left=10
-	label.padding_right=10
-	padding_right=3
-	padding_left=3
-	background.height=26
-	icon.background.height=24
-	background.corner_radius=4
-	background.border_width=1
-	background.color=$BACKGROUND_1
-	background.border_color=$BACKGROUND_2
-	scroll_texts=on
+  updates=when_shown
+  icon.font="$FONT:Bold:14.0"
+  icon.color=$ICON_COLOR
+  icon.background.color=$BACKGROUND_2
+  icon.padding_left=10
+  icon.padding_right=10
+  label.font="$FONT:Semibold:13.0"
+  label.color=$LABEL_COLOR
+  label.padding_left=10
+  label.padding_right=10
+  padding_right=3
+  padding_left=3
+  background.height=26
+  icon.background.height=24
+  background.corner_radius=4
+  background.border_width=1
+  background.color=$BACKGROUND_1
+  background.border_color=$BACKGROUND_2
+  scroll_texts=on
 )
 
 sketchybar --default "${defaults[@]}"
@@ -58,11 +58,12 @@ source "$ITEM_DIR/tabs.sh"
 
 # Right
 source "$ITEM_DIR/calendar.sh"
-source "$ITEM_DIR/wifi.sh"
+#source "$ITEM_DIR/wifi.sh"
 source "$ITEM_DIR/battery.sh"
 source "$ITEM_DIR/volume.sh"
-source "$ITEM_DIR/spaces.sh"
-source "$ITEM_DIR/yabai.sh"
+source "$ITEM_DIR/windows.sh"
+#source "$ITEM_DIR/spaces.sh"
+#source "$ITEM_DIR/yabai.sh"
 
 sketchybar --hotload on
 
