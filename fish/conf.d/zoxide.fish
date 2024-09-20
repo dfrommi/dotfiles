@@ -1,1 +1,1 @@
-zoxide init fish | source
+/opt/homebrew/bin/zoxide init fish | source
