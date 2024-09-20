@@ -49,11 +49,11 @@
 
 (defalias ;; German stuff
   ;; unshift to always have lowercase u in combo
-  au  (macro (unshift lalt u) 5 a)
-  ou  (macro (unshift lalt u) 5 o)
-  uu  (macro (unshift lalt u) 5 u)
-  ss  A-s
-  eur A-S-2
+  au  (macro (unshift ralt u) 5 a)
+  ou  (macro (unshift ralt u) 5 o)
+  uu  (macro (unshift ralt u) 5 u)
+  ss  RA-s
+  eur RA-S-2
 
   a   (tap-hold 250 250 a @au)
   o   (tap-hold 250 250 o @ou)
@@ -178,7 +178,7 @@
 ;; )
 
 (defalias
-  term   (cmd open -a kitty)
+  term   (cmd open -a WezTerm)
   web    (cmd open -a Safari)
   alfred (tap-hold-release 200 200 
             C-S-A-M-spc

@@ -5,7 +5,7 @@ echo "EVENT $SENDER $INFO"
 if [[ "$SENDER" = "front_app_switched" || "$SENDER" = "front_app_name_changed" ]]; then
   ICON=$($CONFIG_DIR/plugins/icon_map.sh "$INFO")
 
-  if [ "$INFO" = "kitty" ]; then
+  if [ "$INFO" = "WezTerm" ]; then
     INFO=$(tmux list-sessions -F "#{session_name}" -f "#{session_attached}")
   fi
 
