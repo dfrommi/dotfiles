@@ -1,6 +1,5 @@
 local M = {}
 
-local Kitty = require("apps.kitty")
 local Safari = require("apps.safari")
 local IntelliJ = require("apps.intellij")
 local Obsidian = require("apps.obsidian")
@@ -16,9 +15,7 @@ function M.launch(appname)
 end
 
 function M.of(app)
-	if app:name() == "kitty" then
-		return Kitty.new(app)
-	elseif app:name() == "Safari" then
+	if app:name() == "Safari" then
 		return Safari.new()
 	elseif app:bundleID() == "com.jetbrains.intellij.ce" then
 		return IntelliJ.new(app)
