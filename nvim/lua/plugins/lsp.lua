@@ -2,6 +2,13 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      setup = {
+        -- To avoid conflict with rustaceanvim
+        -- See :help rustaceanvim.mason
+        rust_analyzer = function()
+          return true
+        end,
+      },
       servers = {
         lua_ls = {
           settings = {
