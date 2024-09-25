@@ -13,7 +13,9 @@ k.set({ "n", "v" }, "<leader>d", [["_d]])
 -- yank and paste with system clipboard
 k.set({ "n", "v" }, "<leader>y", [["+y]])
 k.set("n", "<leader>Y", [["+Y]])
-k.set("x", "<leader>P", [["+P]])
+
+k.set({ "n", "x" }, "<leader>p", [["+p]])
+k.set({ "n", "x" }, "<leader>P", [["+P]])
 
 -- Better for Colemak
 k.set("n", "<C-i>", "<C-o>", { noremap = true })
