@@ -42,11 +42,13 @@ defaults=(
   padding_right=3
   padding_left=3
   background.height=26
-  icon.background.height=24
+  icon.background.height=26
   background.corner_radius=4
-  background.border_width=1
+  icon.background.corner_radius=4
+  background.border_width=0
+  icon.background.border_width=0
   background.color=$BACKGROUND_1
-  background.border_color=$BACKGROUND_2
+  background.border_color=$BLUE
   scroll_texts=on
 )
 
@@ -71,7 +73,7 @@ sketchybar --hotload on
 sketchybar --update
 
 if [[ -e "$CONFIG_DIR/sketchybarrc.local" ]]; then
-	source "$CONFIG_DIR/sketchybarrc.local"
+  source "$CONFIG_DIR/sketchybarrc.local"
 fi
 
 echo "sketchybar configuation loaded.."

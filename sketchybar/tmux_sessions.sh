@@ -21,15 +21,18 @@ for i in {1..9}; do
     if [ "$session_name" = "$active_session" ]; then
       label_color='0xff8aadf4' # Active session label color
       icon_color='0xffcad3f5'  # Active session icon color
+      border_width=1
     else
       label_color='0xff939ab7' # Inactive session label color
       icon_color='0xff939ab7'  # Inactive session icon color
+      border_width=0
     fi
 
     # Collect parameters for this tab
     sketchybar_params+="--set window.$i label=\"$session_name\" \
                                      icon=\"$i\" \
                                      drawing='on' \
+                                     background.border_width=$border_width \
                                      label.color='$label_color' \
                                      icon.color='$icon_color' "
   fi
