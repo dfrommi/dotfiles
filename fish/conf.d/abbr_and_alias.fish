@@ -1,5 +1,4 @@
 abbr brwe brew
-abbr cask brew cask
 
 abbr g git
 abbr gcm git commit -m
