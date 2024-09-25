@@ -31,7 +31,7 @@ local tmux = function(mods, key, target)
 end
 
 config.disable_default_key_bindings = true
--- config.debug_key_events = true
+config.debug_key_events = true
 config.keys = {
 	{ mods = "CMD", key = " ", action = wezterm.action.SendKey({ mods = "CTRL", key = "b" }) },
 	tmux("CMD", "[", "n"),
