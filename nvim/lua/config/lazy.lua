@@ -11,6 +11,7 @@ require("lazy").setup({
     -- not working { import = "lazyvim.plugins.extras.lang.json" },
     -- not working { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.editor.mini-files" },
+    { import = "lazyvim.plugins.extras.editor.harpoon2" },
     { import = "lazyvim.plugins.extras.ui.treesitter-context" },
     { import = "lazyvim.plugins.extras.lang.rust" },
     { import = "lazyvim.plugins.extras.lang.java" },
