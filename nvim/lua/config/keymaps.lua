@@ -1,13 +1,20 @@
 local k = vim.keymap
 
---k.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>")
+-- modes:
+--   v = only in character based visual mode
+--   x = any visual mode
 
--- replace selected text
-k.set("x", "<leader>p", [["_dP]])
+-- replace selected text without affecting default register
+k.set("x", "p", [["_dP]])
 
--- yank into system clipboard
+-- delete without affecting default register
+k.set({ "n", "v" }, "<leader>d", [["_d]])
+
+-- yank and paste with system clipboard
 k.set({ "n", "v" }, "<leader>y", [["+y]])
 k.set("n", "<leader>Y", [["+Y]])
+k.set("x", "<leader>P", [["+P]])
 
--- delete without affection default register
-k.set({ "n", "v" }, "<leader>d", [["_d]])
+-- Better for Colemak
+k.set("n", "<C-i>", "<C-o>", { noremap = true })
+k.set("n", "<C-o>", "<C-i>", { noremap = true })

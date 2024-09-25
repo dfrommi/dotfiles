@@ -2,6 +2,9 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      codelens = {
+        enabled = true,
+      },
       setup = {
         -- To avoid conflict with rustaceanvim
         -- See :help rustaceanvim.mason
