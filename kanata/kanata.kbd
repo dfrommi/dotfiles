@@ -81,7 +81,7 @@
   bspc  (tap-hold-release 200 200 bspc  (layer-while-held number))
   del   (tap-hold-release 200 200 del   (layer-while-held number))
 
-  lalt   (tap-hold-release 200 200 tab lalt)
+  lalt   (one-shot-release 2000 lalt)
   lctl   (tap-hold-release 200 200 esc lctl)
 
   ralt   (tap-hold-release 200 200 [ ralt)
@@ -135,9 +135,9 @@
 (deflayer number
   _    _    _    _    _    _         _    _    _    _    _    _    _
   _    _    _    _    _    _         _    _    _    _    _    _    _    _
-  _    _    9    8    7    6         _    _    _    @top _    _    _
-  _    3    2    1    0    5         @lwd left down up   rght @rwd _    _
-  _    _    .    ,    _    4    _    _    _    @eop _    _    _    _
+  _    5    6    7    8    9         _    _    _    @top _    _    _
+  _    0    1    2    3    4         @lwd left down up   rght @rwd _    _
+  _    _    .    ,    _    _    _    _    _    @eop _    _    _    _
   _    _    @loalt @lmet       _              @rmet @roalt  _    _    _
 )
 
@@ -146,6 +146,7 @@
   nxtt  (macro M-])
   prvg  (macro M-S-[)
   nxtg  (macro M-S-])
+  act   (macro M-spc)
 
   loc   (macro M-l)
   newt  (macro M-n)
@@ -163,7 +164,7 @@
   _    _       _      _      _      _      _    _     _     _     _     _     _
   _    _       _      _      _      _      _    _     _     _     _     _     _    _
   _    @spc1   @spc2  @spc3  @spc4  @spc5  @loc @newt @newg _     @cls  _     _
-  _    @alfred _      @web   @term  _      _    @prvt @prvg @nxtg @nxtt _     _    _
+  _    @alfred _      @web   @term  _      @act @prvt @prvg @nxtg @nxtt _     _    _
   _    @ystk   @yequ  @yrot  @yprev _      _    _     @ylft @ydwn @yup  @yrgt _    _
   _    _       _      _                    _                _     _     _     _    _
 )
