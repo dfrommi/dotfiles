@@ -1,0 +1,7 @@
+model: openai
+clients:
+- type: openai
+  api_key: null
+- type: openai-compatible
+  name: ollama
+  api_base: http://localhost:11434/v1
