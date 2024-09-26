@@ -53,6 +53,12 @@ truncation_length = 4
 style = "bold lavender"
 repo_root_style = "green bold"
 
+[docker_context]
+disabled = true
+
+[rust]
+disabled = true
+
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
