@@ -1,8 +1,13 @@
 " Find more examples here: https://jb.gg/share-ideavimrc
+"
+" Find IntelliJ Action names:
+"   Press Сmd-Shift-A and type 'IdeaVim: Track Action Ids'
+"   Popup will then show actions when executed
+"
+" Reload config with Cmd-Shift-i
+
 
 let mapleader=" "
-
-"source ~/.config/idea.vim/init.vim
 
 set clipboard+=unnamed
 set clipboard+=ideaput
@@ -36,12 +41,16 @@ set which-key
 " - Movements also in insert-mode
 
 " Zen mode
-" map <c-z> <Action>(ToggleDistractionFreeMode)
-map <leader>fs <Action>(FileStructurePopup)
-map <leader>ff <Action>(GotoFile)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+map <leader><space> <Action>(GotoFile)
+map <leader>/  <Action>(FindInPath)
+map <leader>ss <Action>(FileStructurePopup)
+map <leader>sS <Action>(GotoSymbol)
+map <Leader>xx <Action>(ActivateProblemsViewToolWindow)
 
 nmap s <Plug>(easymotion-s)
-nnoremap <leader>ft :NERDTreeFocus<CR>
+nnoremap <leader>fe :NERDTreeFocus<CR>
 
 " buffer switch
 map <leader>fb <Action>(RecentFiles)
@@ -63,26 +72,24 @@ nmap [e <Action>(GotoPreviousError)
 nnoremap [m <Action>(MethodUp)
 nnoremap ]m <Action>(MethodDown)
 
-nmap gD <Action>(GotoDeclaration)
-nmap gy <Action>(GotoTypeDeclaration)
-nmap gI <Action>(GotoImplementation)
 
-"
-" TODO
-"
+nmap gr   <Action>(FindUsages)
+nmap gR   <Action>(CallHierarchy)
+nmap gd   <Action>(GotoDeclaration)
+nmap gD   <Action>(GotoTypeDeclaration)
+nmap gI   <Action>(GotoImplementation)
+nmap gt   <Action>(GotoTest)
 
-" nmap <Leader><Leader> <Action>(ShowIntentionActions)
-nmap <Leader>r <Action>(RenameElement)
-nmap <Leader>R <Action>(Refactorings.QuickListPopupAction)
-nmap <Leader>u <Action>(FindUsages)
-nmap <Leader>U <Action>(FindUsagesInFile)
-nmap <Leader>h <Action>(CallHierarchy)
+nmap <Leader>ca <Action>(ShowIntentionActions)
+nmap <Leader>cA <Action>(Refactorings.QuickListPopupAction)
+nmap <Leader>cr <Action>(RenameElement)
+nmap <Leader>cr <Action>(RenameFile)
 
 nmap <Leader>cc <Action>(ReformatCode)<Action>(OptimizeImports)
 nmap <Leader>cf <Action>(ReformatCode)
 nmap <Leader>co <Action>(OptimizeImports)
 
-nmap <Leader>/ <Action>(FindInPath)
+nmap <Leader>*  <Action>(FindUsagesInFile)
 
 "
 " MOVEMENTS
@@ -98,8 +105,6 @@ nmap <Leader>/ <Action>(FindInPath)
 " nmap <Leader>gJ <Action>(GotoImplementation)
 
 " <Leader>* ???
-
-nmap <Leader>gt <Action>(GotoTest)
 
 " nmap <Leader>gm <Action>(FileStructurePopup)
 
