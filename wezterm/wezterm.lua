@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")
 
 local config = {
+	default_prog = { "/opt/homebrew/bin/fish", "-l" },
 	color_scheme = "Catppuccin Mocha",
 
 	enable_tab_bar = false,
