@@ -12,8 +12,6 @@
 (defvar
   tap-time 200
   hold-time 150
-
-  yabai /Users/dennis/.config/yabai/wrapper.sh
 )
 
 ;; QWERTY ABC
@@ -66,7 +64,7 @@
   ,;   (template-expand new-shift , (unshift ;))
   .:   (template-expand new-shift . @:)
   ?!   (tap-hold-release 200 200 (template-expand new-shift @? @!) rsft)
-  z     (tap-hold-release 200 200 z    lsft)
+  z    (tap-hold-release 200 200 z    lsft)
   
   ;;macro for no repeat
   ^0   (tap-hold-release 200 200 @^  (macro kp0))
@@ -74,6 +72,8 @@
   {}   (tap-hold-release 200 200 @{  (macro @{ @} lft))
   []   (tap-hold-release 200 200 [   (macro [ ] lft))
   <>   (tap-hold-release 200 200 S-, (macro S-, S-. lft))
+  ->   (tap-hold-release 200 200 S-. (macro - S-.))
+  =>   (tap-hold-release 200 200 =   (macro = S-.))
 
   spc   (tap-hold-release 200 200 spc   (layer-while-held nav))
   ret   (tap-hold-release 200 200 ret   (layer-while-held symbol))
@@ -126,18 +126,18 @@
 (deflayer symbol
   _    _    _    _    _    _         _    _    _    _    _    _    _
   _    _    _    _    _    _         _    _    _    _    _    _    _    _
-  _    _    _    @[]  ]    _         _    @<>  @>   =    @+   _    _
+  _    _    _    @[]  ]    _         _    @<>  @->  @+   @=>  _    _
   _    @^0  @$   @{}  @}   @@        @&   @boc S-0  @#   @*   grv  _    _
   _    @cw  _    _    @%   _    _    @|   /    @~   _    \    _    _
-  _    _    @loalt @lmet        _              @rmet @roalt  _    _    _
+  _    _    @loalt @lmet        _              @rmet @roalt   _    _    _
 )
 
 (deflayer number
   _    _    _    _    _    _         _    _    _    _    _    _    _
   _    _    _    _    _    _         _    _    _    _    _    _    _    _
-  _    5    6    7    8    9         _    _    _    @top _    _    _
-  _    0    1    2    3    4         @lwd left down up   rght @rwd _    _
-  _    _    .    ,    _    _    _    _    _    @eop _    _    _    _
+  _    6    7    8    9    _         _    _    _    @top _    _    _
+  _    1    2    3    4    5         @lwd left down up   rght @rwd _    _
+  _    _    .    ,    0    _    _    _    _    @eop _    _    _    _
   _    _    @loalt @lmet       _              @rmet @roalt  _    _    _
 )
 
@@ -165,7 +165,7 @@
   _    _       _      _      _      _      _    _     _     _     _     _     _    _
   _    @spc1   @spc2  @spc3  @spc4  @spc5  @loc @newt @newg _     @cls  _     _
   _    @alfred _      @web   @term  _      @act @prvt @prvg @nxtg @nxtt _     _    _
-  _    @ystk   @yequ  @yrot  @yprev _      _    _     @ylft @ydwn @yup  @yrgt _    _
+  _    _       _      _      _      _      _    _     _     _     _     _     _    _
   _    _       _      _                    _                _     _     _     _    _
 )
 
@@ -179,8 +179,11 @@
 ;; )
 
 (defalias
-  term   (cmd open -a WezTerm)
-  web    (cmd open -a Safari)
+  ;;action configured in Alfred
+  
+  term   C-S-A-M-t
+  web    C-S-A-M-s
+ 
   alfred (tap-hold-release 200 200 
             C-S-A-M-spc
             C-S-A-M-g
@@ -192,39 +195,6 @@
   spc3   C-A-M-3
   spc4   C-A-M-4
   spc5   C-A-M-5
-
-  yprev  (cmd $yabai -m space --focus recent)
-  yequ   (tap-hold-release 200 200 
-            (cmd $yabai -m space --balance)
-            (cmd $yabai -m window --toggle float; $yabai window --grid 4:4:1:1:2:2)
-         )
-  yrot   (tap-hold-release 200 200 
-            (cmd $yabai -m space --rotate 270)
-            (cmd $yabai -m space --rotate 90)
-         )
-  ystk   (tap-hold-release 200 200 
-            (cmd $yabai -m space --layout stack)
-            (cmd $yabai -m space --layout bsp)
-         )
-
-
-  ;; TODO detect layout and use correct action
-  ylft   (tap-hold-release 200 200 
-            (cmd $yabai -m window --focus west)
-            (cmd $yabai -m window --focus stack.first)
-         )
-  yrgt   (tap-hold-release 200 200 
-            (cmd $yabai -m window --focus east)
-            (cmd $yabai -m window --focus stack.last)
-         )
-  yup    (tap-hold-release 200 200 
-            (cmd $yabai -m window --focus north)
-            (cmd $yabai -m window --focus stack.prev)
-         )
-  ydwn   (tap-hold-release 200 200 
-            (cmd $yabai -m window --focus south)
-            (cmd $yabai -m window --focus stack.next)
-         )
 
   ;;trg    (tap-dance 200 (@alfred @term))
 )
