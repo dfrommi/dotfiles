@@ -2,7 +2,7 @@
 
 # Get the active session
 active_session=$(tmux list-sessions -F "#{session_name}" -f "#{session_attached}")
-current_window=$(tmux display-message -p '#I')
+current_window=$(tmux list-windows -F '#I' -f '#{window_active}' -t "$active_session")
 
 # Get all windows of the active session safely and store them in an array
 IFS=$'\n' read -d '' -r -a windows < <(tmux list-windows -F '#W' -t "$active_session")
@@ -13,6 +13,8 @@ sketchybar_params=""
 # Iterate over a fixed set of 9 tab slots
 for i in {0..8}; do
   window_name="${windows[$i]}" # Get the window at position $i (array index starts from 0)
+
+  echo "$active_session $current_window $window_name"
 
   if [ -z "$window_name" ]; then
     # If there's no window for this index, turn drawing off

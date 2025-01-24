@@ -25,7 +25,7 @@ local tmux = function(mods, key, target)
 		key = key,
 		mods = mods,
 		action = act.Multiple({
-			act.SendKey({ key = "b", mods = "CTRL" }),
+			act.SendKey({ key = "\\", mods = "CTRL" }),
 			act.SendKey({ key = target }),
 		}),
 	}
@@ -34,7 +34,7 @@ end
 config.disable_default_key_bindings = true
 -- config.debug_key_events = true
 config.keys = {
-	{ mods = "CMD", key = " ", action = wezterm.action.SendKey({ mods = "CTRL", key = "b" }) },
+	-- { mods = "CMD", key = " ", action = wezterm.action.SendKey({ mods = "CTRL", key = "b" }) },
 	tmux("CMD", "[", "n"),
 	tmux("CMD", "]", "o"),
 	tmux("CMD", "n", "w"),
@@ -43,8 +43,8 @@ config.keys = {
 	tmux("CMD|SHIFT", "}", "i"),
 	tmux("CMD|SHIFT", "n", "W"),
 	tmux("CMD", "l", "/"),
-	{ key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
-	{ key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
+	-- { key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
+	-- { key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
 }
 
 config.mouse_bindings = {
