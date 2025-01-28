@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 
 local config = {
-	default_prog = { "/opt/homebrew/bin/fish", "-l" },
+	--default_prog = { "/opt/homebrew/bin/fish", "-l" },
 	color_scheme = "Catppuccin Mocha",
 
 	enable_tab_bar = false,
@@ -38,13 +38,16 @@ config.keys = {
 	tmux("CMD", "[", "n"),
 	tmux("CMD", "]", "o"),
 	tmux("CMD", "n", "w"),
+	tmux("CMD", "'", "b"),
+	tmux("CMD", " ", " "),
 	-- {} as [] is not working
 	tmux("CMD|SHIFT", "{", "e"),
 	tmux("CMD|SHIFT", "}", "i"),
 	tmux("CMD|SHIFT", "n", "W"),
 	tmux("CMD", "l", "/"),
-	-- { key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
-	-- { key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
+	--copy/paste with cmd c/v
+	{ key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
+	{ key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
 }
 
 config.mouse_bindings = {
