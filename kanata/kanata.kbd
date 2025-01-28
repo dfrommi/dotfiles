@@ -147,6 +147,7 @@
   prvg  (macro M-S-[)
   nxtg  (macro M-S-])
   act   (macro M-spc)
+  tog   (macro M-')
 
   loc   (macro M-l)
   newt  (macro M-n)
@@ -164,8 +165,8 @@
   _    _       _      _      _      _      _    _     _     _     _     _     _
   _    _       _      _      _      _      _    _     _     _     _     _     _    _
   _    @spc1   @spc2  @spc3  @spc4  @spc5  @loc @newt @newg _     @cls  _     _
-  _    @alfred _      @web   @term  _      @act @prvt @prvg @nxtg @nxtt _     _    _
-  _    _       _      _      _      _      _    _     _     _     _     _     _    _
+  _    @alfred _      @web   @term  _      @act @prvt @prvg @nxtg @nxtt @tog  _    _
+  _    _       _      _      _      _      _    _     _     _     _     @dict _    _
   _    _       _      _                    _                _     _     _     _    _
 )
 
@@ -188,6 +189,9 @@
             C-S-A-M-spc
             C-S-A-M-g
          )
+
+  ;; dictation
+  dict   C-S-A-M-\
 
   ;; System-Preferences -> Keyboard -> Mission Control
   spc1   C-A-M-1
