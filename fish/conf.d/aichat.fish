@@ -7,4 +7,4 @@ function _aichat_fish
     end
 end
 
-bind \ei _aichat_fish
+bind ' ae' _aichat_fish

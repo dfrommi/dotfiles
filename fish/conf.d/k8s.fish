@@ -1,1 +1,1 @@
-set -x PATH $PATH $HOME/.krew/bin
+fish_add_path $HOME/.krew/bin
