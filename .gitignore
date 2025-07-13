@@ -10,6 +10,7 @@ fish/fish_history
 fish/conf.d/*.local.fish
 fish-deps
 fish_variables
+.env
 
 aws-tunnel.fish
 *-token.fish
