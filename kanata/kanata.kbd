@@ -1,6 +1,10 @@
 (defcfg
   process-unmapped-keys yes
   danger-enable-cmd yes
+
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+  )
 )
 
 (environment (LAPTOP work)
@@ -186,7 +190,7 @@
   web    C-S-A-M-s
  
   alfred (tap-hold-release 200 200 
-            C-S-A-M-spc
+            C-A-M-a
             C-S-A-M-g
          )
 
