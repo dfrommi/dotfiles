@@ -8,3 +8,5 @@ abbr -a !fg --position anywhere -f fzf_file_git_root
 abbr -a !z --position anywhere -f fzf_zoxide
 
 abbr -a !/ --position anywhere -f fzf_grep --regex '\!\/.*'
+
+abbr -a : -f fzf_history
