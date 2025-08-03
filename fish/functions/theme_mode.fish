@@ -43,5 +43,5 @@ function theme_mode -d "Switch between dark and light theme" --argument mode
           --color=border:#CCD0DA,label:#4C4F69"
     end
 
-    tmux source-file ~/.config/tmux/tmux.conf
+    #tmux source-file ~/.config/tmux/tmux.conf
 end
