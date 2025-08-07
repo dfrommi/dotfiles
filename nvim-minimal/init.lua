@@ -4,11 +4,12 @@
 --   https://github.com/SylvanFranklin/.config/blob/main/nvim/init.lua
 
 -- TODO:
---   - migrate key mappings back to plain vim keymaps
---   - check flash.nvim for more options
---   - add mini.ai
---   - configure more code keymaps (like ca)
---   - look into built-in keymaps for LSP
+--   - missing keybindings:
+--     - other buffer navigation
+--     - window split
+--     - window jumps
+--   - window navigation
+--   - Wezterm window navigation
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -65,10 +66,11 @@ vim.pack.add({
   --
   -- CORE
   --
-  "https://github.com/folke/which-key.nvim",  -- keybinding help
-  "https://github.com/folke/snacks.nvim",     -- item picker popup
-  "https://github.com/folke/flash.nvim",      -- jump around
-  "https://github.com/nvim-lua/plenary.nvim", -- common dependency
+  "https://github.com/folke/which-key.nvim", -- keybinding help
+  "https://github.com/folke/snacks.nvim",    -- item picker popup
+  "https://github.com/folke/flash.nvim",     -- jump around
+  "https://github.com/echasnovski/mini.ai",  -- text objects and surrounding text manipulation
+  -- "https://github.com/HiPhish/rainbow-delimiters.nvim", -- rainbow brackets
 
   --
   -- LSP
@@ -96,83 +98,111 @@ vim.pack.add({
   },
   "https://github.com/nvim-lualine/lualine.nvim",   -- nice looking status line at the bottom
   "https://github.com/nvim-tree/nvim-web-devicons", -- dependency of lualine
+  "https://github.com/mrjones2014/smart-splits.nvim", -- integrate with wezterm splits
 
   --
   -- AI
   --
-  "https://github.com/zbirenbaum/copilot.lua",        -- suggestions
-  "https://github.com/CopilotC-Nvim/CopilotChat.nvim" -- chat interface
+  "https://github.com/zbirenbaum/copilot.lua",         -- suggestions
+  "https://github.com/CopilotC-Nvim/CopilotChat.nvim", -- chat interface
+
+  --
+  -- DEPENDENCIES
+  --
+  "https://github.com/nvim-lua/plenary.nvim", -- common dependency (e.g. CopilotChat)
 })
 
-local keys = require("which-key")
 local picker = require("snacks").picker
 local flash = require("flash")
 local chat = require("CopilotChat")
+local splits = require("smart-splits")
 
-keys.add({
-  --
-  -- CORE
-  --
-  { "p",               [["_dP]],                     mode = "x",                            desc = "Paste without yanking" },
-  { "<leader>d",       [["_d]],                      mode = { "n", "v" },                   desc = "Delete without yanking" },
+--
+-- CORE
+--
+vim.keymap.set("x", "p", [["_dP]], { desc = "Paste without yanking" })
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete without yanking" })
 
-  { "<leader>y",       [["+y]],                      mode = { "n", "v" },                   desc = "Yank to system clipboard" },
-  { "<leader>Y",       [["+Y]],                      desc = "Yank line to system clipboard" },
-  { "<leader>p",       [["+p]],                      mode = { "n", "x" },                   desc = "Paste from system clipboard" },
-  { "<leader>P",       [["+P]],                      mode = { "n", "x" },                   desc = "Paste before from system clipboard" },
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard" })
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
+vim.keymap.set({ "n", "x" }, "<leader>p", [["+p]], { desc = "Paste from system clipboard" })
+vim.keymap.set({ "n", "x" }, "<leader>P", [["+P]], { desc = "Paste before from system clipboard" })
 
-  -- Colemak fix for jumplist
-  { "<C-i>",           "<C-o>",                      mode = "n",                            desc = "Jump back (Colemak)" },
-  { "<C-o>",           "<C-i>",                      mode = "n",                            desc = "Jump forward (Colemak)" },
+-- Colemak fix for jumplist
+vim.keymap.set("n", "<C-i>", "<C-o>", { desc = "Jump back (Colemak)" })
+vim.keymap.set("n", "<C-o>", "<C-i>", { desc = "Jump forward (Colemak)" })
 
-  --
-  -- ITEM PICKER
-  --
-  { "<leader>fR",      picker.resume,                desc = "Resume" },
-  { "<leader><space>", picker.smart,                 desc = "Smart Find Files" },
-  { "<leader>/",       picker.grep,                  desc = "Grep" },
-  { "<leader>fb",      picker.buffers,               desc = "Buffers" },
-  { "<leader>fr",      picker.recent,                desc = "Recent" },
-  { "<leader>fe",      picker.explorer,              desc = "File Explorer" },
-  { "<leader>ff",      picker.files,                 desc = "Find Files" },
-  -- { "<leader>fg", picker.git_files, desc = "Find Git Files" },
-  { "<leader>fh",      picker.help,                  desc = "Help Pages" },
+--
+-- ITEM PICKER
+--
 
-  { "<leader>sb",      picker.lines,                 desc = "Buffer Lines" },
-  { "<leader>sB",      picker.grep_buffers,          desc = "Grep Open Buffers" },
-  -- { "<leader>sw", picker.grep_word, desc = "Visual selection or word", mode = { "n", "x" } },
+-- Global
+vim.keymap.set("n", "<leader>fR", picker.resume, { desc = "Resume" })
+vim.keymap.set("n", "<leader><space>", picker.grep, { desc = "Grep" })
+vim.keymap.set("n", "<leader>ff", picker.files, { desc = "Find Files" })
+vim.keymap.set("n", "<leader>fb", picker.buffers, { desc = "Buffers" })
+--vim.keymap.set("n", "<leader>fr", picker.recent, { desc = "Recent" })
+vim.keymap.set("n", "<leader>fe", picker.explorer, { desc = "File Explorer" })
+-- vim.keymap.set("n", "<leader>fg", picker.git_files, { desc = "Find Git Files" })
+vim.keymap.set("n", "<leader>fh", picker.help, { desc = "Help Pages" })
+vim.keymap.set("n", "<leader>fk", picker.keymaps, { desc = "Keymaps" })
+vim.keymap.set("n", "<leader>fs", picker.lsp_workspace_symbols, { desc = "LSP Workspace Symbols" })
+vim.keymap.set({ "n", "x" }, "<leader>*", picker.grep_word, { desc = "Visual selection or word" })
 
-  -- LSP
-  -- TODO look into neovim default mappings
-  { "gd",              picker.lsp_definitions,       desc = "Goto Definition" },
-  { "gD",              picker.lsp_declarations,      desc = "Goto Declaration" },
-  { "gr",              picker.lsp_references,        nowait = true,                         desc = "References" },
-  { "gI",              picker.lsp_implementations,   desc = "Goto Implementation" },
-  { "gy",              picker.lsp_type_definitions,  desc = "Goto T[y]pe Definition" },
-  { "<leader>ss",      picker.lsp_symbols,           desc = "LSP Symbols" },
-  { "<leader>sS",      picker.lsp_workspace_symbols, desc = "LSP Workspace Symbols" },
+-- in buffer
+vim.keymap.set("n", "<leader>/", picker.lines, { desc = "Buffer Lines" })
+-- vim.keymap.set("n", "<leader>sB", picker.grep_buffers, { desc = "Grep Open Buffers" })
 
-  --
-  -- CODE EDITING
-  --
-  { "<leader>cf",      vim.lsp.buf.format,           desc = "Format buffer" },
+-- LSP
+vim.keymap.set("n", "gs", picker.lsp_symbols, { desc = "Goto Symbol" })
+vim.keymap.set("n", "gd", picker.lsp_definitions, { desc = "Goto Definition" })
+vim.keymap.set("n", "gD", picker.lsp_declarations, { desc = "Goto Declaration" })
+vim.keymap.set("n", "gr", picker.lsp_references, { nowait = true, desc = "References" })
+vim.keymap.set("n", "gI", picker.lsp_implementations, { desc = "Goto Implementation" })
+vim.keymap.set("n", "gy", picker.lsp_type_definitions, { desc = "Goto T[y]pe Definition" })
+vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
 
-  --
-  -- JUMPING
-  --
-  { "s",               mode = { "n", "x", "o" },     flash.jump,                            desc = "Flash" },
-  { "S",               mode = { "n", "x", "o" },     flash.treesitter,                      desc = "Flash Treesitter" },
-  { "r",               mode = "o",                   flash.remote,                          desc = "Remote Flash" },
-  { "R",               mode = { "o", "x" },          flash.treesitter_search,               desc = "Treesitter Search" },
+--
+-- CODE EDITING
+--
+vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format buffer" })
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Actions" })
+vim.keymap.set("n", "<leader>cA", function() -- run code actions only on the source (e.g. fix imports)
+  vim.lsp.buf.code_action({
+    context = { only = { "source" }, },
+  })
+end, { desc = "Code Actions" })
 
-  --
-  -- AI
-  --
-  { "<leader>a",       "",                           desc = "+ai",                          mode = { "n", "v" } },
-  { "<leader>aa",      chat.toggle,                  desc = "Toggle (CopilotChat)",         mode = { "n", "v" }, },
-  { "<leader>ap",      chat.select_prompt,           desc = "Prompt Actions (CopilotChat)", mode = { "n", "v" }, },
-  { "<leader>ax",      chat.reset,                   desc = "Clear (CopilotChat)",          mode = { "n", "v" }, },
-})
+--
+-- JUMPING
+--
+vim.keymap.set({ "n", "x", "o" }, "s", flash.jump, { desc = "Flash" })
+vim.keymap.set({ "n", "x", "o" }, "S", flash.treesitter, { desc = "Flash Treesitter" })
+vim.keymap.set("o", "r", flash.remote, { desc = "Remote Flash" })
+vim.keymap.set({ "o", "x" }, "R", flash.treesitter_search, { desc = "Treesitter Search" })
+
+--
+-- WINDOW MANAGEMENT
+--
+vim.keymap.set("n", "<leader><tab>", ":e #<CR>", { desc = "Toggle Buffer" })
+-- CTRL+W S/V to create splits
+vim.keymap.set('n', '<C-h>', splits.move_cursor_left, { desc = "Go to Left Window" })
+vim.keymap.set('n', '<C-j>', splits.move_cursor_down, { desc = "Go to Bottom Window" })
+vim.keymap.set('n', '<C-k>', splits.move_cursor_up, { desc = "Go to Top Window" })
+vim.keymap.set('n', '<C-l>', splits.move_cursor_right, { desc = "Go to Right Window" })
+vim.keymap.set('n', '<A-h>', splits.resize_left, { desc = "Shrink Window Horizontally" })
+vim.keymap.set('n', '<A-j>', splits.resize_down, { desc = "Shrink Window Vertically" })
+vim.keymap.set('n', '<A-k>', splits.resize_up, { desc = "Grow Window Vertically" })
+vim.keymap.set('n', '<A-l>', splits.resize_right, { desc = "Grow Window Horizontally" })
+--vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
+
+--
+-- AI
+--
+vim.keymap.set({ "n", "v" }, "<leader>aa", chat.toggle, { desc = "Toggle (CopilotChat)" })
+vim.keymap.set({ "n", "v" }, "<leader>ap", chat.select_prompt, { desc = "Prompt Actions (CopilotChat)" })
+vim.keymap.set({ "n", "v" }, "<leader>ax", chat.reset, { desc = "Clear (CopilotChat)" })
 
 require("gitsigns").setup({
   on_attach = function(buffer)
@@ -191,15 +221,20 @@ require("gitsigns").setup({
   end,
 })
 
-keys.setup({
+require("which-key").setup({
   preset = "helix",
   show_help = false
 })
 
 require("snacks").setup({
-  picker = {},  -- enable picker
+  picker = {},   -- enable picker
   explorer = {} -- enable explorer
 })
+
+require("mini.ai").setup()
+-- require("rainbow-delimiters.setup").setup()
+
+require("smart-splits").setup({})
 
 --
 -- LSP
