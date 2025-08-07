@@ -1,15 +1,9 @@
 local wezterm = require("wezterm")
+local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
--- wezterm.gui is not available to the mux server, so take care to
--- do something reasonable when this config is evaluated by the mux
-function get_appearance()
-	if wezterm.gui then
-		return wezterm.gui.get_appearance()
-	end
-	return "Dark"
-end
+local theme_name = "Catppuccin Mocha"
 
-function set_appearance_in_shell(apearance)
+local function set_appearance_in_shell(apearance)
 	wezterm.background_child_process({
 		"/opt/homebrew/bin/fish",
 		"-c",
@@ -17,50 +11,35 @@ function set_appearance_in_shell(apearance)
 	})
 end
 
-function scheme_for_appearance(appearance)
-	if appearance:find("Dark") then
-		set_appearance_in_shell("dark")
-		return "Catppuccin Mocha"
-	else
-		set_appearance_in_shell("light")
-		return "Catppuccin Latte"
-	end
-end
+local config = wezterm.config_builder()
+config.color_scheme = theme_name
 
-local config = {
-	--default_prog = { "/opt/homebrew/bin/fish", "-l" },
-	--color_scheme = "Catppuccin Mocha",
-	--color_scheme = "Catppuccin Latte",
+config.enable_tab_bar = true
+config.use_fancy_tab_bar = false
+config.show_tabs_in_tab_bar = true
+config.show_new_tab_button_in_tab_bar = false
+config.tab_bar_at_bottom = false
+config.hide_tab_bar_if_only_one_tab = false
+config.tab_max_width = 32
 
-	color_scheme = scheme_for_appearance(get_appearance()),
+config.font_size = 14.0
+config.font = wezterm.font("Hack Nerd Font Mono")
 
-	enable_tab_bar = true,
-	use_fancy_tab_bar = false,
-	show_tabs_in_tab_bar = true,
-	show_new_tab_button_in_tab_bar = false,
-	font_size = 14.0,
+-- Ensure tab bar uses the same font with powerline support
+config.window_frame = {
 	font = wezterm.font("Hack Nerd Font Mono"),
-
-	window_decorations = "RESIZE",
-
-	window_padding = {
-		left = 0,
-		right = 0,
-		top = 0,
-		bottom = 0,
-	},
-
-	status_update_interval = 1000,
-
-	-- Multiplexing configuration
-	default_workspace = "main",
-	max_fps = 60,
-	
-	-- Tab bar styling
-	tab_bar_at_bottom = false,
-	hide_tab_bar_if_only_one_tab = false,
-	tab_max_width = 32,
+	font_size = 14.0,
 }
+
+config.window_decorations = "RESIZE"
+
+local scheme = wezterm.get_builtin_color_schemes()["Catppuccin Mocha"]
+scheme.tab_bar.background = "#1e1e2e"
+config.color_schemes = {
+	["Catppuccin Mocha"] = scheme,
+	["Catppuccin Latte"] = wezterm.get_builtin_color_schemes()["Catppuccin Latte"],
+}
+set_appearance_in_shell("dark")
 
 config.disable_default_key_bindings = true
 
@@ -71,13 +50,14 @@ config.keys = {
 	-- Tab navigation
 	{ key = "[", mods = "CMD", action = wezterm.action.ActivateTabRelative(-1) },
 	{ key = "]", mods = "CMD", action = wezterm.action.ActivateTabRelative(1) },
+	{ key = "n", mods = "LEADER", action = wezterm.action.ActivateTabRelative(-1) },
+	{ key = "o", mods = "LEADER", action = wezterm.action.ActivateTabRelative(1) },
 
-	-- New tab/window
-	{ key = "n", mods = "CMD", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
-
-	-- Split panes
-	{ key = "'", mods = "CMD", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = " ", mods = "CMD", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	-- Workspace navigation
+	{ key = "[", mods = "CMD|SHIFT", action = wezterm.action.SwitchWorkspaceRelative(-1) },
+	{ key = "]", mods = "CMD|SHIFT", action = wezterm.action.SwitchWorkspaceRelative(1) },
+	{ key = "e", mods = "LEADER", action = wezterm.action.SwitchWorkspaceRelative(-1) },
+	{ key = "i", mods = "LEADER", action = wezterm.action.SwitchWorkspaceRelative(1) },
 
 	-- Navigate panes (vim-style hjkl)
 	{ key = "h", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Left") },
@@ -85,11 +65,33 @@ config.keys = {
 	{ key = "k", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Up") },
 	{ key = "l", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Right") },
 
+	-- split
+	{ key = "s", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "v", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
+	-- Copy/paste
+	{ key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
+	{ key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
+
+	-- New tab/window
+	{ key = "w", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
+	{
+		key = "r",
+		mods = "LEADER",
+		action = wezterm.action.PromptInputLine({
+			description = "Enter new tab title:",
+			action = wezterm.action_callback(function(window, pane, line)
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
+	},
+
 	-- Workspace management
-	{ key = "w", mods = "CMD", action = wezterm.action.ShowLauncherArgs({ flags = "WORKSPACES" }) },
 	{
 		key = "w",
-		mods = "CMD|SHIFT",
+		mods = "LEADER|SHIFT",
 		action = wezterm.action.PromptInputLine({
 			description = "Enter name for new workspace",
 			action = wezterm.action_callback(function(window, pane, line)
@@ -99,35 +101,31 @@ config.keys = {
 			end),
 		}),
 	},
-	{ key = "[", mods = "CMD|SHIFT", action = wezterm.action.SwitchWorkspaceRelative(-1) },
-	{ key = "]", mods = "CMD|SHIFT", action = wezterm.action.SwitchWorkspaceRelative(1) },
-
-	-- Close tab/pane
-	{ key = "x", mods = "CMD", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
-
-	-- Leader key commands
-	{ key = "r", mods = "LEADER", action = wezterm.action.PromptInputLine({
-		description = "Enter new tab title:",
-		action = wezterm.action_callback(function(window, pane, line)
-			if line then
-				window:active_tab():set_title(line)
-			end
-		end),
-	}) },
-	{ key = "R", mods = "LEADER|SHIFT", action = wezterm.action.PromptInputLine({
-		description = "Enter new workspace name:",
-		action = wezterm.action_callback(function(window, pane, line)
-			if line then
-				window:perform_action(wezterm.action.SwitchToWorkspace({ name = line }), pane)
-			end
-		end),
-	}) },
-
-	-- Copy/paste
-	{ key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
-	{ key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
+	{
+		key = "r",
+		mods = "LEADER|SHIFT",
+		action = wezterm.action.PromptInputLine({
+			description = "Enter new workspace title:",
+			action = wezterm.action_callback(function(window, pane, line)
+				if line then
+					window:active_workspace():set_title(line)
+				end
+			end),
+		}),
+	},
 }
 
+-- WINDOW SPLITS
+smart_splits.apply_to_config(config, {
+	direction_keys = { "h", "j", "k", "l" },
+	modifiers = {
+		move = "CTRL", -- modifier to use for pane movement, e.g. CTRL+h to move left
+		resize = "META", -- modifier to use for pane resize, e.g. META+h to resize to the left
+	},
+	log_level = "info",
+})
+
+-- MOUSE SUPPORT
 config.mouse_bindings = {
 	-- Ctrl-click will open the link under the mouse cursor
 	{
@@ -137,98 +135,58 @@ config.mouse_bindings = {
 	},
 }
 
--- Catppuccin Mocha colors
-local colors = {
-	rosewater = "#f5e0dc",
-	flamingo = "#f2cdcd",
-	pink = "#f5c2e7",
-	mauve = "#cba6f7",
-	red = "#f38ba8",
-	maroon = "#eba0ac",
-	peach = "#fab387",
-	yellow = "#f9e2af",
-	green = "#a6e3a1",
-	teal = "#94e2d5",
-	sky = "#89dceb",
-	sapphire = "#74c7ec",
-	blue = "#89b4fa",
-	lavender = "#b4befe",
-	text = "#cdd6f4",
-	subtext1 = "#bac2de",
-	subtext0 = "#a6adc8",
-	overlay2 = "#9399b2",
-	overlay1 = "#7f849c",
-	overlay0 = "#6c7086",
-	surface2 = "#585b70",
-	surface1 = "#45475a",
-	surface0 = "#313244",
-	base = "#1e1e2e",
-	mantle = "#181825",
-	crust = "#11111b",
-}
+-- TAB BAR
+-- colors: https://github.com/catppuccin/wezterm/blob/main/dist/catppuccin-mocha.toml
+-- icons: https://wezterm.org/config/lua/wezterm/nerdfonts.html
+wezterm.on("update-status", function(window, pane)
+	local current_workspace = window:active_workspace()
+	local workspace_names = wezterm.mux.get_workspace_names()
+
+	local left = {
+		{ Background = { Color = scheme.tab_bar.active_tab.bg_color } },
+		{ Foreground = { Color = scheme.tab_bar.active_tab.fg_color } },
+		{ Attribute = { Intensity = "Bold" } },
+		{ Text = " " .. current_workspace .. " " },
+		{ Background = { Color = scheme.tab_bar.active_tab.fg_color } },
+		{ Foreground = { Color = scheme.tab_bar.active_tab.bg_color } },
+		{ Attribute = { Intensity = "Normal" } },
+		{ Text = wezterm.nerdfonts.pl_left_hard_divider .. " " },
+	}
+
+	local right = {}
+	for i, name in ipairs(workspace_names) do
+		local is_active = name == current_workspace
+		local colors = is_active and scheme.tab_bar.new_tab_hover or scheme.tab_bar.new_tab
+		local intensity = is_active and "Bold" or "Normal"
+
+		table.insert(right, { Foreground = { Color = colors.fg_color } })
+		table.insert(right, { Background = { Color = colors.bg_color } })
+		table.insert(right, { Attribute = { Intensity = intensity } })
+		table.insert(right, { Text = " " .. name .. " " })
+	end
+
+	window:set_left_status(wezterm.format(left))
+	window:set_right_status(wezterm.format(right))
+end)
 
 local function tab_title(tab_info)
 	local title = tab_info.tab_title
+	-- if the tab title is explicitly set, take that
 	if title and #title > 0 then
 		return title
 	end
+	-- Otherwise, use the title from the active pane in that tab
 	return tab_info.active_pane.title
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	local edge_background = colors.base
-	local background = colors.surface0
-	local foreground = colors.text
-
-	if tab.is_active then
-		background = colors.mauve
-		foreground = colors.base
-	elseif hover then
-		background = colors.surface1
-		foreground = colors.text
-	end
-
-	local edge_foreground = background
-
 	local title = tab_title(tab)
-	title = wezterm.truncate_right(title, max_width - 2)
-
+	local colors = tab.is_active and scheme.tab_bar.new_tab_hover or scheme.tab_bar.new_tab
 	return {
-		{ Background = { Color = edge_background } },
-		{ Foreground = { Color = edge_foreground } },
-		{ Text = "" },
-		{ Background = { Color = background } },
-		{ Foreground = { Color = foreground } },
+		{ Foreground = { Color = colors.fg_color } },
+		{ Background = { Color = colors.bg_color } },
 		{ Text = " " .. title .. " " },
-		{ Background = { Color = edge_background } },
-		{ Foreground = { Color = edge_foreground } },
-		{ Text = "" },
 	}
-end)
-
-wezterm.on("update-right-status", function(window, pane)
-	local current_workspace = window:active_workspace()
-	local workspace_names = wezterm.mux.get_workspace_names()
-	
-	local elements = {}
-	
-	for i, name in ipairs(workspace_names) do
-		local is_active = name == current_workspace
-		local bg_color = is_active and colors.mauve or colors.surface1
-		local fg_color = is_active and colors.base or colors.text
-		
-		-- Add left-pointing separator
-		table.insert(elements, { Background = { Color = colors.base } })
-		table.insert(elements, { Foreground = { Color = bg_color } })
-		table.insert(elements, { Text = "" })
-		
-		-- Add workspace name
-		table.insert(elements, { Background = { Color = bg_color } })
-		table.insert(elements, { Foreground = { Color = fg_color } })
-		table.insert(elements, { Text = " " .. name .. " " })
-	end
-
-	window:set_right_status(wezterm.format(elements))
 end)
 
 return config
