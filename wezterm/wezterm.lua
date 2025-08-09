@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
 local theme_name = "Catppuccin Mocha"
@@ -31,10 +32,17 @@ config.window_frame = {
 	font_size = 14.0,
 }
 
+config.window_padding = {
+	left = 20,
+	right = 20,
+	top = 20,
+	bottom = 20,
+}
+
 config.window_decorations = "RESIZE"
 
 local scheme = wezterm.get_builtin_color_schemes()["Catppuccin Mocha"]
-scheme.tab_bar.background = "#1e1e2e"
+-- scheme.tab_bar.background = "#1e1e2e"
 config.color_schemes = {
 	["Catppuccin Mocha"] = scheme,
 	["Catppuccin Latte"] = wezterm.get_builtin_color_schemes()["Catppuccin Latte"],
@@ -150,7 +158,7 @@ wezterm.on("update-status", function(window, pane)
 		{ Background = { Color = scheme.tab_bar.active_tab.fg_color } },
 		{ Foreground = { Color = scheme.tab_bar.active_tab.bg_color } },
 		{ Attribute = { Intensity = "Normal" } },
-		{ Text = wezterm.nerdfonts.pl_left_hard_divider .. " " },
+		{ Text = wezterm.nerdfonts.pl_left_hard_divider .. "  " },
 	}
 
 	local right = {}
@@ -181,11 +189,26 @@ end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
 	local title = tab_title(tab)
-	local colors = tab.is_active and scheme.tab_bar.new_tab_hover or scheme.tab_bar.new_tab
+	local fg_color = tab.is_active and scheme.ansi[3] or scheme.tab_bar.new_tab.fg_color
+	local bg_color = tab.is_active and scheme.tab_bar.new_tab_hover.bg_color or scheme.tab_bar.new_tab.bg_color
+	local tabbar_bg = scheme.tab_bar.background
+
 	return {
-		{ Foreground = { Color = colors.fg_color } },
-		{ Background = { Color = colors.bg_color } },
+		--{ Text = wezterm.nerdfonts.ple_upper_left_triangle .. " " },
+		{ Background = { Color = tabbar_bg } },
+		{ Text = " " },
+
+		--{ Background = { Color = colors.bg_color } },
+		{ Foreground = { Color = bg_color } },
+		{ Text = wezterm.nerdfonts.ple_lower_right_triangle },
+
+		{ Background = { Color = bg_color } },
+		{ Foreground = { Color = fg_color } },
 		{ Text = " " .. title .. " " },
+
+		{ Foreground = { Color = bg_color } },
+		{ Background = { Color = tabbar_bg } },
+		{ Text = wezterm.nerdfonts.ple_upper_left_triangle },
 	}
 end)
 
