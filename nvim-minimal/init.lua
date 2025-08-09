@@ -3,19 +3,10 @@
 --   https://gpanders.com/blog/whats-new-in-neovim-0-11/#lspa
 --   https://github.com/SylvanFranklin/.config/blob/main/nvim/init.lua
 
--- TODO:
---   - missing keybindings:
---     - other buffer navigation
---     - window split
---     - window jumps
---   - window navigation
---   - Wezterm window navigation
-
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 vim.g.have_nerd_font = true
-
 
 -- OS integration
 vim.opt.mouse = "a"
@@ -28,9 +19,9 @@ vim.opt.swapfile = false
 -- UI
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 vim.opt.cursorline = true
-vim.opt.winborder = 'rounded' -- Set the default border for all floating windows
+vim.opt.winborder = "rounded" -- Set the default border for all floating windows
 vim.opt.termguicolors = true
 
 -- Search
@@ -60,28 +51,30 @@ vim.opt.splitbelow = true
 
 -- Completion
 vim.opt.completeopt = "menu,menuone,noselect" -- show menu also when only one match, don't select automatically
-vim.opt.pumheight = 10                        -- max lines in popup menu
+vim.opt.pumheight = 10 -- max lines in popup menu
 
 vim.pack.add({
   --
   -- CORE
   --
   "https://github.com/folke/which-key.nvim", -- keybinding help
-  "https://github.com/folke/snacks.nvim",    -- item picker popup
-  "https://github.com/folke/flash.nvim",     -- jump around
-  "https://github.com/echasnovski/mini.ai",  -- text objects and surrounding text manipulation
+  "https://github.com/folke/snacks.nvim", -- item picker popup
+  "https://github.com/folke/flash.nvim", -- jump around
+  "https://github.com/echasnovski/mini.ai", -- text objects and surrounding text manipulation
   -- "https://github.com/HiPhish/rainbow-delimiters.nvim", -- rainbow brackets
 
   --
   -- LSP
   --
   "https://github.com/neovim/nvim-lspconfig", -- configures LSP servers
-  "https://github.com/mrcjkb/rustaceanvim",   -- Rust LSP with additional features
+  "https://github.com/mrcjkb/rustaceanvim", -- Rust LSP with additional features
+  "https://github.com/saecki/crates.nvim", -- Rust crates management
+  "https://github.com/stevearc/conform.nvim", -- better formatting
 
   --
   -- TREESITTER
   --
-  "https://github.com/nvim-treesitter/nvim-treesitter",         -- syntax highlighter
+  "https://github.com/nvim-treesitter/nvim-treesitter", -- syntax highlighter
   "https://github.com/nvim-treesitter/nvim-treesitter-context", -- show surrounding context on top of editor
 
   --
@@ -94,16 +87,16 @@ vim.pack.add({
   --
   {
     src = "https://github.com/catppuccin/nvim",
-    name = "catppuccin"
+    name = "catppuccin",
   },
-  "https://github.com/nvim-lualine/lualine.nvim",   -- nice looking status line at the bottom
+  "https://github.com/nvim-lualine/lualine.nvim", -- nice looking status line at the bottom
   "https://github.com/nvim-tree/nvim-web-devicons", -- dependency of lualine
   "https://github.com/mrjones2014/smart-splits.nvim", -- integrate with wezterm splits
 
   --
   -- AI
   --
-  "https://github.com/zbirenbaum/copilot.lua",         -- suggestions
+  "https://github.com/zbirenbaum/copilot.lua", -- suggestions
   "https://github.com/CopilotC-Nvim/CopilotChat.nvim", -- chat interface
 
   --
@@ -116,10 +109,17 @@ local picker = require("snacks").picker
 local flash = require("flash")
 local chat = require("CopilotChat")
 local splits = require("smart-splits")
+local conform = require("conform")
+
+local function map(mode, key, action, description)
+  vim.keymap.set(mode, key, action, { desc = description })
+end
 
 --
 -- CORE
 --
+map("n", "U", "<C-r>", "Redo")
+
 vim.keymap.set("x", "p", [["_dP]], { desc = "Paste without yanking" })
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete without yanking" })
 
@@ -160,17 +160,17 @@ vim.keymap.set("n", "gD", picker.lsp_declarations, { desc = "Goto Declaration" }
 vim.keymap.set("n", "gr", picker.lsp_references, { nowait = true, desc = "References" })
 vim.keymap.set("n", "gI", picker.lsp_implementations, { desc = "Goto Implementation" })
 vim.keymap.set("n", "gy", picker.lsp_type_definitions, { desc = "Goto T[y]pe Definition" })
-vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
-vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
 
 --
 -- CODE EDITING
 --
-vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format buffer" })
+vim.keymap.set("n", "cK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+vim.keymap.set("n", "<leader>cf", conform.format, { desc = "Format buffer" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Actions" })
 vim.keymap.set("n", "<leader>cA", function() -- run code actions only on the source (e.g. fix imports)
   vim.lsp.buf.code_action({
-    context = { only = { "source" }, },
+    context = { only = { "source" } },
   })
 end, { desc = "Code Actions" })
 
@@ -187,14 +187,14 @@ vim.keymap.set({ "o", "x" }, "R", flash.treesitter_search, { desc = "Treesitter 
 --
 vim.keymap.set("n", "<leader><tab>", ":e #<CR>", { desc = "Toggle Buffer" })
 -- CTRL+W S/V to create splits
-vim.keymap.set('n', '<C-h>', splits.move_cursor_left, { desc = "Go to Left Window" })
-vim.keymap.set('n', '<C-j>', splits.move_cursor_down, { desc = "Go to Bottom Window" })
-vim.keymap.set('n', '<C-k>', splits.move_cursor_up, { desc = "Go to Top Window" })
-vim.keymap.set('n', '<C-l>', splits.move_cursor_right, { desc = "Go to Right Window" })
-vim.keymap.set('n', '<A-h>', splits.resize_left, { desc = "Shrink Window Horizontally" })
-vim.keymap.set('n', '<A-j>', splits.resize_down, { desc = "Shrink Window Vertically" })
-vim.keymap.set('n', '<A-k>', splits.resize_up, { desc = "Grow Window Vertically" })
-vim.keymap.set('n', '<A-l>', splits.resize_right, { desc = "Grow Window Horizontally" })
+vim.keymap.set("n", "<C-h>", splits.move_cursor_left, { desc = "Go to Left Window" })
+vim.keymap.set("n", "<C-j>", splits.move_cursor_down, { desc = "Go to Bottom Window" })
+vim.keymap.set("n", "<C-k>", splits.move_cursor_up, { desc = "Go to Top Window" })
+vim.keymap.set("n", "<C-l>", splits.move_cursor_right, { desc = "Go to Right Window" })
+vim.keymap.set("n", "<A-h>", splits.resize_left, { desc = "Shrink Window Horizontally" })
+vim.keymap.set("n", "<A-j>", splits.resize_down, { desc = "Shrink Window Vertically" })
+vim.keymap.set("n", "<A-k>", splits.resize_up, { desc = "Grow Window Vertically" })
+vim.keymap.set("n", "<A-l>", splits.resize_right, { desc = "Grow Window Horizontally" })
 --vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
 
 --
@@ -221,20 +221,71 @@ require("gitsigns").setup({
   end,
 })
 
+-- enabled by rustaceanvim
+vim.lsp.config("rust-analyzer", {
+  on_attach = function(client, bufnr)
+    local function map(mode, lhs, rhs, desc)
+      vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+    end
+
+    local function rlsp(sub)
+      return function()
+        vim.cmd.RustLsp(sub)
+      end
+    end
+
+    map({ "n", "x" }, "J", rlsp("joinLines"), "Join lines")
+    map("n", "K", rlsp("hover actions"), "Hover actions")
+    -- not working map("v", "K", rlsp("hover range"), "Hover actions")
+    map("n", "<leader>ca", rlsp("codeAction"), "Code actions")
+    -- TODO not existing, but optimize import would be nice
+    -- map("n", "<leader>cA", rlsp("codeAction source"), "Rust: Source actions")
+
+    map("n", "gu", rlsp("parentModule"), "Parent module (Go Up)")
+
+    map("n", "<leader>cd", rlsp("renderDiagnostic"), "Render Diagnostic")
+    map("n", "<leader>ce", rlsp("explainError"), "Explain Error")
+    map("n", "<leader>cm", rlsp("expandMacro"), "Expand Macro")
+
+    -- map("n", "<leader>rr",   rlsp("runnables"),             "Rust: Runnables")
+    -- map("n", "<leader>rt",   rlsp("testables"),             "Rust: Testables")
+  end,
+})
+
 require("which-key").setup({
   preset = "helix",
-  show_help = false
+  show_help = false,
 })
 
 require("snacks").setup({
-  picker = {},   -- enable picker
-  explorer = {} -- enable explorer
+  picker = {}, -- enable picker
+  explorer = {}, -- enable explorer
 })
 
 require("mini.ai").setup()
 -- require("rainbow-delimiters.setup").setup()
 
 require("smart-splits").setup({})
+
+require("crates").setup({
+  lsp = {
+    enabled = true,
+    -- on_attach = function(client, bufnr)
+    --     -- the same on_attach function as for your other language servers
+    --     -- can be ommited if you're using the `LspAttach` autocmd
+    -- end,
+    actions = true,
+    completion = true,
+    hover = true,
+  },
+  completion = {
+    crates = {
+      enabled = true, -- Disabled by default
+      max_results = 8, -- The maximum number of search results to display
+      min_chars = 3, -- The minimum number of charaters to type before completions begin appearing
+    },
+  },
+})
 
 --
 -- LSP
@@ -245,8 +296,8 @@ require("smart-splits").setup({})
 vim.lsp.enable({ "lua_ls" })
 
 vim.diagnostic.config({
-  -- show diagnostic on extra lines
-  virtual_text = true,
+  -- diagnostic on extra lines, disabled for now as lines are jumping around
+  virtual_text = false,
   -- only on current line
   virtual_lines = {
     current_line = true,
@@ -255,21 +306,35 @@ vim.diagnostic.config({
     active = true,
     text = {
       [vim.diagnostic.severity.ERROR] = "",
-      [vim.diagnostic.severity.WARN]  = "",
-      [vim.diagnostic.severity.HINT]  = "",
-      [vim.diagnostic.severity.INFO]  = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.HINT] = "",
+      [vim.diagnostic.severity.INFO] = "",
     },
   },
 })
 
 -- enable built-in completion if LSP supports it
-vim.api.nvim_create_autocmd('LspAttach', {
+vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client:supports_method('textDocument/completion') then
+    if client:supports_method("textDocument/completion") then
+      -- Optional: trigger autocompletion on EVERY keypress. May be slow!
+      -- local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+      -- client.server_capabilities.completionProvider.triggerCharacters = chars
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
     end
   end,
+})
+
+-- Configure Formatters
+require("conform").setup({
+  formatters_by_ft = {
+    lua = { "stylua" },
+  },
+  format_on_save = {
+    timeout_ms = 500,
+    lsp_format = "fallback",
+  },
 })
 
 --
@@ -277,18 +342,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --
 -- Treesitter is the “syntax tree parser” — it understands code structure and helps with navigation, highlighting, and text manipulation.
 -- syntax highlighting. Update with :TSUpdate and install new with :TSInstall or add to list
-require('nvim-treesitter.configs').setup({
+require("nvim-treesitter.configs").setup({
   ensure_installed = {
-    'lua',
-    'vimdoc',
-    'vim',
-    'bash',
-    'fish',
-    'rust',
+    "lua",
+    "vimdoc",
+    "vim",
+    "bash",
+    "fish",
+    "rust",
   },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false -- for Catpucchin
+    additional_vim_regex_highlighting = false, -- for Catpucchin
   },
   indent = { enable = true },
 })
@@ -296,13 +361,13 @@ require('nvim-treesitter.configs').setup({
 --
 -- STYLE
 --
-require('lualine').setup()
+require("lualine").setup()
 vim.cmd.colorscheme("catppuccin-mocha")
 
 --
 -- AI
 --
-require('copilot').setup({
+require("copilot").setup({
   suggestion = {
     auto_trigger = true,
     keymap = {
@@ -313,7 +378,7 @@ require('copilot').setup({
       prev = "<M-[>",
       --dismiss = "<C-]>",
     },
-  }
+  },
 })
 
 require("CopilotChat").setup()
