@@ -93,7 +93,6 @@ vim.pack.add({
     name = "catppuccin",
   },
   "https://github.com/nvim-lualine/lualine.nvim", -- nice looking status line at the bottom
-  "https://github.com/nvim-tree/nvim-web-devicons", -- dependency of lualine
   "https://github.com/mrjones2014/smart-splits.nvim", -- integrate with wezterm splits
 
   --
@@ -106,6 +105,7 @@ vim.pack.add({
   -- DEPENDENCIES
   --
   "https://github.com/nvim-lua/plenary.nvim", -- common dependency (e.g. CopilotChat)
+  "https://github.com/nvim-tree/nvim-web-devicons", -- dependency of lualine
 })
 
 local picker = require("snacks").picker
@@ -122,7 +122,7 @@ end
 --
 -- CORE
 --
-keymap("n", "U", "<C-r>", "Redo")
+keymap("n", "U", "<C-r>", "Redo [<C-r>]")
 keymap("x", "J", ":m '>+1<CR>gv=gv", "Move selection down")
 keymap("x", "K", ":m '<-2<CR>gv=gv", "Move selection up")
 
@@ -132,10 +132,6 @@ keymap({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard")
 keymap("n", "<leader>Y", [["+Y]], "Yank line to system clipboard")
 keymap({ "n", "x" }, "<leader>p", [["+p]], "Paste from system clipboard")
 keymap({ "n", "x" }, "<leader>P", [["+P]], "Paste before from system clipboard")
-
--- Colemak fix for jumplist
-keymap("n", "<C-i>", "<C-o>", "Jump back (Colemak)")
-keymap("n", "<C-o>", "<C-i>", "Jump forward (Colemak)")
 
 --
 -- ITEM PICKER
@@ -151,7 +147,7 @@ keymap("n", "<leader>fe", picker.explorer, "File Explorer")
 -- vim.keymap.set("n", "<leader>fg", picker.git_files, { desc = "Find Git Files" })
 keymap("n", "<leader>fh", picker.help, "Help Pages")
 keymap("n", "<leader>fk", picker.keymaps, "Keymaps")
-keymap("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols")
+keymap("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols [gO]")
 keymap({ "n", "x" }, "<leader>*", picker.grep_word, "Visual selection or word")
 
 -- in buffer
@@ -159,31 +155,39 @@ keymap("n", "<leader>/", picker.lines, "Buffer Lines")
 -- vim.keymap.set("n", "<leader>sB", picker.grep_buffers, { desc = "Grep Open Buffers" })
 
 -- LSP
+-- TODO incoming/outgoing calls. Not yet in SnAcks.picker
+-- TODO evaluate using locatonList directly
 keymap("n", "gs", picker.lsp_symbols, "Goto Symbol")
 keymap("n", "gd", picker.lsp_definitions, "Goto Definition")
 keymap("n", "gD", picker.lsp_declarations, "Goto Declaration")
-keymap("n", "gr", picker.lsp_references, { nowait = true, desc = "References" })
-keymap("n", "gI", picker.lsp_implementations, "Goto Implementation")
-keymap("n", "gy", picker.lsp_type_definitions, "Goto T[y]pe Definition")
+keymap("n", "gr", picker.lsp_references, { nowait = true, desc = "References [grr]" })
+keymap("n", "gI", picker.lsp_implementations, "Goto Implementation [gri]")
+keymap("n", "gy", picker.lsp_type_definitions, "Goto T[y]pe Definition [grt]")
 
 --
 -- CODE EDITING
 --
 keymap("n", "<leader>cK", vim.lsp.buf.signature_help, "Signature Help")
-keymap("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+keymap("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help [CTRL-S]")
 keymap("n", "<leader>cf", conform.format, "Format buffer")
-keymap("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions")
+keymap("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions [gra]")
 keymap("n", "<leader>cA", function() -- run code actions only on the source (e.g. fix imports)
   vim.lsp.buf.code_action({
     context = { only = { "source" } },
   })
 end, "Code Actions")
-keymap("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
+keymap("n", "<leader>cr", vim.lsp.buf.rename, "Rename [grn]")
 keymap("n", "<leader>cR", Snacks.rename.rename_file, "Rename File")
 
 --
 -- JUMPING
 --
+
+-- Colemak fix for jumplist
+-- e and i can be used for up/down jumping
+keymap("n", "<C-n>", "<C-o>", "Jump back (Colemak) [<C-o>]")
+keymap("n", "<C-o>", "<C-i>", "Jump forward (Colemak) [<C-i>]")
+
 keymap({ "n", "x", "o" }, "s", flash.jump, "Flash")
 keymap({ "n", "x", "o" }, "S", flash.treesitter, "Flash Treesitter")
 keymap("o", "r", flash.remote, "Remote Flash")
@@ -192,16 +196,16 @@ keymap({ "o", "x" }, "R", flash.treesitter_search, "Treesitter Search")
 --
 -- WINDOW MANAGEMENT
 --
-keymap("n", "<leader><tab>", ":e #<CR>", "Toggle Buffer")
+keymap("n", "<leader><tab>", "<C-^>", "Toggle Buffer [<C-^>]")
 -- CTRL+W S/V to create splits
-keymap("n", "<C-h>", splits.move_cursor_left, "Go to Left Window")
-keymap("n", "<C-j>", splits.move_cursor_down, "Go to Bottom Window")
-keymap("n", "<C-k>", splits.move_cursor_up, "Go to Top Window")
-keymap("n", "<C-l>", splits.move_cursor_right, "Go to Right Window")
-keymap("n", "<A-h>", splits.resize_left, "Shrink Window Horizontally")
-keymap("n", "<A-j>", splits.resize_down, "Shrink Window Vertically")
-keymap("n", "<A-k>", splits.resize_up, "Grow Window Vertically")
-keymap("n", "<A-l>", splits.resize_right, "Grow Window Horizontally")
+keymap("n", "<C-h>", splits.move_cursor_left, "Go to Left Window [<C-w>h]")
+keymap("n", "<C-j>", splits.move_cursor_down, "Go to Bottom Window [<C-w>j]")
+keymap("n", "<C-k>", splits.move_cursor_up, "Go to Top Window [<C-w>k]")
+keymap("n", "<C-l>", splits.move_cursor_right, "Go to Right Window [<C-w>l]")
+-- keymap("n", "<A-h>", splits.resize_left, "Shrink Window Horizontally [<C-w><]")
+-- keymap("n", "<A-j>", splits.resize_down, "Shrink Window Vertically [<C-w>-]")
+-- keymap("n", "<A-k>", splits.resize_up, "Grow Window Vertically [<C-w>+]")
+-- keymap("n", "<A-l>", splits.resize_right, "Grow Window Horizontally [<C-w>>]")
 --vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
 
 --
@@ -221,12 +225,12 @@ local copilot_chat_keymap = {
 }
 
 local function git_signs_bindings(map, gs)
-  map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-  map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-  map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-  map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-  map("n", "<leader>ghd", gs.preview_hunk_inline, "Diff Hunk Inline")
-  map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+  -- map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+  -- map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
+  map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+  map("n", "<leader>gR", gs.reset_buffer, "Reset Buffer")
+  map("n", "<leader>gd", gs.preview_hunk_inline, "Diff Hunk Inline")
+  -- map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
 end
 
 local function rust_bindings(map, rlsp)
