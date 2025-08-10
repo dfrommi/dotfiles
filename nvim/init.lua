@@ -67,6 +67,8 @@ vim.pack.add({
   -- LSP
   --
   "https://github.com/neovim/nvim-lspconfig", -- configures LSP servers
+  "https://github.com/mason-org/mason.nvim", -- manage LSP servers, formatters, linters
+  "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- automatically install tools, instead of manually via :MasonInstall
   "https://github.com/mrcjkb/rustaceanvim", -- Rust LSP with additional features
   "https://github.com/saecki/crates.nvim", -- Rust crates management
   "https://github.com/stevearc/conform.nvim", -- better formatting
@@ -78,9 +80,10 @@ vim.pack.add({
   "https://github.com/nvim-treesitter/nvim-treesitter-context", -- show surrounding context on top of editor
 
   --
-  -- CODING TOOLS
+  -- TOOLS
   --
   "https://github.com/lewis6991/gitsigns.nvim", -- show git changes in the gutter
+  "https://github.com/MeanderingProgrammer/render-markdown.nvim", -- render markdown
 
   --
   -- UI
@@ -111,121 +114,176 @@ local chat = require("CopilotChat")
 local splits = require("smart-splits")
 local conform = require("conform")
 
-local function map(mode, key, action, opts)
-  local options = {}
-  if type(opts) == "string" then
-    options.desc = opts
-  elseif type(opts) == "table" then
-    options = opts
-  end
+local function keymap(mode, key, action, opts)
+  local options = type(opts) == "string" and { desc = opts } or opts
   vim.keymap.set(mode, key, action, options)
 end
 
 --
 -- CORE
 --
-map("n", "U", "<C-r>", "Redo")
+keymap("n", "U", "<C-r>", "Redo")
+keymap("x", "J", ":m '>+1<CR>gv=gv", "Move selection down")
+keymap("x", "K", ":m '<-2<CR>gv=gv", "Move selection up")
 
-map("x", "p", [["_dP]], "Paste without yanking")
-map({ "n", "v" }, "<leader>d", [["_d]], "Delete without yanking")
-
-map({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard")
-map("n", "<leader>Y", [["+Y]], "Yank line to system clipboard")
-map({ "n", "x" }, "<leader>p", [["+p]], "Paste from system clipboard")
-map({ "n", "x" }, "<leader>P", [["+P]], "Paste before from system clipboard")
+keymap("x", "p", [["_dP]], "Paste without yanking")
+keymap({ "n", "v" }, "<leader>d", [["_d]], "Delete without yanking")
+keymap({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard")
+keymap("n", "<leader>Y", [["+Y]], "Yank line to system clipboard")
+keymap({ "n", "x" }, "<leader>p", [["+p]], "Paste from system clipboard")
+keymap({ "n", "x" }, "<leader>P", [["+P]], "Paste before from system clipboard")
 
 -- Colemak fix for jumplist
-map("n", "<C-i>", "<C-o>", "Jump back (Colemak)")
-map("n", "<C-o>", "<C-i>", "Jump forward (Colemak)")
+keymap("n", "<C-i>", "<C-o>", "Jump back (Colemak)")
+keymap("n", "<C-o>", "<C-i>", "Jump forward (Colemak)")
 
 --
 -- ITEM PICKER
 --
 
 -- Global
-map("n", "<leader>fR", picker.resume, "Resume")
-map("n", "<leader><space>", picker.grep, "Grep")
-map("n", "<leader>ff", picker.files, "Find Files")
-map("n", "<leader>fb", picker.buffers, "Buffers")
+keymap("n", "<leader>fR", picker.resume, "Resume")
+keymap("n", "<leader><space>", picker.grep, "Grep") -- TODO maybe not the best mapping, should be most used one
+keymap("n", "<leader>ff", picker.files, "Find Files")
+keymap("n", "<leader>fb", picker.buffers, "Buffers")
 --vim.keymap.set("n", "<leader>fr", picker.recent, { desc = "Recent" })
-map("n", "<leader>fe", picker.explorer, "File Explorer")
+keymap("n", "<leader>fe", picker.explorer, "File Explorer")
 -- vim.keymap.set("n", "<leader>fg", picker.git_files, { desc = "Find Git Files" })
-map("n", "<leader>fh", picker.help, "Help Pages")
-map("n", "<leader>fk", picker.keymaps, "Keymaps")
-map("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols")
-map({ "n", "x" }, "<leader>*", picker.grep_word, "Visual selection or word")
+keymap("n", "<leader>fh", picker.help, "Help Pages")
+keymap("n", "<leader>fk", picker.keymaps, "Keymaps")
+keymap("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols")
+keymap({ "n", "x" }, "<leader>*", picker.grep_word, "Visual selection or word")
 
 -- in buffer
-map("n", "<leader>/", picker.lines, "Buffer Lines")
+keymap("n", "<leader>/", picker.lines, "Buffer Lines")
 -- vim.keymap.set("n", "<leader>sB", picker.grep_buffers, { desc = "Grep Open Buffers" })
 
 -- LSP
-map("n", "gs", picker.lsp_symbols, "Goto Symbol")
-map("n", "gd", picker.lsp_definitions, "Goto Definition")
-map("n", "gD", picker.lsp_declarations, "Goto Declaration")
-map("n", "gr", picker.lsp_references, { nowait = true, desc = "References" })
-map("n", "gI", picker.lsp_implementations, "Goto Implementation")
-map("n", "gy", picker.lsp_type_definitions, "Goto T[y]pe Definition")
+keymap("n", "gs", picker.lsp_symbols, "Goto Symbol")
+keymap("n", "gd", picker.lsp_definitions, "Goto Definition")
+keymap("n", "gD", picker.lsp_declarations, "Goto Declaration")
+keymap("n", "gr", picker.lsp_references, { nowait = true, desc = "References" })
+keymap("n", "gI", picker.lsp_implementations, "Goto Implementation")
+keymap("n", "gy", picker.lsp_type_definitions, "Goto T[y]pe Definition")
 
 --
 -- CODE EDITING
 --
-map("n", "cK", vim.lsp.buf.signature_help, "Signature Help")
-map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
-map("n", "<leader>cf", conform.format, "Format buffer")
-map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions")
-map("n", "<leader>cA", function() -- run code actions only on the source (e.g. fix imports)
+keymap("n", "<leader>cK", vim.lsp.buf.signature_help, "Signature Help")
+keymap("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+keymap("n", "<leader>cf", conform.format, "Format buffer")
+keymap("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions")
+keymap("n", "<leader>cA", function() -- run code actions only on the source (e.g. fix imports)
   vim.lsp.buf.code_action({
     context = { only = { "source" } },
   })
 end, "Code Actions")
+keymap("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
+keymap("n", "<leader>cR", Snacks.rename.rename_file, "Rename File")
 
 --
 -- JUMPING
 --
-map({ "n", "x", "o" }, "s", flash.jump, "Flash")
-map({ "n", "x", "o" }, "S", flash.treesitter, "Flash Treesitter")
-map("o", "r", flash.remote, "Remote Flash")
-map({ "o", "x" }, "R", flash.treesitter_search, "Treesitter Search")
+keymap({ "n", "x", "o" }, "s", flash.jump, "Flash")
+keymap({ "n", "x", "o" }, "S", flash.treesitter, "Flash Treesitter")
+keymap("o", "r", flash.remote, "Remote Flash")
+keymap({ "o", "x" }, "R", flash.treesitter_search, "Treesitter Search")
 
 --
 -- WINDOW MANAGEMENT
 --
-map("n", "<leader><tab>", ":e #<CR>", "Toggle Buffer")
+keymap("n", "<leader><tab>", ":e #<CR>", "Toggle Buffer")
 -- CTRL+W S/V to create splits
-map("n", "<C-h>", splits.move_cursor_left, "Go to Left Window")
-map("n", "<C-j>", splits.move_cursor_down, "Go to Bottom Window")
-map("n", "<C-k>", splits.move_cursor_up, "Go to Top Window")
-map("n", "<C-l>", splits.move_cursor_right, "Go to Right Window")
-map("n", "<A-h>", splits.resize_left, "Shrink Window Horizontally")
-map("n", "<A-j>", splits.resize_down, "Shrink Window Vertically")
-map("n", "<A-k>", splits.resize_up, "Grow Window Vertically")
-map("n", "<A-l>", splits.resize_right, "Grow Window Horizontally")
+keymap("n", "<C-h>", splits.move_cursor_left, "Go to Left Window")
+keymap("n", "<C-j>", splits.move_cursor_down, "Go to Bottom Window")
+keymap("n", "<C-k>", splits.move_cursor_up, "Go to Top Window")
+keymap("n", "<C-l>", splits.move_cursor_right, "Go to Right Window")
+keymap("n", "<A-h>", splits.resize_left, "Shrink Window Horizontally")
+keymap("n", "<A-j>", splits.resize_down, "Shrink Window Vertically")
+keymap("n", "<A-k>", splits.resize_up, "Grow Window Vertically")
+keymap("n", "<A-l>", splits.resize_right, "Grow Window Horizontally")
 --vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
 
 --
 -- AI
 --
-map({ "n", "v" }, "<leader>aa", chat.toggle, "Toggle (CopilotChat)")
-map({ "n", "v" }, "<leader>ap", chat.select_prompt, "Prompt Actions (CopilotChat)")
-map({ "n", "v" }, "<leader>ax", chat.reset, "Clear (CopilotChat)")
+keymap({ "n", "v" }, "<leader>aa", chat.toggle, "Toggle (CopilotChat)")
+keymap({ "n", "v" }, "<leader>ap", chat.select_prompt, "Prompt Actions (CopilotChat)")
+keymap({ "n", "v" }, "<leader>ax", chat.reset, "Clear (CopilotChat)")
 
-require("gitsigns").setup({
-  on_attach = function(buffer)
-    local gs = package.loaded.gitsigns
+local copilot_chat_keymap = {
+  accept = "<tab>",
+  accept_word = "<S-tab>",
+  accept_line = false,
+  next = "<M-]>",
+  prev = "<M-[>",
+  --dismiss = "<C-]>",
+}
 
-    local function map(mode, l, r, desc)
-      vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
-    end
+local function git_signs_bindings(map, gs)
+  map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+  map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
+  map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+  map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
+  map("n", "<leader>ghd", gs.preview_hunk_inline, "Diff Hunk Inline")
+  map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+end
 
-    map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-    map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-    map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-    map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-    map("n", "<leader>ghd", gs.preview_hunk_inline, "Diff Hunk Inline")
-    map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-  end,
+local function rust_bindings(map, rlsp)
+  --TODO move up and down bindings
+  map("n", "J", rlsp("joinLines"), "Join lines")
+  map("n", "K", rlsp("hover actions"), "Hover actions")
+
+  map("x", "J", rlsp("moveItem up"), "Move selection down")
+  map("x", "K", rlsp("moveItem down"), "Move selection up")
+
+  -- not working map("v", "K", rlsp("hover range"), "Hover actions")
+  map("n", "<leader>ca", rlsp("codeAction"), "Code actions")
+  -- TODO not existing, but optimize import would be nice
+  -- map("n", "<leader>cA", rlsp("codeAction source"), "Rust: Source actions")
+
+  map("n", "gu", rlsp("parentModule"), "Parent module (Go Up)")
+
+  map("n", "<leader>cd", rlsp("renderDiagnostic"), "Render Diagnostic")
+  map("n", "<leader>ce", rlsp("explainError"), "Explain Error")
+  map("n", "<leader>cm", rlsp("expandMacro"), "Expand Macro")
+
+  -- map("n", "<leader>rr",   rlsp("runnables"),             "Rust: Runnables")
+  -- map("n", "<leader>rt",   rlsp("testables"),             "Rust: Testables")
+end
+
+local tools_config = {
+  treesitter = {
+    "vimdoc",
+    "vim",
+    "bash",
+    "fish",
+    "json",
+    "yaml",
+    "toml",
+  },
+  formatters_by_ft = {},
+  mason = {},
+  lsp_enabled = {},
+}
+
+--
+-- LUA
+--
+table.insert(tools_config.treesitter, "lua")
+table.insert(tools_config.lsp_enabled, "lua_ls")
+tools_config.formatters_by_ft["lua"] = { "stylua" }
+vim.list_extend(tools_config.mason, {
+  "lua-language-server", -- Lua LSP
+  "stylua", -- Lua formatter
 })
+
+--
+-- RUST
+--
+-- using global LSP instead of mason
+-- no setup needed for rustaceanvim, it will automatically install the LSP
+table.insert(tools_config.treesitter, "rust")
 
 -- enabled by rustaceanvim
 vim.lsp.config("rust-analyzer", {
@@ -240,38 +298,9 @@ vim.lsp.config("rust-analyzer", {
       end
     end
 
-    map({ "n", "x" }, "J", rlsp("joinLines"), "Join lines")
-    map("n", "K", rlsp("hover actions"), "Hover actions")
-    -- not working map("v", "K", rlsp("hover range"), "Hover actions")
-    map("n", "<leader>ca", rlsp("codeAction"), "Code actions")
-    -- TODO not existing, but optimize import would be nice
-    -- map("n", "<leader>cA", rlsp("codeAction source"), "Rust: Source actions")
-
-    map("n", "gu", rlsp("parentModule"), "Parent module (Go Up)")
-
-    map("n", "<leader>cd", rlsp("renderDiagnostic"), "Render Diagnostic")
-    map("n", "<leader>ce", rlsp("explainError"), "Explain Error")
-    map("n", "<leader>cm", rlsp("expandMacro"), "Expand Macro")
-
-    -- map("n", "<leader>rr",   rlsp("runnables"),             "Rust: Runnables")
-    -- map("n", "<leader>rt",   rlsp("testables"),             "Rust: Testables")
+    rust_bindings(map, rlsp)
   end,
 })
-
-require("which-key").setup({
-  preset = "helix",
-  show_help = false,
-})
-
-require("snacks").setup({
-  picker = {}, -- enable picker
-  explorer = {}, -- enable explorer
-})
-
-require("mini.ai").setup()
--- require("rainbow-delimiters.setup").setup()
-
-require("smart-splits").setup({})
 
 require("crates").setup({
   lsp = {
@@ -294,20 +323,55 @@ require("crates").setup({
 })
 
 --
+-- MARKDOWN
+--
+vim.list_extend(tools_config.treesitter, {
+  "markdown",
+  "markdown_inline",
+  "html", -- for inline HTML in Markdown
+})
+tools_config.formatters_by_ft["markdown"] = { "markdownlint-cli2", "markdown-toc" }
+tools_config.formatters_by_ft["markdown.mdx"] = { "markdownlint-cli2", "markdown-toc" }
+
+table.insert(tools_config.lsp_enabled, "marksman")
+tools_config.mason = vim.list_extend(tools_config.mason, {
+  "marksman", -- Markdown LSP
+  "markdownlint-cli2", -- Markdown linter
+  "markdown-toc", -- Markdown table of contents generator
+})
+
+require("render-markdown").setup({
+  completions = { lsp = { enabled = true } },
+})
+
+--
+-- SYNTAX HIGHLIGHTING
+--
+-- Treesitter is the “syntax tree parser” — it understands code structure and helps with navigation, highlighting, and text manipulation.
+-- syntax highlighting. Update with :TSUpdate and install new with :TSInstall or add to list
+require("nvim-treesitter.configs").setup({
+  ensure_installed = tools_config.treesitter,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false, -- for Catpucchin
+  },
+  indent = { enable = true },
+})
+
+--
 -- LSP
 --
 -- LSP is the “language server” — it understands code semantics and helps with editing and refactoring.
 -- no Mason, install LSPs manually with homebrew
 -- debug with :LspInfo
-vim.lsp.enable({ "lua_ls" })
+vim.lsp.enable(tools_config.lsp_enabled)
 
 vim.diagnostic.config({
-  -- diagnostic on extra lines, disabled for now as lines are jumping around
-  virtual_text = false,
-  -- only on current line
-  virtual_lines = {
-    current_line = true,
-  },
+  virtual_text = true,
+  -- diagnostic on extra lines
+  -- virtual_lines = {
+  --   current_line = true,
+  -- },
   signs = {
     active = true,
     text = {
@@ -334,9 +398,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Configure Formatters
 require("conform").setup({
-  formatters_by_ft = {
-    lua = { "stylua" },
-  },
+  formatters_by_ft = tools_config.formatters_by_ft,
   format_on_save = {
     timeout_ms = 500,
     lsp_format = "fallback",
@@ -344,31 +406,42 @@ require("conform").setup({
 })
 
 --
--- TREESITTER
---
--- Treesitter is the “syntax tree parser” — it understands code structure and helps with navigation, highlighting, and text manipulation.
--- syntax highlighting. Update with :TSUpdate and install new with :TSInstall or add to list
-require("nvim-treesitter.configs").setup({
-  ensure_installed = {
-    "lua",
-    "vimdoc",
-    "vim",
-    "bash",
-    "fish",
-    "rust",
-  },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false, -- for Catpucchin
-  },
-  indent = { enable = true },
-})
-
---
--- STYLE
+-- CORE PLUGINS
 --
 require("lualine").setup()
 vim.cmd.colorscheme("catppuccin-mocha")
+
+require("which-key").setup({
+  preset = "helix",
+  show_help = false,
+})
+
+require("snacks").setup({
+  picker = {}, -- enable picker
+  explorer = {}, -- enable explorer
+})
+
+require("mini.ai").setup()
+-- require("rainbow-delimiters.setup").setup()
+
+require("smart-splits").setup({})
+
+require("gitsigns").setup({
+  on_attach = function(buffer)
+    local gs = package.loaded.gitsigns
+
+    local function map(mode, l, r, desc)
+      vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+    end
+
+    git_signs_bindings(map, gs)
+  end,
+})
+
+require("mason").setup()
+require("mason-tool-installer").setup({
+  ensure_installed = tools_config.mason,
+})
 
 --
 -- AI
@@ -376,14 +449,7 @@ vim.cmd.colorscheme("catppuccin-mocha")
 require("copilot").setup({
   suggestion = {
     auto_trigger = true,
-    keymap = {
-      accept = "<tab>",
-      accept_word = "<S-tab>",
-      accept_line = false,
-      next = "<M-]>",
-      prev = "<M-[>",
-      --dismiss = "<C-]>",
-    },
+    keymap = copilot_chat_keymap,
   },
 })
 
