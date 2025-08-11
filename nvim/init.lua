@@ -128,6 +128,7 @@ keymap("x", "K", ":m '<-2<CR>gv=gv", "Move selection up")
 
 keymap("x", "p", [["_dP]], "Paste without yanking")
 keymap({ "n", "v" }, "<leader>d", [["_d]], "Delete without yanking")
+
 keymap({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard")
 keymap("n", "<leader>Y", [["+Y]], "Yank line to system clipboard")
 keymap({ "n", "x" }, "<leader>p", [["+p]], "Paste from system clipboard")
@@ -185,8 +186,8 @@ keymap("n", "<leader>cR", Snacks.rename.rename_file, "Rename File")
 
 -- Colemak fix for jumplist
 -- e and i can be used for up/down jumping
-keymap("n", "<C-n>", "<C-o>", "Jump back (Colemak) [<C-o>]")
-keymap("n", "<C-o>", "<C-i>", "Jump forward (Colemak) [<C-i>]")
+keymap("n", "<C-h>", "<C-o>", "Jump back (Colemak) [<C-o>]")
+keymap("n", "<C-l>", "<C-i>", "Jump forward (Colemak) [<C-i>]")
 
 keymap({ "n", "x", "o" }, "s", flash.jump, "Flash")
 keymap({ "n", "x", "o" }, "S", flash.treesitter, "Flash Treesitter")
@@ -196,32 +197,35 @@ keymap({ "o", "x" }, "R", flash.treesitter_search, "Treesitter Search")
 --
 -- WINDOW MANAGEMENT
 --
-keymap("n", "<leader><tab>", "<C-^>", "Toggle Buffer [<C-^>]")
+keymap("n", "<leader>bb", "<C-^>", "Toggle Buffer [<C-^>]")
 -- CTRL+W S/V to create splits
-keymap("n", "<C-h>", splits.move_cursor_left, "Go to Left Window [<C-w>h]")
-keymap("n", "<C-j>", splits.move_cursor_down, "Go to Bottom Window [<C-w>j]")
-keymap("n", "<C-k>", splits.move_cursor_up, "Go to Top Window [<C-w>k]")
-keymap("n", "<C-l>", splits.move_cursor_right, "Go to Right Window [<C-w>l]")
--- keymap("n", "<A-h>", splits.resize_left, "Shrink Window Horizontally [<C-w><]")
--- keymap("n", "<A-j>", splits.resize_down, "Shrink Window Vertically [<C-w>-]")
--- keymap("n", "<A-k>", splits.resize_up, "Grow Window Vertically [<C-w>+]")
--- keymap("n", "<A-l>", splits.resize_right, "Grow Window Horizontally [<C-w>>]")
+keymap("n", "<C-n>", splits.move_cursor_left, "Go to Left Window [<C-w>h]")
+keymap("n", "<C-e>", splits.move_cursor_down, "Go to Bottom Window [<C-w>j]")
+keymap("n", "<C-i>", splits.move_cursor_up, "Go to Top Window [<C-w>k]")
+keymap("n", "<C-o>", splits.move_cursor_right, "Go to Right Window [<C-w>l]")
+-- keymap("n", "<A-n>", splits.resize_left, "Shrink Window Horizontally [<C-w><]")
+-- keymap("n", "<A-e>", splits.resize_down, "Shrink Window Vertically [<C-w>-]")
+-- keymap("n", "<A-i>", splits.resize_up, "Grow Window Vertically [<C-w>+]")
+-- keymap("n", "<A-o>", splits.resize_right, "Grow Window Horizontally [<C-w>>]")
 --vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
 
 --
 -- AI
 --
-keymap({ "n", "v" }, "<leader>aa", chat.toggle, "Toggle (CopilotChat)")
-keymap({ "n", "v" }, "<leader>ap", chat.select_prompt, "Prompt Actions (CopilotChat)")
-keymap({ "n", "v" }, "<leader>ax", chat.reset, "Clear (CopilotChat)")
+keymap({ "n", "v" }, "<leader>aa", chat.toggle, "Toggle Chat")
+keymap({ "n", "v" }, "<leader>ax", chat.reset, "Clear")
+keymap("x", "<leader>ap", function()
+  chat.quick_prompt()
+end, "Quick Prompt")
+keymap({ "n", "v" }, "<leader>aP", chat.select_prompt, "Prompt Actions")
 
-local copilot_chat_keymap = {
+local copilot_cmp_keymap = {
   accept = "<tab>",
   accept_word = "<S-tab>",
-  accept_line = false,
-  next = "<M-]>",
-  prev = "<M-[>",
-  --dismiss = "<C-]>",
+  accept_line = "<M-tab>",
+  next = "<M-j>",
+  prev = "<M-k>",
+  -- dismiss = "<M-h>",
 }
 
 local function git_signs_bindings(map, gs)
@@ -335,7 +339,6 @@ vim.list_extend(tools_config.treesitter, {
   "html", -- for inline HTML in Markdown
 })
 tools_config.formatters_by_ft["markdown"] = { "markdownlint-cli2", "markdown-toc" }
-tools_config.formatters_by_ft["markdown.mdx"] = { "markdownlint-cli2", "markdown-toc" }
 
 table.insert(tools_config.lsp_enabled, "marksman")
 tools_config.mason = vim.list_extend(tools_config.mason, {
@@ -345,6 +348,7 @@ tools_config.mason = vim.list_extend(tools_config.mason, {
 })
 
 require("render-markdown").setup({
+  filetypes = { "markdown", "copilot-chat" },
   completions = { lsp = { enabled = true } },
 })
 
@@ -372,19 +376,19 @@ vim.lsp.enable(tools_config.lsp_enabled)
 
 vim.diagnostic.config({
   virtual_text = true,
-  -- diagnostic on extra lines
-  -- virtual_lines = {
-  --   current_line = true,
-  -- },
-  signs = {
-    active = true,
-    text = {
-      [vim.diagnostic.severity.ERROR] = "",
-      [vim.diagnostic.severity.WARN] = "",
-      [vim.diagnostic.severity.HINT] = "",
-      [vim.diagnostic.severity.INFO] = "",
-    },
-  },
+  --   -- diagnostic on extra lines
+  --   -- virtual_lines = {
+  --   --   current_line = true,
+  --   -- },
+  --   signs = {
+  --     active = true,
+  --     text = {
+  --       [vim.diagnostic.severity.ERROR] = "",
+  --       [vim.diagnostic.severity.WARN] = "",
+  --       [vim.diagnostic.severity.HINT] = "",
+  --       [vim.diagnostic.severity.INFO] = "",
+  --     },
+  --   },
 })
 
 -- enable built-in completion if LSP supports it
@@ -451,19 +455,47 @@ require("mason-tool-installer").setup({
 -- AI
 --
 require("copilot").setup({
+  panel = {
+    enabled = false,
+  },
   suggestion = {
     auto_trigger = true,
-    keymap = copilot_chat_keymap,
+    keymap = copilot_cmp_keymap,
   },
 })
 
-require("CopilotChat").setup()
+require("CopilotChat").setup({
+  -- For render-markdown.nvim - see https://github.com/CopilotC-Nvim/CopilotChat.nvim/wiki/Examples-and-Tips#markdown-rendering
+  highlight_headers = false,
+  separator = "---",
+  error_header = "> [!ERROR] Error",
+})
 
 -- clean up CopilotChat buffer
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "copilot-chat",
+  pattern = "copilot-*",
   callback = function()
     vim.opt_local.relativenumber = false
     vim.opt_local.number = false
+    vim.opt_local.conceallevel = 0
   end,
 })
+
+chat.quick_prompt = function(prompt)
+  if not prompt or prompt == "" then
+    prompt = vim.fn.input("# ")
+  end
+
+  if prompt ~= "" then
+    chat.reset() -- clear previous chat
+    chat.ask(prompt, {
+      window = {
+        layout = "float",
+        relative = "cursor",
+        width = 0.5,
+        height = 0.4,
+        row = 1,
+      },
+    })
+  end
+end

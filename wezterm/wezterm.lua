@@ -125,7 +125,7 @@ config.keys = {
 
 -- WINDOW SPLITS
 smart_splits.apply_to_config(config, {
-	direction_keys = { "h", "j", "k", "l" },
+	direction_keys = { "n", "e", "i", "o" },
 	modifiers = {
 		move = "CTRL", -- modifier to use for pane movement, e.g. CTRL+h to move left
 		resize = "META", -- modifier to use for pane resize, e.g. META+h to resize to the left
