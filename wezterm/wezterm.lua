@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")
 
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+local scrollback = require("scrollback")
 
 local theme_name = "Catppuccin Mocha"
 
@@ -38,6 +39,8 @@ config.window_padding = {
 	top = 20,
 	bottom = 20,
 }
+
+config.quick_select_remove_styling = true
 
 config.window_decorations = "RESIZE"
 
@@ -77,9 +80,37 @@ config.keys = {
 	{ key = "s", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "v", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 
+	--search
+	{
+		key = "/",
+		mods = "LEADER",
+		action = wezterm.action.Search({ CaseInSensitiveString = "" }),
+	},
+
 	-- Copy/paste
 	{ key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
 	{ key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
+	{
+		key = "c",
+		mods = "LEADER",
+		action = wezterm.action.QuickSelect,
+	},
+	{
+		key = "C",
+		mods = "LEADER",
+		action = wezterm.action.ActivateCopyMode,
+	},
+	{
+		key = "x", -- like gx in vim
+		mods = "LEADER",
+		action = scrollback.quick_select_url_and_open,
+	},
+	{
+		key = "V",
+		mods = "LEADER",
+		action = scrollback.scrollback_to_nvim,
+		--action = wezterm.action.EmitEvent("scrollback-to-nvim"),
+	},
 
 	-- New tab/window
 	{ key = "w", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
