@@ -101,10 +101,10 @@ vim.pack.add({
   --
   {
     src = "https://github.com/dfrommi/copilot.lua", -- suggestions
-    version = "has-next-function", -- custon version with suggestion.has_next() until merged upstream
+    version = "has-next-function", -- custom version with suggestion.has_next() until merged upstream
   },
   -- "https://github.com/zbirenbaum/copilot.lua", -- suggestions
-  "https://github.com/CopilotC-Nvim/CopilotChat.nvim", -- chat interface
+  "https://github.com/NickvanDyke/opencode.nvim", -- extract prompt for coding agents
 
   --
   -- DEPENDENCIES
@@ -115,11 +115,11 @@ vim.pack.add({
 
 local picker = require("snacks").picker
 local flash = require("flash")
-local chat = require("CopilotChat")
 local splits = require("smart-splits")
 local conform = require("conform")
 local mini_ai = require("mini.ai")
 local cmp = require("my.completion")
+local assistant = require("my.assistant")
 
 local function keymap(mode, key, action, opts)
   local options = type(opts) == "string" and { desc = opts } or opts
@@ -243,12 +243,14 @@ keymap("v", "<S-Tab>", "b", "Select next word") -- for convenient tab tab tab to
 --
 -- AI
 --
-keymap({ "n", "v" }, "<leader>aa", chat.toggle, "Toggle Chat")
-keymap({ "n", "v" }, "<leader>ax", chat.reset, "Clear")
-keymap("x", "<leader>ap", function()
-  chat.quick_prompt()
-end, "Quick Prompt")
-keymap({ "n", "v" }, "<leader>aP", chat.select_prompt, "Prompt Actions")
+keymap("n", "<leader>aA", assistant.ask(), "Ask Assistant")
+keymap("n", "<leader>aa", assistant.ask("@cursor: "), "Ask Assistant at cursor")
+keymap("v", "<leader>aa", assistant.ask("@selection: "), "Ask Assistant for selection")
+keymap({ "n", "v" }, "<leader>ap", assistant.select_prompt, "Select prompt")
+keymap("n", "<leader>af", assistant.activate, "Focus AI Assistant")
+keymap("n", "<leader>as", assistant.split_bottom, "AI Assistant split bottom")
+keymap("n", "<leader>av", assistant.split_right, "AI Assistant split right")
+keymap("n", "<leader>au", assistant.unsplit, "AI Assistant unsplit")
 
 local mini_surround_mappings = {
   add = "gsa", -- Add surrounding
@@ -500,43 +502,3 @@ require("mason").setup()
 require("mason-tool-installer").setup({
   ensure_installed = tools_config.mason,
 })
-
---
--- AI
---
-
-require("CopilotChat").setup({
-  -- For render-markdown.nvim - see https://github.com/CopilotC-Nvim/CopilotChat.nvim/wiki/Examples-and-Tips#markdown-rendering
-  highlight_headers = false,
-  separator = "---",
-  error_header = "> [!ERROR] Error",
-})
-
--- clean up CopilotChat buffer
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "copilot-*",
-  callback = function()
-    vim.opt_local.relativenumber = false
-    vim.opt_local.number = false
-    vim.opt_local.conceallevel = 0
-  end,
-})
-
-chat.quick_prompt = function(prompt)
-  if not prompt or prompt == "" then
-    prompt = vim.fn.input("# ")
-  end
-
-  if prompt ~= "" then
-    chat.reset() -- clear previous chat
-    chat.ask(prompt, {
-      window = {
-        layout = "float",
-        relative = "cursor",
-        width = 0.5,
-        height = 0.4,
-        row = 1,
-      },
-    })
-  end
-end
