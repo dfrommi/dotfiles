@@ -13,6 +13,13 @@ local function keymap(mode, key, action, opts)
   vim.keymap.set(mode, key, action, options)
 end
 
+-- optional action. Keypress propagated if action not returning true-ish value
+local keymap_opt = function(mode, key, action, description)
+  keymap(mode, key, function()
+    return action() and "" or key
+  end, { desc = description, expr = true })
+end
+
 --
 -- CORE
 --
@@ -87,20 +94,16 @@ keymap("n", "<C-o>", splits.move_cursor_right, "Go to Right Window [<C-w>l]")
 --
 -- COMPLETION
 --
-local cmp_keymap = function(mode, key, pum_action, cop_action, description)
-  local action = cmp.action(pum_action, cop_action, key)
-  keymap(mode, key, action, { desc = description, expr = true })
-end
+keymap_opt("i", "<S-CR>", cmp.cycle, "Cycle completion items")
+keymap_opt("i", "<Tab>", cmp.accept, "Accept completion")
+keymap_opt("i", "<S-Tab>", cmp.accept_interactive, "AI partial accept")
+keymap_opt("i", "<C-e>", cmp.dismiss, "Dismiss completion")
 
-keymap("i", "<S-CR>", cmp.cycle("<S-CR>"), { desc = "Cycle completion items", expr = true })
-cmp_keymap("i", "<Tab>", cmp.pum.confirm_selected_or_first, cmp.cop.confirm_all, "Accept completion")
-cmp_keymap("i", "<S-Tab>", nil, cmp.cop.confirm_all_and_start_partial_accept, "AI partial accept")
-cmp_keymap("i", "<C-e>", cmp.pum.dismiss, cmp.cop.dismiss, "Dismiss completion")
-cmp_keymap("i", "<CR>", cmp.pum.confirm_if_selected, nil, "Confirm selected completion")
+keymap_opt("i", "<CR>", cmp.pum_accept_if_selected, "Confirm selected completion")
 
 --partial completion of suggestions
-keymap("n", "<leader>ak", cmp.cop.start_partial_accept, "AI suggestion keep")
-keymap("x", "<CR>", cmp.cop.confirm_selection, "Confirm AI suggestion keep")
+keymap("n", "<leader>ak", cmp.start_interactive, "AI suggestion keep")
+keymap("x", "<CR>", cmp.apply_interactive, "Confirm AI suggestion keep")
 keymap("v", "<Tab>", "w", "Select next word") -- for convenient tab tab tab to expand selection in AI suggest
 keymap("v", "<S-Tab>", "b", "Select next word") -- for convenient tab tab tab to expand selection in AI suggest
 
