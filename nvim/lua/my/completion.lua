@@ -1,7 +1,15 @@
+vim.opt.completeopt = "menu,menuone,noselect" -- show menu also when only one match, don't select automatically
+vim.opt.pumheight = 10 -- max lines in popup menu
+
 -- enable built-in completion if LSP supports it
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+    if not client then
+      return
+    end
+
     if client:supports_method("textDocument/completion") then
       -- Optional: trigger autocompletion on EVERY keypress. May be slow!
       -- local chars = {}
