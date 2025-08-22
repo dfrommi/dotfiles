@@ -41,42 +41,32 @@ end
 function M.apply_interactive()
   -- multiple norm commands to make sure cursor position is correct
   vim.cmd([[ norm! "sy ]]) -- yank selection (to keep) into register s
-  vim.cmd([[ norm! `sv`t ]]) -- select suggestion region
-  vim.cmd([[ norm! "sp ]]) -- replace full range with selection from register s
-  vim.cmd([[ norm! `]mta ]]) -- jump to end, fix mark t and go back to insert mode
+  vim.cmd([[ norm! `sdv`t ]]) -- select suggestion region
+  vim.cmd([[ norm! `s"sp ]]) -- replace full range with selection from register s
+  vim.cmd([[ norm! `]mt ]]) -- jump to end, fix mark t and go back to insert mode
+  feed("<esc>`ta", "n") -- go back to insert mode, has to be feed as it changes the mode
 end
 
--- function M.action(pum_action, copilot_action, fallback_key)
---   return function()
---     if pum_visible() and pum_action then
---       return (pum_action() or fallback_key or "")
---     elseif cop.is_visible() and copilot_action then
---       return (copilot_action() or fallback_key or "")
---     end
---
---     return fallback_key or ""
---   end
--- end
-
 local pum = require("my.completion.pum")
-local cop = require("my.completion.copilot")
+local ai = require("my.completion.copilot")
+-- local ai = require("my.completion.supermaven")
 
 function M.cycle()
   if pum.is_visible() then
     pum.dismiss()
-    cop.show()
+    ai.show()
     return true
-  elseif cop.is_visible() then
-    if cop.has_next() then
-      cop.next()
+  elseif ai.is_visible() then
+    if ai.has_next() then
+      ai.next()
     else
-      cop.dismiss()
+      ai.dismiss()
       pum.show()
     end
     return true
   else
     -- stuck when no next item and pum not visible because no completion available
-    cop.show()
+    ai.show()
     return true
   end
 end
@@ -85,8 +75,8 @@ function M.accept()
   if pum.is_visible() then
     pum.accept()
     return true
-  elseif cop.is_visible() then
-    accept_with_marks(cop.accept)
+  elseif ai.is_visible() then
+    accept_with_marks(ai.accept)
     return true
   end
 end
@@ -95,8 +85,8 @@ function M.accept_interactive()
   if pum.is_visible() then
     pum.accept() -- no interactive supported
     return true
-  elseif cop.is_visible() then
-    accept_with_marks(cop.accept, M.start_interactive)
+  elseif ai.is_visible() then
+    accept_with_marks(ai.accept, M.start_interactive)
     return true
   end
 end
@@ -105,8 +95,8 @@ function M.dismiss()
   if pum.is_visible() then
     pum.dismiss()
     return true
-  elseif cop.is_visible() then
-    cop.dismiss()
+  elseif ai.is_visible() then
+    ai.dismiss()
     return true
   end
 end

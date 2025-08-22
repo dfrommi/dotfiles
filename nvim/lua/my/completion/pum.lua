@@ -24,12 +24,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-local function feed(keys, mode)
-  if not mode then
-    mode = vim.fn.mode() -- default to current mode
-  end
-
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), mode, false)
+local function feed(keys)
+  -- mode n (noremap) skips custom mappings thus avoids endless recursion
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", false)
 end
 
 local function pum_selected()
@@ -45,7 +42,6 @@ end
 
 function M.show()
   feed("<C-x><C-o>")
-  --return "<C-x><C-o>"
 end
 
 function M.dismiss()
@@ -72,7 +68,7 @@ function M.next()
 end
 
 -- function M.prev()
---   return "<C-p>"
+--   feed "<C-p>"
 -- end
 
 return M
