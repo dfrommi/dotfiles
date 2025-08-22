@@ -5,6 +5,7 @@ local flash = require("flash")
 local splits = require("smart-splits")
 local conform = require("conform")
 local mini_ai = require("mini.ai")
+local mini_files = require("mini.files")
 local cmp = require("my.completion")
 local assistant = require("my.assistant")
 
@@ -48,11 +49,15 @@ keymap("n", "<leader>fF", picker.grep, "Find in Files")
 keymap("n", "<leader>fb", picker.buffers, "Find Buffers")
 keymap("n", "<leader>fB", picker.grep_buffers, "Find in Buffers")
 --vim.keymap.set("n", "<leader>fr", picker.recent, { desc = "Recent" })
-keymap("n", "<leader>fe", picker.explorer, "File Explorer")
 keymap("n", "<leader>fh", picker.help, "Help Pages")
 keymap("n", "<leader>fk", picker.keymaps, "Keymaps")
 keymap("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols")
 keymap({ "n", "x" }, "<leader>*", picker.grep_word, "Visual selection or word")
+
+keymap("n", "<leader>fe", function()
+  mini_files.open(vim.api.nvim_buf_get_name(0))
+end, "File Explorer (buffer)")
+keymap("n", "<leader>fE", mini_files.open, "File Explorer (root)")
 
 --
 -- CODE EDITING

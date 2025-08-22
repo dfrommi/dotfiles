@@ -3,14 +3,13 @@
 --   https://gpanders.com/blog/whats-new-in-neovim-0-11/#lspa
 --   https://github.com/SylvanFranklin/.config/blob/main/nvim/init.lua
 
-require("my.options")
-
 vim.pack.add({
   --
   -- CORE
   --
   "https://github.com/folke/which-key.nvim", -- keybinding help
   "https://github.com/folke/snacks.nvim", -- item picker popup
+  "https://github.com/echasnovski/mini.files", -- file explorer
   "https://github.com/folke/flash.nvim", -- jump around
   "https://github.com/echasnovski/mini.ai", -- text objects and surrounding text manipulation
   "https://github.com/echasnovski/mini.surround", -- text objects and surrounding text manipulation

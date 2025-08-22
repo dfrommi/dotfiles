@@ -17,6 +17,8 @@ require("mini.surround").setup({
   mappings = keymap.mini_surround_mappings,
 })
 
+require("mini.files").setup({})
+
 -- require("rainbow-delimiters.setup").setup()
 
 require("smart-splits").setup({})
@@ -36,7 +38,7 @@ require("gitsigns").setup({
 local snacks = require("snacks")
 snacks.setup({
   picker = {}, -- enable picker
-  explorer = {}, -- enable explorer
+  --explorer = {}, -- enable explorer
 })
 
 local snacks_lsp_symbols = snacks.picker.lsp_symbols
