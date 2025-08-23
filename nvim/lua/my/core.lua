@@ -1,6 +1,27 @@
 local keymap = require("my.keymap")
 
-require("lualine").setup()
+local function buffer_parent_dir()
+  local path = vim.api.nvim_buf_get_name(0)
+  if path == "" then
+    return nil
+  end
+  local parent = vim.fs.dirname(path) -- full parent path
+  return parent and vim.fs.basename(parent) or nil -- just the last part
+end
+
+require("lualine").setup({
+  sections = {
+    -- replace branch with parent dir
+    lualine_b = {
+      {
+        function()
+          return buffer_parent_dir() or ""
+        end,
+        icon = "",
+      },
+    },
+  },
+})
 vim.cmd.colorscheme("catppuccin-mocha")
 
 require("which-key").setup({
