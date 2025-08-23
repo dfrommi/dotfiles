@@ -50,15 +50,8 @@ vim.pack.add({
   --
   -- AI
   --
-  {
-    src = "https://github.com/dfrommi/copilot.lua", -- suggestions
-    version = "has-next-function", -- custom version with suggestion.has_next() until merged upstream
-  },
-  -- "https://github.com/zbirenbaum/copilot.lua", -- suggestions
-  {
-    src = "https://github.com/dfrommi/supermaven-nvim",
-    version = "disable-inline-as-function", -- custom version that allows temporary disabling inline suggestions
-  },
+  "https://github.com/zbirenbaum/copilot.lua", -- suggestions
+  "https://github.com/supermaven-inc/supermaven-nvim",
   "https://github.com/NickvanDyke/opencode.nvim", -- extract prompt for coding agents
 
   --
