@@ -107,4 +107,31 @@ function M.setup()
   })
 end
 
+--
+-- highlight symbol under cursor
+--
+-- time to wait before triggering the CursorHold event
+vim.opt.updatetime = 500
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client and client:supports_method("textDocument/documentHighlight") then
+      local group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
+
+      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        group = group,
+        buffer = ev.buf,
+        callback = vim.lsp.buf.document_highlight,
+      })
+
+      vim.api.nvim_create_autocmd("CursorMoved", {
+        group = group,
+        buffer = ev.buf,
+        callback = vim.lsp.buf.clear_references,
+      })
+    end
+  end,
+})
+
 return M
