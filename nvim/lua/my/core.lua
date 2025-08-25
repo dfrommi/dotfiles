@@ -60,6 +60,7 @@ local snacks = require("snacks")
 snacks.setup({
   picker = {}, -- enable picker
   --explorer = {}, -- enable explorer
+  indent = {},
 })
 
 local snacks_lsp_symbols = snacks.picker.lsp_symbols
