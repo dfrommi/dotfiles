@@ -38,7 +38,12 @@ require("mini.surround").setup({
   mappings = keymap.mini_surround_mappings,
 })
 
-require("mini.files").setup({})
+require("mini.files").setup({
+  mappings = {
+    go_in = "L",
+    go_in_plus = "l",
+  },
+})
 
 -- require("rainbow-delimiters.setup").setup()
 
