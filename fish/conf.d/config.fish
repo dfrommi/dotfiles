@@ -24,6 +24,8 @@ functions -e gh
 
 alias ll="ls -l"
 alias la="ls -la"
+alias lll="ls -l -T -L 2"
+alias lt="ls -T"
 
 alias vi nvim
 alias vim nvim
