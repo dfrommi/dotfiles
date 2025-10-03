@@ -8,6 +8,7 @@ local mini_ai = require("mini.ai")
 local mini_files = require("mini.files")
 local cmp = require("my.completion")
 local assistant = require("my.assistant")
+local neotest = require("neotest")
 
 local function keymap(mode, key, action, opts)
   local options = type(opts) == "string" and { desc = opts } or opts
@@ -111,6 +112,31 @@ keymap("n", "<leader>ak", cmp.start_interactive, "AI suggestion keep")
 keymap("x", "<CR>", cmp.apply_interactive, "Confirm AI suggestion keep")
 keymap("v", "<Tab>", "w", "Select next word") -- for convenient tab tab tab to expand selection in AI suggest
 keymap("v", "<S-Tab>", "b", "Select next word") -- for convenient tab tab tab to expand selection in AI suggest
+
+--
+-- TESTING
+--
+keymap("n", "<leader>tt", function()
+  neotest.run.run()
+end, "Run nearest test")
+keymap("n", "<leader>tT", function()
+  neotest.run.run(vim.fn.expand("%"))
+end, "Run file tests")
+keymap("n", "<leader>tl", function()
+  neotest.run.run_last()
+end, "Run last test")
+keymap("n", "<leader>ts", function()
+  neotest.summary.toggle()
+end, "Toggle test summary")
+keymap("n", "<leader>to", function()
+  neotest.output.open({ enter = true, auto_close = true })
+end, "Show test output")
+keymap("n", "<leader>tO", function()
+  neotest.output_panel.toggle()
+end, "Toggle test output panel")
+keymap("n", "<leader>tS", function()
+  neotest.run.stop()
+end, "Stop running tests")
 
 --
 -- AI

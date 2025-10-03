@@ -36,6 +36,7 @@ vim.pack.add({
   --
   "https://github.com/lewis6991/gitsigns.nvim", -- show git changes in the gutter
   "https://github.com/MeanderingProgrammer/render-markdown.nvim", -- render markdown
+  "https://github.com/nvim-neotest/neotest", -- testing framework
 
   --
   -- UI
@@ -59,6 +60,7 @@ vim.pack.add({
   --
   "https://github.com/nvim-lua/plenary.nvim", -- common dependency (e.g. CopilotChat)
   "https://github.com/nvim-tree/nvim-web-devicons", -- dependency of lualine
+  "https://github.com/nvim-neotest/nvim-nio", -- dependency of neotest
 })
 
 require("my.options")
@@ -73,6 +75,8 @@ require("my.lang.markdown")
 
 -- has to be after lang because other modules add config to it
 require("my.code").setup()
+
+require("my.testing").setup()
 
 -- very last to make sure everything is loaded and available
 require("my.keymap")
