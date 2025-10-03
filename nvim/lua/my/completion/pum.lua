@@ -17,9 +17,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       --   table.insert(chars, string.char(i))
       -- end
       -- client.server_capabilities.completionProvider.triggerCharacters = chars
+
       --vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
 
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
     end
   end,
 })
