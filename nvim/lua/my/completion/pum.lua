@@ -1,16 +1,19 @@
-vim.opt.completeopt = "menu,menuone,noselect" -- show menu also when only one match, don't select automatically
+-- see https://gist.github.com/MariaSolOs/2e44a86f569323c478e5a078d0cf98cc
+--
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
 vim.opt.pumheight = 10 -- max lines in popup menu
 
 -- enable built-in completion if LSP supports it
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    local bufnr = ev.buf
 
     if not client then
       return
     end
 
-    if client:supports_method("textDocument/completion") then
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_completion, bufnr) then
       -- Optional: trigger autocompletion on EVERY keypress. May be slow!
       -- local chars = {}
       -- for i = 32, 126 do
@@ -18,9 +21,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       -- end
       -- client.server_capabilities.completionProvider.triggerCharacters = chars
 
-      --vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
     end
   end,
 })
@@ -38,7 +39,7 @@ end
 local M = {}
 
 function M.is_visible()
-  return vim.fn.pumvisible() == 1
+  return tonumber(vim.fn.pumvisible()) ~= 0
 end
 
 function M.show()

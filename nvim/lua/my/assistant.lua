@@ -1,5 +1,4 @@
 local oc = require("opencode")
-oc.setup()
 
 local M = {}
 
@@ -30,7 +29,8 @@ end
 
 -- intercepting opencode communication, used by the other methods
 function oc.prompt(prompt)
-  prompt = require("opencode.context").inject(prompt, require("opencode.config").options.contexts)
+  -- process input, replace placeholders like @selection
+  prompt = require("opencode.context").inject(prompt)
 
   local executed = with_codex(function(pane_id)
     wezterm.send_text(pane_id, prompt)
@@ -42,14 +42,14 @@ function oc.prompt(prompt)
   end
 end
 
-function M.ask(default)
+function M.ask(default, opts)
   return function()
-    oc.ask(default)
+    oc.ask(default, opts)
   end
 end
 
 function M.select_prompt()
-  return oc.select_prompt()
+  return oc.select()
 end
 
 function M.activate()

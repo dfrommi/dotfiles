@@ -66,6 +66,7 @@ snacks.setup({
   picker = {}, -- enable picker
   --explorer = {}, -- enable explorer
   indent = {},
+  input = {}, -- for openassitant.nvim
 })
 
 local snacks_lsp_symbols = snacks.picker.lsp_symbols

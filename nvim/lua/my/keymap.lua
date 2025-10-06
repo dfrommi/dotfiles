@@ -100,11 +100,14 @@ keymap("n", "<C-o>", splits.move_cursor_right, "Go to Right Window [<C-w>l]")
 --
 -- COMPLETION
 --
-keymap_opt("i", "<S-CR>", cmp.cycle, "Cycle completion items")
-keymap_opt("i", "<Tab>", cmp.accept, "Accept completion")
-keymap_opt("i", "<S-Tab>", cmp.accept_interactive, "AI partial accept")
-keymap_opt("i", "<C-e>", cmp.dismiss, "Dismiss completion")
+-- Inline completion: thumb keys right hand
+keymap_opt("i", "<S-CR>", cmp.inline.accept, "Inline completion accept")
+keymap_opt("i", "<M-BS>", cmp.inline.accept_interactive, "Inline completion interactive")
+keymap_opt("i", "<M-DEL>", cmp.inline.next, "Inline completion next")
 
+--keymap_opt("i", "<Tab>", cmp.pum.accept, "Accept completion")
+keymap_opt("i", "<S-Tab>", cmp.pum.show_or_accept, "LSP completion show/accept")
+keymap_opt("i", "<C-e>", cmp.pum.dismiss, "Dismiss completion")
 keymap_opt("i", "<CR>", cmp.pum_accept_if_selected, "Confirm selected completion")
 
 --partial completion of suggestions

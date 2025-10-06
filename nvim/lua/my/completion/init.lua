@@ -31,6 +31,12 @@ end
 
 local M = {}
 
+local pum = require("my.completion.pum")
+M.pum = {}
+
+local ai = require("my.completion.copilot_lsp")
+M.inline = {}
+
 function M.start_interactive()
   -- go to mark s and start visual mode with first word selected
   -- requires feed instead of vim.cmd to really enter visual mode
@@ -47,56 +53,33 @@ function M.apply_interactive()
   feed("<esc>`ta", "n") -- go back to insert mode, has to be feed as it changes the mode
 end
 
-local pum = require("my.completion.pum")
-local ai = require("my.completion.copilot")
--- local ai = require("my.completion.supermaven")
-
-function M.cycle()
-  if pum.is_visible() then
-    pum.dismiss()
-    ai.show()
-    return true
-  elseif ai.is_visible() then
-    if ai.has_next() then
-      ai.next()
-    else
-      ai.dismiss()
-      pum.show()
-    end
-    return true
-  else
-    -- stuck when no next item and pum not visible because no completion available
-    ai.show()
-    return true
-  end
+function M.inline.accept()
+  accept_with_marks(ai.accept)
+  return true
 end
 
-function M.accept()
+function M.inline.accept_interactive()
+  accept_with_marks(ai.accept, M.start_interactive)
+  return true
+end
+
+function M.inline.next()
+  ai.next()
+  return true
+end
+
+function M.pum.show_or_accept()
   if pum.is_visible() then
     pum.accept()
-    return true
-  elseif ai.is_visible() then
-    accept_with_marks(ai.accept)
-    return true
+  else
+    pum.show()
   end
+  return true
 end
 
-function M.accept_interactive()
-  if pum.is_visible() then
-    pum.accept() -- no interactive supported
-    return true
-  elseif ai.is_visible() then
-    accept_with_marks(ai.accept, M.start_interactive)
-    return true
-  end
-end
-
-function M.dismiss()
+function M.pum.dismiss()
   if pum.is_visible() then
     pum.dismiss()
-    return true
-  elseif ai.is_visible() then
-    ai.dismiss()
     return true
   end
 end

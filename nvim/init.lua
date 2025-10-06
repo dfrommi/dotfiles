@@ -51,14 +51,12 @@ vim.pack.add({
   --
   -- AI
   --
-  "https://github.com/zbirenbaum/copilot.lua", -- suggestions
-  "https://github.com/supermaven-inc/supermaven-nvim",
   "https://github.com/NickvanDyke/opencode.nvim", -- extract prompt for coding agents
 
   --
   -- DEPENDENCIES
   --
-  "https://github.com/nvim-lua/plenary.nvim", -- common dependency (e.g. CopilotChat)
+  "https://github.com/nvim-lua/plenary.nvim", -- dependency of many plugins
   "https://github.com/nvim-tree/nvim-web-devicons", -- dependency of lualine
   "https://github.com/nvim-neotest/nvim-nio", -- dependency of neotest
 })
