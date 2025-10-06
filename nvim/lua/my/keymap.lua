@@ -45,13 +45,19 @@ keymap({ "n", "x" }, "<leader>P", [["+P]], "Paste before from system clipboard")
 -- FIND
 --
 keymap("n", "<leader>ff", picker.files, "Find Files")
--- vim.keymap.set("n", "<leader>fg", picker.git_files, { desc = "Find Git Files" })
-keymap("n", "<leader>fF", picker.grep, "Find in Files")
+keymap("n", "<leader>fF", function()
+  picker.files({ dirs = { vim.fn.expand("%:h") } })
+end, "Find Files (buffer dir)")
+keymap("n", "<leader>fg", picker.grep, "Find in Files")
+keymap("n", "<leader>fG", function()
+  picker.grep({ dirs = { vim.fn.expand("%:h") } })
+end, "Find in Files (buffer dir)")
 keymap("n", "<leader>fb", picker.buffers, "Find Buffers")
 keymap("n", "<leader>fB", picker.grep_buffers, "Find in Buffers")
 --vim.keymap.set("n", "<leader>fr", picker.recent, { desc = "Recent" })
 keymap("n", "<leader>fh", picker.help, "Help Pages")
 keymap("n", "<leader>fk", picker.keymaps, "Keymaps")
+keymap("n", "<leader>fm", picker.marks, "Marks")
 keymap("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols")
 keymap({ "n", "x" }, "<leader>*", picker.grep_word, "Visual selection or word")
 
@@ -176,7 +182,7 @@ M.mini_textobjects = {
   c = mini_ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
   s = mini_ai.gen_spec.treesitter({ a = "@statement.outer", i = "@statement.outer" }), -- statement
   C = mini_ai.gen_spec.treesitter({ a = "@comment.outer", i = "@comment.inner" }), -- comment
-  e = { -- Word with case (parts of camilCase, snake_case, etc.)
+  e = { -- Word with case (parts of camelCase, snake_case, etc.)
     { "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
     "^().*()$",
   },

@@ -40,8 +40,8 @@ require("mini.surround").setup({
 
 require("mini.files").setup({
   mappings = {
-    go_in = "L",
-    go_in_plus = "l",
+    close = "<esc>",
+    go_in_plus = "<cr>",
   },
 })
 
