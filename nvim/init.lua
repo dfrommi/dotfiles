@@ -14,6 +14,7 @@ vim.pack.add({
   "https://github.com/echasnovski/mini.ai", -- text objects and surrounding text manipulation
   "https://github.com/echasnovski/mini.surround", -- text objects and surrounding text manipulation
   -- "https://github.com/HiPhish/rainbow-delimiters.nvim", -- rainbow brackets
+  "https://github.com/j-hui/fidget.nvim", -- LSP status info
 
   --
   -- LSP
@@ -29,7 +30,7 @@ vim.pack.add({
   -- TREESITTER
   --
   "https://github.com/nvim-treesitter/nvim-treesitter", -- syntax highlighter
-  "https://github.com/nvim-treesitter/nvim-treesitter-context", -- show surrounding context on top of editor
+  --  "https://github.com/nvim-treesitter/nvim-treesitter-context", -- show surrounding context on top of editor
 
   --
   -- TOOLS
