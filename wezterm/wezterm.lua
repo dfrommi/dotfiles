@@ -58,6 +58,12 @@ config.disable_default_key_bindings = true
 config.leader = { key = "\\", mods = "CTRL", timeout_milliseconds = 1000 }
 
 config.keys = {
+	-- Shift-Enter fix/workaound
+	{
+		key = "Enter",
+		mods = "SHIFT",
+		action = wezterm.action.SendString("\x1b[13;2u"),
+	},
 	-- Tab navigation
 	{ key = "[", mods = "CMD", action = wezterm.action.ActivateTabRelative(-1) },
 	{ key = "]", mods = "CMD", action = wezterm.action.ActivateTabRelative(1) },
