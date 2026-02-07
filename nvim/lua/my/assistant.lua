@@ -27,10 +27,14 @@ local function with_codex(fn)
   return true
 end
 
+local function format(str)
+  -- process input, replace placeholders like @selection
+  return require("opencode.context").inject(str)
+end
+
 -- intercepting opencode communication, used by the other methods
 function oc.prompt(prompt)
-  -- process input, replace placeholders like @selection
-  prompt = require("opencode.context").inject(prompt)
+  prompt = format(prompt)
 
   local executed = with_codex(function(pane_id)
     wezterm.send_text(pane_id, prompt)
@@ -56,6 +60,15 @@ function M.activate()
   with_codex(function(pane_id)
     wezterm.activate_pane(pane_id)
   end)
+end
+
+function M.paste_and_activate(str)
+  return function()
+    with_codex(function(pane_id)
+      wezterm.send_text(pane_id, format(str))
+      wezterm.activate_pane(pane_id)
+    end)
+  end
 end
 
 function M.split_right()

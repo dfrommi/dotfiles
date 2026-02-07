@@ -25,6 +25,9 @@ end
 --
 -- CORE
 --
+keymap("x", ">", ">gv", "Indent and reselect")
+keymap("x", "<", "<gv", "Unindent and reselect")
+
 -- keymap("n", "U", "<C-r>", "Redo [<C-r>]")
 keymap("x", "J", ":m '>+1<CR>gv=gv", "Move selection down")
 keymap("x", "K", ":m '<-2<CR>gv=gv", "Move selection up")
@@ -59,7 +62,7 @@ keymap("n", "<leader>fh", picker.help, "Help Pages")
 keymap("n", "<leader>fk", picker.keymaps, "Keymaps")
 keymap("n", "<leader>fm", picker.marks, "Marks")
 keymap("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols")
-keymap({ "n", "x" }, "<leader>*", picker.grep_word, "Visual selection or word")
+keymap({ "n", "x" }, "<leader>fw", picker.grep_word, "Visual selection or word")
 
 keymap("n", "<leader>fe", function()
   mini_files.open(vim.api.nvim_buf_get_name(0))
@@ -78,7 +81,15 @@ keymap("n", "grD", vim.lsp.buf.declaration, "Go to Declaration")
 keymap("n", "grc", vim.lsp.buf.incoming_calls, "Incoming Calls")
 keymap("n", "grC", vim.lsp.buf.outgoing_calls, "Outgoing Calls")
 -- no need to go via location list for arbitrary collection of symbols. Always pick one, never bulk-operate
-keymap("n", "gO", picker.lsp_symbols, "LSP Symbols")
+keymap("n", "gO", function()
+  picker.lsp_symbols()
+end, "LSP Symbols")
+
+--
+-- SCROLLING
+--
+keymap("n", "<C-d>", "<C-d>zz", "Scroll down and center")
+keymap("n", "<C-u>", "<C-u>zz", "Scroll up and center")
 
 --
 -- JUMPING
@@ -150,14 +161,25 @@ end, "Stop running tests")
 --
 -- AI
 --
-keymap("n", "<leader>aA", assistant.ask(), "Ask Assistant")
-keymap("n", "<leader>aa", assistant.ask("@cursor: "), "Ask Assistant at cursor")
-keymap("v", "<leader>aa", assistant.ask("@selection: "), "Ask Assistant for selection")
-keymap({ "n", "v" }, "<leader>ap", assistant.select_prompt, "Select prompt")
-keymap("n", "<leader>af", assistant.activate, "Focus AI Assistant")
-keymap("n", "<leader>as", assistant.split_bottom, "AI Assistant split bottom")
-keymap("n", "<leader>av", assistant.split_right, "AI Assistant split right")
-keymap("n", "<leader>au", assistant.unsplit, "AI Assistant unsplit")
+-- Ideas for a better workflow:
+--  - aa to toggle split/unsplit, and maybe focus codex when activated
+--  - try to find more natural ways for input
+--    - i for input, p for pasting into codex(append)
+--
+-- keymap("n", "<leader>aI", assistant.ask(), "Ask Assistant")
+-- keymap("n", "<leader>ai", assistant.ask("@cursor: "), "Ask Assistant at cursor")
+-- keymap("v", "<leader>ai", assistant.ask("@selection: "), "Ask Assistant for selection")
+-- keymap({ "n", "v" }, "<leader>ap", assistant.select_prompt, "Select prompt")
+
+keymap("v", "<leader>ap", assistant.paste_and_activate(" @selection "), "AI Assistant paste & activate")
+keymap("n", "<leader>ap", assistant.paste_and_activate(" @cursor "), "AI Assistant paste & activate")
+keymap("n", "<leader>aPd", assistant.paste_and_activate(" @diagnostics "), "AI Assistant paste diagnostics")
+keymap("n", "<leader>aPq", assistant.paste_and_activate(" @quickfix "), "AI Assistant paste quickfix")
+
+keymap({ "n", "x" }, "<leader>aa", assistant.activate, "AI Assistant activate")
+keymap({ "n", "x" }, "<leader>as", assistant.split_bottom, "AI Assistant split bottom")
+keymap({ "n", "x" }, "<leader>av", assistant.split_right, "AI Assistant split right")
+keymap({ "n", "x" }, "<leader>aq", assistant.unsplit, "AI Assistant hide")
 
 M.mini_surround_mappings = {
   add = "gsa", -- Add surrounding
@@ -169,9 +191,20 @@ M.mini_surround_mappings = {
   update_n_lines = "gsn", -- Update `n_lines` for the highlighted surrounding
 }
 
-M.mini_textobjects = {
+M.mini_ai_mappings = {
+  around_next = "aN",
+  inside_next = "iN",
+  around_last = "aL",
+  inside_last = "iL",
+}
+
+M.mini_ai_textobjects = {
+  -- rename to math custom layout better
+  ["r"] = { { "%b''", '%b""', "%b``" }, "^.().*().$" },
+  ["l"] = { { "%b()", "%b[]", "%b{}" }, "^.().*().$" },
+
   -- built-in text objects:
-  --   f - function
+  --   f - function call
   --   t - tag
   --   a - argument
   o = mini_ai.gen_spec.treesitter({ -- code block
