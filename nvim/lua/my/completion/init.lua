@@ -38,9 +38,9 @@ local ai = require("my.completion.copilot_lsp")
 M.inline = {}
 
 function M.start_interactive()
-  -- go to mark s and start visual mode with first word selected
+  -- go to mark s and start visual mode
   -- requires feed instead of vim.cmd to really enter visual mode
-  feed("<esc>`svw", "n")
+  feed("<esc>`sv", "n")
 end
 
 -- assumes suggestion is between marks s and t

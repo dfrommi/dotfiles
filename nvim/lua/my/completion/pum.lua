@@ -2,6 +2,7 @@
 --
 vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
 vim.opt.pumheight = 10 -- max lines in popup menu
+vim.opt.pumborder = "rounded"
 
 -- enable built-in completion if LSP supports it
 vim.api.nvim_create_autocmd("LspAttach", {
