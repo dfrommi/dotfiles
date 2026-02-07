@@ -27,11 +27,16 @@ vim.cmd.colorscheme("catppuccin-mocha")
 require("which-key").setup({
   preset = "helix",
   show_help = false,
+  delay = 1000,
 })
+
+-- LSP progress indicator
+require("fidget").setup()
 
 require("mini.ai").setup({
   n_lines = 500,
-  custom_textobjects = keymap.mini_textobjects,
+  mappings = keymap.mini_ai_mappings,
+  custom_textobjects = keymap.mini_ai_textobjects,
 })
 
 require("mini.surround").setup({
