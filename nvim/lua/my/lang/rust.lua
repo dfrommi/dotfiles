@@ -1,6 +1,7 @@
 local M = {}
 
 require("my.code").treesitter("rust")
+require("my.code").conform("rust", "rustfmt")
 
 -- enabled by rustaceanvim
 vim.lsp.config("rust-analyzer", {
