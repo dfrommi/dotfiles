@@ -8,30 +8,31 @@
 [push]
 	default = current
 	autoSetupRemote = true
+
 [pull]
 	rebase = true
+
+[rebase]
+	autoStash = true
+
+[branch]
+	autoSetupMerge = false
+
+[init]
+	templatedir = ~/.config/git/templates
+	defaultBranch = main
+
+[github]
+	user = dfrommi
 
 [alias]
 	st = status -sb
 	
-	branches = branch -a
-	tags = tag
-	stashes = stash list
-	aliases = config --get-regexp alias
-	conflicts = diff --name-only --diff-filter=U
-
 	unstage = reset -q HEAD --
 	discard = checkout --
 	uncommit = reset --mixed HEAD~
-	nevermind = !git reset --hard HEAD && git clean -d -f
 	amend = commit --amend
-#	undo = reset --soft HEAD~
 
-	prestage = diff --diff-algorithm=minimal -w
-	precommit = diff --cached --diff-algorithm=minimal -w
-	
-	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
-	
 	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate -20
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --numstat -20
 	lds = log --pretty=format:"%C(yellow)%h\\ %C(white)%ad%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --date=short -20
@@ -43,48 +44,39 @@
   gdiff=difftool --dir-diff -y -t intellij
   resolve=mergetool -t intellij --prompt
 
-[branch]
-	autoSetupMerge = false
-
-[init]
-	templatedir = ~/.config/git/templates
-
-[github]
-	user = dfrommi
-[ghi]
-	token = !security find-internet-password -a dfrommi -s github.com -l 'ghi token' -w
-
-
 [core]
 	pager = delta
 
-#[pager]
-#	log = diff-so-fancy | less
-#	show = diff-so-fancy | less
-#	diff = diff-so-fancy | less
-
 [interactive]
 	diffFilter = delta --color-only
-# 	diffFilter = diff-so-fancy
 
 [delta]
-    navigate = true    # use n and N to move between diff sections
-    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-    side-by-side = true
-    syntax-theme = Catppuccin-mocha
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  side-by-side = true
+  syntax-theme = Catppuccin-mocha
 
 [diff]
-	colorMoved = default
-#	compactionHeuristic = true
-    tool = intellij
-[difftool "intellij"]
-  cmd = /Applications/IntelliJ*.app/Contents/MacOS/idea diff $(realpath "$LOCAL") $(realpath "$REMOTE") 2>/dev/null
+  colorMoved = default
+  external = difft
+  tool = difft
+
+[difftool]
+  prompt = false
 
 [merge]
 	tool = intellij
 	conflictstyle = diff3
+
 [mergetool]
 	keepBackup = false
+
+[difftool "difft"]
+  cmd = difft --color=always --width=1000 "$LOCAL" "$REMOTE"
+
+[difftool "intellij"]
+  cmd = /Applications/IntelliJ*.app/Contents/MacOS/idea diff $(realpath "$LOCAL") $(realpath "$REMOTE") 2>/dev/null
+
 [mergetool "intellij"]
   cmd = /Applications/IntelliJ*.app/Contents/MacOS/idea merge $(realpath "$LOCAL") $(realpath "$REMOTE") $(realpath "$BASE") $(realpath "$MERGED") 2>/dev/null
   trustExitCode = true
@@ -94,5 +86,3 @@
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
-[rebase]
-	autoStash = true

@@ -1,7 +1,6 @@
-
 reporting: "off"
 update:
-    method: never
+  method: never
 gui:
   showFileTree: true
   nerdFontsVersion: 3
@@ -13,6 +12,7 @@ os:
 git:
   autoFetch: false
   autoRefresh: false
-  paging:
-    colorArg: always
-    pager: delta --paging=never
+  pagers:
+    - externalDiffCommand: difft --color=always
+    - colorArg: always
+      pager: delta --paging=never
