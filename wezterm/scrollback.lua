@@ -15,6 +15,7 @@ M.quick_select_url_and_open = wezterm.action.QuickSelectArgs({
 	end),
 })
 
+-- Copy Wezterm scrollback/window content to a new Neovim instance
 wezterm.on("scrollback-to-nvim", function(window, pane)
 	local rows = pane:get_dimensions().scrollback_rows
 	local text = pane:get_lines_as_text(rows) or ""

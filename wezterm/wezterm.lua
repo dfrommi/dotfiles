@@ -94,8 +94,8 @@ config.keys = {
 	},
 
 	-- Copy/paste
-	{ key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
-	{ key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
+	{ key = "c", mods = "CMD", action = wezterm.action.CopyTo("Clipboard") },
+	{ key = "v", mods = "CMD", action = wezterm.action.PasteFrom("Clipboard") },
 	{
 		key = "c",
 		mods = "LEADER",
@@ -203,11 +203,12 @@ wezterm.on("update-status", function(window, pane)
 		local is_active = name == current_workspace
 		local colors = is_active and scheme.tab_bar.new_tab_hover or scheme.tab_bar.new_tab
 		local intensity = is_active and "Bold" or "Normal"
+		local marker = is_active and "*" or ""
 
 		table.insert(right, { Foreground = { Color = colors.fg_color } })
 		table.insert(right, { Background = { Color = colors.bg_color } })
 		table.insert(right, { Attribute = { Intensity = intensity } })
-		table.insert(right, { Text = " " .. name .. " " })
+		table.insert(right, { Text = " " .. name .. marker .. " " })
 	end
 
 	window:set_left_status(wezterm.format(left))
