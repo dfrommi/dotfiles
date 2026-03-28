@@ -50,11 +50,6 @@ vim.pack.add({
   "https://github.com/mrjones2014/smart-splits.nvim", -- integrate with wezterm splits
 
   --
-  -- AI
-  --
-  "https://github.com/NickvanDyke/opencode.nvim", -- extract prompt for coding agents
-
-  --
   -- DEPENDENCIES
   --
   "https://github.com/nvim-lua/plenary.nvim", -- dependency of many plugins
@@ -66,7 +61,6 @@ require("my.options")
 require("my.core")
 
 require("my.completion")
-require("my.assistant")
 
 require("my.lang.lua")
 require("my.lang.rust")

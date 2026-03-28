@@ -7,7 +7,6 @@ local conform = require("conform")
 local mini_ai = require("mini.ai")
 local mini_files = require("mini.files")
 local cmp = require("my.completion")
-local assistant = require("my.assistant")
 local neotest = require("neotest")
 local file_info = require("my.utils.file_info")
 
@@ -162,29 +161,6 @@ end, "Toggle test output panel")
 keymap("n", "<leader>tS", function()
   neotest.run.stop()
 end, "Stop running tests")
-
---
--- AI
---
--- Ideas for a better workflow:
---  - aa to toggle split/unsplit, and maybe focus codex when activated
---  - try to find more natural ways for input
---    - i for input, p for pasting into codex(append)
---
--- keymap("n", "<leader>aI", assistant.ask(), "Ask Assistant")
--- keymap("n", "<leader>ai", assistant.ask("@cursor: "), "Ask Assistant at cursor")
--- keymap("v", "<leader>ai", assistant.ask("@selection: "), "Ask Assistant for selection")
--- keymap({ "n", "v" }, "<leader>ap", assistant.select_prompt, "Select prompt")
-
-keymap("v", "<leader>ap", assistant.paste_and_activate(" @selection "), "AI Assistant paste & activate")
-keymap("n", "<leader>ap", assistant.paste_and_activate(" @cursor "), "AI Assistant paste & activate")
-keymap("n", "<leader>aPd", assistant.paste_and_activate(" @diagnostics "), "AI Assistant paste diagnostics")
-keymap("n", "<leader>aPq", assistant.paste_and_activate(" @quickfix "), "AI Assistant paste quickfix")
-
-keymap({ "n", "x" }, "<leader>aa", assistant.activate, "AI Assistant activate")
-keymap({ "n", "x" }, "<leader>as", assistant.split_bottom, "AI Assistant split bottom")
-keymap({ "n", "x" }, "<leader>av", assistant.split_right, "AI Assistant split right")
-keymap({ "n", "x" }, "<leader>aq", assistant.unsplit, "AI Assistant hide")
 
 M.mini_surround_mappings = {
   add = "gsa", -- Add surrounding
