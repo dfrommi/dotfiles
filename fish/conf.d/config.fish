@@ -7,6 +7,8 @@ set -x GIT_REPOS_BASE_PATHS $HOME/{my,thirdparty} $HOME
 
 fish_add_path $HOME/my/bin
 fish_add_path $HOME/thirdparty/bin
+fish_add_path $HOME/.local/bin
+
 
 abbr brwe brew
 
