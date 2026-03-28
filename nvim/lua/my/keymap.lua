@@ -9,6 +9,7 @@ local mini_files = require("mini.files")
 local cmp = require("my.completion")
 local assistant = require("my.assistant")
 local neotest = require("neotest")
+local file_info = require("my.utils.file_info")
 
 local function keymap(mode, key, action, opts)
   local options = type(opts) == "string" and { desc = opts } or opts
@@ -39,6 +40,10 @@ keymap({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard")
 keymap("n", "<leader>Y", [["+Y]], "Yank line to system clipboard")
 keymap({ "n", "x" }, "<leader>p", [["+p]], "Paste from system clipboard")
 keymap({ "n", "x" }, "<leader>P", [["+P]], "Paste before from system clipboard")
+
+keymap("n", "<leader>cyf", file_info.yank_relative_file_path, "Yank file path (project relative)")
+keymap("x", "<leader>cyf", file_info.yank_relative_file_path_with_range, "Yank file path with range (project relative)")
+keymap("n", "<leader>cyF", file_info.yank_relative_dir_path, "Yank directory path (project relative)")
 
 --
 -- ITEM PICKER
