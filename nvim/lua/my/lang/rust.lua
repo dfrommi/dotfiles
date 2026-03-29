@@ -1,7 +1,9 @@
 local M = {}
 
-require("my.code").treesitter("rust")
-require("my.code").conform("rust", "rustfmt")
+local code = require("my.code")
+code.treesitter("rust")
+code.conform("rust", "rustfmt")
+code.test_adapter(require("rustaceanvim.neotest"))
 
 -- enabled by rustaceanvim
 vim.lsp.config("rust-analyzer", {

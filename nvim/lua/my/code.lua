@@ -11,8 +11,11 @@ local tools_config = {
     "toml",
   },
   formatters_by_ft = {},
-  mason = {},
+  mason = {
+    "tree-sitter-cli",
+  },
   lsp_enabled = {},
+  test_adapters = {},
 }
 
 vim.diagnostic.config({
@@ -41,10 +44,8 @@ vim.api.nvim_create_user_command("WorkspaceErrors", function()
   vim.cmd.copen()
 end, { desc = "Show ERROR diagnostics for workspace" })
 
-function M.lsp(name)
-  if not vim.tbl_contains(tools_config.lsp_enabled, name) then
-    table.insert(tools_config.lsp_enabled, name)
-  end
+function M.lsp(name, lsp_config)
+  tools_config.lsp_enabled[name] = lsp_config or false
 end
 
 function M.mason(name)
@@ -68,19 +69,27 @@ function M.conform(ft, formatter)
   end
 end
 
+function M.test_adapter(name)
+  if not vim.tbl_contains(tools_config.test_adapters, name) then
+    table.insert(tools_config.test_adapters, name)
+  end
+end
+
 function M.setup()
   --
   -- SYNTAX HIGHLIGHTING
   --
   -- Treesitter is the “syntax tree parser” — it understands code structure and helps with navigation, highlighting, and text manipulation.
   -- syntax highlighting. Update with :TSUpdate and install new with :TSInstall or add to list
-  require("nvim-treesitter.configs").setup({
-    ensure_installed = tools_config.treesitter,
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false, -- for Catpucchin
-    },
-    indent = { enable = true },
+  require("nvim-treesitter").install(tools_config.treesitter)
+
+  -- Treesitter only provides parsers, Neovim has to make use of it.
+  -- Pattern limits the autocmd to filetypes with installed parsers only.
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = require("nvim-treesitter").get_installed(),
+    callback = function()
+      pcall(vim.treesitter.start)
+    end,
   })
 
   --
@@ -89,7 +98,12 @@ function M.setup()
   -- LSP is the “language server” — it understands code semantics and helps with editing and refactoring.
   -- no Mason, install LSPs manually with homebrew
   -- debug with :LspInfo
-  vim.lsp.enable(tools_config.lsp_enabled)
+  for name, config in pairs(tools_config.lsp_enabled) do
+    if config then
+      vim.lsp.config(name, config)
+    end
+    vim.lsp.enable(name)
+  end
 
   -- Configure Formatters
   require("conform").setup({
@@ -104,6 +118,11 @@ function M.setup()
   require("mason").setup()
   require("mason-tool-installer").setup({
     ensure_installed = tools_config.mason,
+  })
+
+  -- Neotest
+  require("neotest").setup({
+    adapters = tools_config.test_adapters,
   })
 end
 

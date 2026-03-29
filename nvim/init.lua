@@ -23,13 +23,30 @@ vim.pack.add({
   "https://github.com/mason-org/mason.nvim", -- manage LSP servers, formatters, linters
   "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- automatically install tools, instead of manually via :MasonInstall
   "https://github.com/mrcjkb/rustaceanvim", -- Rust LSP with additional features
+  "https://github.com/mfussenegger/nvim-jdtls", -- Java LSP with extended code actions
   "https://github.com/saecki/crates.nvim", -- Rust crates management
   "https://github.com/stevearc/conform.nvim", -- better formatting
 
   --
+  -- TESTING
+  --
+  -- "https://github.com/nvim-neotest/neotest",
+  {
+    src = "https://github.com/dfrommi/neotest",
+    --with workarounds for treesitter breaking changes until upstream resolved them
+    version = "fix-treesitter-main",
+  },
+  "https://github.com/rcasia/neotest-java", -- Java neotest adapter
+
+  --
   -- TREESITTER
   --
-  "https://github.com/nvim-treesitter/nvim-treesitter", -- syntax highlighter
+  --"https://github.com/nvim-treesitter/nvim-treesitter", --- syntax highlighter
+  -- syntax highlighter
+  {
+    src = "https://github.com/nvim-treesitter/nvim-treesitter", -- syntax highlighter
+    version = "main",
+  },
   --  "https://github.com/nvim-treesitter/nvim-treesitter-context", -- show surrounding context on top of editor
 
   --
@@ -37,7 +54,6 @@ vim.pack.add({
   --
   "https://github.com/lewis6991/gitsigns.nvim", -- show git changes in the gutter
   "https://github.com/MeanderingProgrammer/render-markdown.nvim", -- render markdown
-  "https://github.com/nvim-neotest/neotest", -- testing framework
 
   --
   -- UI
@@ -65,11 +81,10 @@ require("my.completion")
 require("my.lang.lua")
 require("my.lang.rust")
 require("my.lang.markdown")
+require("my.lang.java")
 
 -- has to be after lang because other modules add config to it
 require("my.code").setup()
-
-require("my.testing").setup()
 
 -- very last to make sure everything is loaded and available
 require("my.keymap")

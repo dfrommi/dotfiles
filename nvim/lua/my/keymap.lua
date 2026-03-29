@@ -209,6 +209,16 @@ function M.git_signs_bindings(map, gs)
   -- map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
 end
 
+function M.java_bindings(map)
+  local jdtls = require("jdtls")
+  map("n", "<leader>ji", jdtls.organize_imports, "Java: Organize imports")
+  map("n", "<leader>jev", jdtls.extract_variable, "Java: Extract variable")
+  map("x", "<leader>jev", function() jdtls.extract_variable(true) end, "Java: Extract variable")
+  map("n", "<leader>jec", jdtls.extract_constant, "Java: Extract constant")
+  map("x", "<leader>jec", function() jdtls.extract_constant(true) end, "Java: Extract constant")
+  map("x", "<leader>jem", function() jdtls.extract_method(true) end, "Java: Extract method")
+end
+
 function M.rust_bindings(map, rlsp)
   map("n", "J", rlsp("joinLines"), "Join lines")
   -- map("n", "K", rlsp({ "hover", "actions" }), "Hover actions")
