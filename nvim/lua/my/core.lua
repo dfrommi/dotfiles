@@ -10,6 +10,18 @@ local function buffer_parent_dir()
 end
 
 require("lualine").setup({
+  options = {
+    disabled_filetypes = {
+      statusline = {
+        "dapui_scopes",
+        "dapui_watches",
+        "dapui_stacks",
+        "dapui_breakpoints",
+        "dapui_console",
+        "dap-repl",
+      },
+    },
+  },
   sections = {
     -- replace branch with parent dir
     lualine_b = {

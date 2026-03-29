@@ -1,6 +1,8 @@
 local code = require("my.code")
 
 code.mason("jdtls")
+code.mason("java-debug-adapter")
+code.mason("java-test")
 code.treesitter("java")
 code.treesitter("groovy") -- build.gradle files
 code.test_adapter(require("neotest-java")({}))
@@ -20,12 +22,37 @@ else
   }
 end
 
+local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
+local bundles = {}
+
+local debug_jar = vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true)
+if debug_jar ~= "" then
+  table.insert(bundles, debug_jar)
+end
+
+local test_jars = vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", true, true)
+for _, jar in ipairs(test_jars) do
+  table.insert(bundles, jar)
+end
+
 code.lsp("jdtls", {
   cmd = {
     "jdtls",
     "--jvm-arg=-javaagent:" .. lombok,
   },
   settings = jdtls_settings,
+  init_options = {
+    bundles = bundles,
+  },
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "jdtls" then
+      require("jdtls").setup_dap({ hotcodereplace = "auto" })
+    end
+  end,
 })
 
 -- nvim-jdtls replaces vim.lsp.enable("jdtls") to avoid two server instances.

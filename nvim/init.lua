@@ -28,6 +28,12 @@ vim.pack.add({
   "https://github.com/stevearc/conform.nvim", -- better formatting
 
   --
+  -- DEBUGGING
+  --
+  "https://github.com/mfussenegger/nvim-dap", -- Debug Adapter Protocol client
+  "https://github.com/rcarriga/nvim-dap-ui", -- debugging UI panels
+
+  --
   -- TESTING
   --
   -- "https://github.com/nvim-neotest/neotest",
@@ -82,6 +88,8 @@ require("my.lang.lua")
 require("my.lang.rust")
 require("my.lang.markdown")
 require("my.lang.java")
+
+require("my.dap")
 
 -- has to be after lang because other modules add config to it
 require("my.code").setup()

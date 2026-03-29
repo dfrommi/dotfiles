@@ -2,6 +2,7 @@ local M = {}
 
 local code = require("my.code")
 code.treesitter("rust")
+code.mason("codelldb")
 code.conform("rust", "rustfmt")
 code.test_adapter(require("rustaceanvim.neotest"))
 

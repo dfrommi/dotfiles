@@ -8,6 +8,8 @@ local mini_ai = require("mini.ai")
 local mini_files = require("mini.files")
 local cmp = require("my.completion")
 local neotest = require("neotest")
+local dap = require("dap")
+local dapui = require("dapui")
 local file_info = require("my.utils.file_info")
 
 local function keymap(mode, key, action, opts)
@@ -33,7 +35,7 @@ keymap("x", "J", ":m '>+1<CR>gv=gv", "Move selection down")
 keymap("x", "K", ":m '<-2<CR>gv=gv", "Move selection up")
 
 keymap("x", "p", [["_dP]], "Paste without yanking")
-keymap({ "n", "v" }, "<leader>d", [["_d]], "Delete without yanking")
+-- keymap({ "n", "v" }, "<leader>d", [["_d]], "Delete without yanking") -- freed for debug prefix
 
 keymap({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard")
 keymap("n", "<leader>Y", [["+Y]], "Yank line to system clipboard")
@@ -161,6 +163,29 @@ end, "Toggle test output panel")
 keymap("n", "<leader>tS", function()
   neotest.run.stop()
 end, "Stop running tests")
+keymap("n", "<leader>td", function()
+  neotest.run.run({ strategy = "dap" })
+end, "Debug nearest test")
+keymap("n", "<leader>tD", function()
+  neotest.run.run(vim.fn.expand("%"), { strategy = "dap" })
+end, "Debug file tests")
+
+--
+-- DEBUGGING
+--
+keymap("n", "<leader>db", dap.toggle_breakpoint, "Toggle breakpoint")
+keymap("n", "<leader>dB", function()
+  dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, "Conditional breakpoint")
+keymap("n", "<leader>dc", dap.continue, "Continue / Start")
+keymap("n", "<leader>ds", dap.step_over, "Step over")
+keymap("n", "<leader>di", dap.step_into, "Step into")
+keymap("n", "<leader>do", dap.step_out, "Step out")
+keymap("n", "<leader>dq", dap.terminate, "Terminate")
+keymap("n", "<leader>du", dapui.toggle, "Toggle DAP UI")
+keymap({ "n", "x" }, "<leader>de", function()
+  dapui.eval(nil, { enter = true })
+end, "Eval expression")
 
 M.mini_surround_mappings = {
   add = "gsa", -- Add surrounding
@@ -217,6 +242,7 @@ function M.java_bindings(map)
   map("n", "<leader>jec", jdtls.extract_constant, "Java: Extract constant")
   map("x", "<leader>jec", function() jdtls.extract_constant(true) end, "Java: Extract constant")
   map("x", "<leader>jem", function() jdtls.extract_method(true) end, "Java: Extract method")
+  map("n", "<leader>dd", function() require("dap").continue() end, "Debug (Java)")
 end
 
 function M.rust_bindings(map, rlsp)
@@ -237,6 +263,8 @@ function M.rust_bindings(map, rlsp)
   map("n", "<leader>cd", rlsp("renderDiagnostic"), "Render Diagnostic")
   map("n", "<leader>ce", rlsp("explainError"), "Explain Error")
   map("n", "<leader>cm", rlsp("expandMacro"), "Expand Macro")
+
+  map("n", "<leader>dd", rlsp("debuggables"), "Debug (Rust)")
 
   -- map("n", "<leader>rr",   rlsp("runnables"),             "Rust: Runnables")
   -- map("n", "<leader>rt",   rlsp("testables"),             "Rust: Testables")
