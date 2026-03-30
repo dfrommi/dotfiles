@@ -44,8 +44,12 @@ vim.api.nvim_create_user_command("WorkspaceErrors", function()
   vim.cmd.copen()
 end, { desc = "Show ERROR diagnostics for workspace" })
 
-function M.lsp(name, lsp_config)
-  tools_config.lsp_enabled[name] = lsp_config or false
+function M.lsp(name, opts)
+  opts = opts or {}
+  tools_config.lsp_enabled[name] = {
+    config = opts.config,
+    on_attach = opts.on_attach,
+  }
 end
 
 function M.mason(name)
@@ -98,12 +102,45 @@ function M.setup()
   -- LSP is the “language server” — it understands code semantics and helps with editing and refactoring.
   -- no Mason, install LSPs manually with homebrew
   -- debug with :LspInfo
-  for name, config in pairs(tools_config.lsp_enabled) do
-    if config then
-      vim.lsp.config(name, config)
+  for name, entry in pairs(tools_config.lsp_enabled) do
+    if entry.config then
+      vim.lsp.config(name, entry.config)
     end
     vim.lsp.enable(name)
   end
+
+  -- Single LspAttach: global behavior + per-LSP dispatch
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(ev)
+      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+      if not client then
+        return
+      end
+
+      -- Global: document highlighting
+      if client:supports_method("textDocument/documentHighlight") then
+        local group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
+
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+          group = group,
+          buffer = ev.buf,
+          callback = vim.lsp.buf.document_highlight,
+        })
+
+        vim.api.nvim_create_autocmd("CursorMoved", {
+          group = group,
+          buffer = ev.buf,
+          callback = vim.lsp.buf.clear_references,
+        })
+      end
+
+      -- Per-LSP on_attach dispatch
+      local entry = tools_config.lsp_enabled[client.name]
+      if entry and entry.on_attach then
+        entry.on_attach(client, ev.buf)
+      end
+    end,
+  })
 
   -- Configure Formatters
   require("conform").setup({
@@ -131,26 +168,5 @@ end
 --
 -- time to wait before triggering the CursorHold event
 vim.opt.updatetime = 500
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(ev)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client and client:supports_method("textDocument/documentHighlight") then
-      local group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
-
-      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        group = group,
-        buffer = ev.buf,
-        callback = vim.lsp.buf.document_highlight,
-      })
-
-      vim.api.nvim_create_autocmd("CursorMoved", {
-        group = group,
-        buffer = ev.buf,
-        callback = vim.lsp.buf.clear_references,
-      })
-    end
-  end,
-})
 
 return M
