@@ -1,3 +1,8 @@
+local file_info = require("my.utils.file_info")
+if not file_info.root_has_file("Cargo.toml") then
+  return {}
+end
+
 local M = {}
 
 local code = require("my.code")

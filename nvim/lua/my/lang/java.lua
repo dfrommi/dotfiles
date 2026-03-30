@@ -1,3 +1,8 @@
+local file_info = require("my.utils.file_info")
+if not file_info.root_has_file("build.gradle", "build.gradle.kts") then
+  return
+end
+
 local code = require("my.code")
 
 code.mason("jdtls")

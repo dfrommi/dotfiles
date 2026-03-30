@@ -85,4 +85,14 @@ function M.yank_relative_dir_path()
   yank_text(M.relative_dir_path())
 end
 
+function M.root_has_file(...)
+  local root = vim.fn.getcwd()
+  for _, name in ipairs({ ... }) do
+    if vim.uv.fs_stat(root .. "/" .. name) then
+      return true
+    end
+  end
+  return false
+end
+
 return M
