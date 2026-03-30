@@ -12,3 +12,6 @@ dap.listeners.before.event_exited["dapui_config"] = dapui.close
 vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint" })
 vim.fn.sign_define("DapBreakpointCondition", { text = "◐", texthl = "DapBreakpoint" })
 vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DapStopped", linehl = "DapStoppedLine" })
+
+-- Keymaps
+require("my.keymap").dap_bindings()

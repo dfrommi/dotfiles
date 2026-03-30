@@ -80,6 +80,8 @@ function M.test_adapter(name)
 end
 
 function M.setup()
+  local keymap = require("my.keymap")
+
   --
   -- SYNTAX HIGHLIGHTING
   --
@@ -158,9 +160,12 @@ function M.setup()
   })
 
   -- Neotest
-  require("neotest").setup({
-    adapters = tools_config.test_adapters,
-  })
+  if tools_config.test_adapters and #tools_config.test_adapters > 0 then
+    require("neotest").setup({
+      adapters = tools_config.test_adapters,
+    })
+    keymap.neotest_bindings()
+  end
 end
 
 --

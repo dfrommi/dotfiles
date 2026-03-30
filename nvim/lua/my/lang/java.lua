@@ -1,5 +1,5 @@
 local file_info = require("my.utils.file_info")
-if not file_info.root_has_file("build.gradle", "build.gradle.kts") then
+if not file_info.root_has_file("build.gradle", "build.gradle.kts", "settings.gradle", "gradlew") then
   return
 end
 
@@ -25,6 +25,12 @@ local bundles =
   vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true, true)
 vim.list_extend(bundles, vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", true, true))
 
+require("java-helpers").setup({
+  new_file = {
+    should_format = false,
+  },
+})
+
 code.lsp("jdtls", {
   config = {
     cmd = {
@@ -38,5 +44,7 @@ code.lsp("jdtls", {
   },
   on_attach = function(client, bufnr)
     require("jdtls").setup_dap({ hotcodereplace = "auto" })
+
+    require("my.keymap").java_bindings(bufnr)
   end,
 })

@@ -47,12 +47,12 @@ require("fidget").setup()
 
 require("mini.ai").setup({
   n_lines = 500,
-  mappings = keymap.mini_ai_mappings,
-  custom_textobjects = keymap.mini_ai_textobjects,
+  mappings = keymap.mini_ai_mappings(),
+  custom_textobjects = keymap.mini_ai_textobjects(),
 })
 
 require("mini.surround").setup({
-  mappings = keymap.mini_surround_mappings,
+  mappings = keymap.mini_surround_mappings(),
 })
 
 require("mini.files").setup({
@@ -65,6 +65,10 @@ require("mini.files").setup({
 -- require("rainbow-delimiters.setup").setup()
 
 require("smart-splits").setup({})
+keymap.smart_splits_bindings()
+
+require("flash").setup({})
+keymap.flash_bindings()
 
 require("gitsigns").setup({
   on_attach = function(buffer)
@@ -85,6 +89,7 @@ snacks.setup({
   indent = {},
   input = {}, -- for openassitant.nvim
 })
+keymap.picker_bindings()
 
 local snacks_lsp_symbols = snacks.picker.lsp_symbols
 

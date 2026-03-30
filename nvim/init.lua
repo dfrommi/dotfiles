@@ -24,6 +24,7 @@ vim.pack.add({
   "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- automatically install tools, instead of manually via :MasonInstall
   "https://github.com/mrcjkb/rustaceanvim", -- Rust LSP with additional features
   "https://github.com/mfussenegger/nvim-jdtls", -- Java LSP with extended code actions
+  "https://github.com/NickJAllen/java-helpers.nvim", -- Java file creation and stack traces
   "https://github.com/saecki/crates.nvim", -- Rust crates management
   "https://github.com/stevearc/conform.nvim", -- better formatting
 
@@ -95,4 +96,4 @@ require("my.dap")
 require("my.code").setup()
 
 -- very last to make sure everything is loaded and available
-require("my.keymap")
+require("my.keymap").setup()
