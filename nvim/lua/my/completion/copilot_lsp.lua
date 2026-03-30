@@ -7,6 +7,7 @@ vim.lsp.config("copilot", {
 })
 
 require("my.code").lsp("copilot")
+require("my.code").mason("copilot-language-server")
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
