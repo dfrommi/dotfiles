@@ -105,6 +105,18 @@ end
 -- ITEM PICKER
 --
 
+local is_main = function(item, ctx)
+  if ctx.client.name == "jdtls" then
+    return item.path and item.path:find("/src/main/", 1, true) ~= nil
+  end
+
+  if ctx.client.name == "rust-analyzer" then
+    return item.path and item.path:find("/.cargo/", 1, true) == nil and item.path:find("/.rustup/", 1, true) == nil
+  end
+
+  return item.path ~= nil
+end
+
 --
 -- FIND
 --
@@ -133,6 +145,34 @@ function M.picker_bindings()
     mini_files.open(vim.api.nvim_buf_get_name(0))
   end, "File Explorer (buffer)")
   keymap("n", "<leader>fE", mini_files.open, "File Explorer (root)")
+
+  keymap("n", "<leader>fi", function()
+    picker.call_hierarchy_in({
+      lsp_filter = is_main,
+    })
+  end, "Incoming Call Hierarchy (project)")
+  keymap("n", "<leader>fI", function()
+    picker.call_hierarchy_in()
+  end, "Incoming Call Hierarchy")
+
+  keymap("n", "<leader>fo", function()
+    picker.call_hierarchy_out({
+      lsp_filter = is_main,
+    })
+  end, "Outgoing Call Hierarchy (project)")
+  keymap("n", "<leader>fO", function()
+    picker.call_hierarchy_out()
+  end, "Outgoing Call Hierarchy")
+end
+
+function M.call_hierarchy_keys()
+  return {
+    ["<CR>"] = { "confirm", desc = "Open file" },
+    ["za"] = { "call_hierarchy_toggle_expanded", desc = "Toggle expand/collapse" },
+    ["gi"] = { "call_hierarchy_incoming", desc = "Re-root: incoming calls" },
+    ["go"] = { "call_hierarchy_outgoing", desc = "Re-root: outgoing calls" },
+    ["<leader><space>"] = { "call_hierarchy_toggle_direction", desc = "Toggle direction" },
+  }
 end
 
 --
@@ -171,6 +211,10 @@ function M.neotest_bindings()
   keymap("n", "<leader>tl", function()
     neotest.run.run_last()
   end, "Run last test")
+  keymap("n", "<leader>ta", function()
+    neotest.run.run(vim.uv.cwd())
+  end, "Run all tests")
+
   keymap("n", "<leader>ts", function()
     neotest.summary.toggle()
   end, "Toggle test summary")
@@ -180,9 +224,11 @@ function M.neotest_bindings()
   keymap("n", "<leader>tO", function()
     neotest.output_panel.toggle()
   end, "Toggle test output panel")
-  keymap("n", "<leader>tS", function()
+
+  keymap("n", "<leader>tq", function()
     neotest.run.stop()
   end, "Stop running tests")
+
   keymap("n", "<leader>td", function()
     neotest.run.run({ strategy = "dap" })
   end, "Debug nearest test")
@@ -268,21 +314,43 @@ function M.git_signs_bindings(map, gs)
 end
 
 function M.java_bindings(bufnr)
+  local picker = require("snacks").picker
+
   local map = function(mode, key, action, desc)
-    vim.keymap.set(mode, key, action, { buffer = bufnr, desc = desc })
+    vim.keymap.set(mode, key, action, { buffer = bufnr, desc = desc, remap = true })
   end
+
+  map("n", "<leader>fs", function()
+    picker.lsp_workspace_symbols({
+      transform = function(item)
+        local path = item.file or item.filename or ""
+        return path:find("/src/main/", 1, true) ~= nil
+      end,
+    })
+  end, "Find classes (main)")
+
+  map("n", "<leader>ft", function()
+    picker.lsp_workspace_symbols({
+      transform = function(item)
+        local path = item.file or item.filename or ""
+        return path:find("/src/test/", 1, true) ~= nil
+      end,
+    })
+  end, "Find classes (test)")
+
+  map("n", "<leader>fS", picker.lsp_workspace_symbols, "Find classes (all)")
 
   map("n", "<leader>cn", function()
     require("java-helpers").create_java_file()
   end, "Create new type")
 
-  map("n", "<leader>cN", function()
+  map("n", "<leader>tn", function()
     require("jdtls.tests").generate()
   end, "Create new test")
 
-  map("n", "grT", function()
+  map("n", "<leader>tg", function()
     require("jdtls.tests").goto_subjects()
-  end, "Create new type")
+  end, "Goto test")
 end
 
 function M.rust_bindings(map, rlsp)

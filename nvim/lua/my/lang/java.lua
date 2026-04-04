@@ -44,7 +44,6 @@ code.lsp("jdtls", {
   },
   on_attach = function(client, bufnr)
     require("jdtls").setup_dap({ hotcodereplace = "auto" })
-
     require("my.keymap").java_bindings(bufnr)
   end,
 })

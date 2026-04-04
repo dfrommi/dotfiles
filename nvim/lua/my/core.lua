@@ -89,6 +89,13 @@ snacks.setup({
   indent = {},
   input = {}, -- for openassitant.nvim
 })
+require("snacks-call-hierarchy").setup({
+  win = {
+    input = { keys = keymap.call_hierarchy_keys() },
+    list = { keys = keymap.call_hierarchy_keys() },
+  },
+})
+
 keymap.picker_bindings()
 
 local snacks_lsp_symbols = snacks.picker.lsp_symbols

@@ -9,6 +9,7 @@ vim.pack.add({
   --
   "https://github.com/folke/which-key.nvim", -- keybinding help
   "https://github.com/folke/snacks.nvim", -- item picker popup
+  "https://github.com/dfrommi/snacks-call-hierarchy.nvim", -- my extension for call hierarchy on top of snacks
   "https://github.com/echasnovski/mini.files", -- file explorer
   "https://github.com/folke/flash.nvim", -- jump around
   "https://github.com/echasnovski/mini.ai", -- text objects and surrounding text manipulation
@@ -22,11 +23,11 @@ vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig", -- configures LSP servers
   "https://github.com/mason-org/mason.nvim", -- manage LSP servers, formatters, linters
   "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- automatically install tools, instead of manually via :MasonInstall
-  "https://github.com/mrcjkb/rustaceanvim", -- Rust LSP with additional features
+  "https://github.com/stevearc/conform.nvim", -- better formatting
   "https://github.com/mfussenegger/nvim-jdtls", -- Java LSP with extended code actions
   "https://github.com/NickJAllen/java-helpers.nvim", -- Java file creation and stack traces
+  "https://github.com/mrcjkb/rustaceanvim", -- Rust LSP with additional features
   "https://github.com/saecki/crates.nvim", -- Rust crates management
-  "https://github.com/stevearc/conform.nvim", -- better formatting
 
   --
   -- DEBUGGING
@@ -37,24 +38,17 @@ vim.pack.add({
   --
   -- TESTING
   --
-  -- "https://github.com/nvim-neotest/neotest",
-  {
-    src = "https://github.com/dfrommi/neotest",
-    --with workarounds for treesitter breaking changes until upstream resolved them
-    version = "fix-treesitter-main",
-  },
+  "https://github.com/nvim-neotest/neotest",
   "https://github.com/rcasia/neotest-java", -- Java neotest adapter
 
   --
   -- TREESITTER
   --
-  --"https://github.com/nvim-treesitter/nvim-treesitter", --- syntax highlighter
   -- syntax highlighter
   {
-    src = "https://github.com/nvim-treesitter/nvim-treesitter", -- syntax highlighter
+    src = "https://github.com/nvim-treesitter/nvim-treesitter",
     version = "main",
   },
-  --  "https://github.com/nvim-treesitter/nvim-treesitter-context", -- show surrounding context on top of editor
 
   --
   -- TOOLS
