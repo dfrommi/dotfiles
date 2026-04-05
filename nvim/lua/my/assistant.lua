@@ -1,3 +1,4 @@
+local claude_native = true
 local keymap = require("my.keymap")
 
 require("sidekick").setup({
@@ -5,11 +6,23 @@ require("sidekick").setup({
     mux = { enabled = true },
   },
 })
-
--- Register backend and override config after scheduled validation has run
 require("sidekick.cli.session").register("wezterm", require("adapter.sidekick.wezterm"))
 vim.schedule(function()
   require("sidekick.config").cli.mux.backend = "wezterm"
 end)
+keymap.sidekick_nes_bindings()
 
-keymap.sidekick_bindings()
+if claude_native then
+  require("claudecode").setup({
+    terminal = {
+      provider = require("adapter.claude.wezterm"),
+      split_side = "right",
+    },
+    window = {
+      split_ratio = 0.5,
+    },
+  })
+  keymap.claude_bindings()
+else
+  keymap.sidekick_cli_bindings()
+end

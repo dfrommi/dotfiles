@@ -75,8 +75,6 @@ function M.setup()
   keymap("n", "gO", function()
     picker.lsp_symbols()
   end, "LSP Symbols")
-
-  M.claude_bindings()
 end
 
 --
@@ -308,18 +306,6 @@ function M.mini_ai_textobjects()
   }
 end
 
---
--- CLAUDE
---
-function M.claude_bindings()
-  keymap("n", "<leader>ac", "<cmd>ClaudeCode<cr>", "Toggle Claude")
-  keymap("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", "Focus Claude")
-  keymap("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", "Resume Claude")
-  keymap("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", "Continue Claude")
-  keymap("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", "Add buffer to Claude")
-  keymap("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", "Send to Claude")
-end
-
 function M.git_signs_bindings(map, gs)
   map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
   map("n", "<leader>gR", gs.reset_buffer, "Reset Buffer")
@@ -370,19 +356,31 @@ end
 --
 -- AI / SIDEKICK
 --
-function M.sidekick_bindings()
-  local sk = require("sidekick")
-  local cli = require("sidekick.cli")
-  local wez = require("adapter.sidekick.wezterm")
+function M.claude_bindings()
+  keymap("n", "<leader>ac", "<cmd>ClaudeCode<cr>", "Toggle Claude")
+  keymap("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", "Focus Claude")
+  keymap("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", "Resume Claude")
+  keymap("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", "Continue Claude")
+  keymap("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", "Add buffer to Claude")
+  keymap("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", "Send to Claude")
+end
 
-  -- Next Edit Suggestion
+-- Next Edit Suggestion
+function M.sidekick_nes_bindings()
+  local sk = require("sidekick")
+
   keymap("n", "<Tab>", function()
     if not sk.nes_jump_or_apply() then
       return "<Tab>"
     end
   end, { desc = "NES: Jump or apply next edit", expr = true })
+end
 
-  -- CLI terminal
+-- CLI terminal
+function M.sidekick_cli_bindings()
+  local cli = require("sidekick.cli")
+  local wez = require("adapter.sidekick.wezterm")
+
   keymap({ "n", "t", "i", "x" }, "<c-.>", cli.focus, "AI CLI focus")
   keymap("n", "<leader>aa", cli.show, "AI CLI attach")
   keymap("n", "<leader>ad", cli.close, "AI CLI detach")

@@ -19,11 +19,11 @@ local function cleanup()
 end
 
 local function split_percent(config)
-  local pct = config and config.split_width_percentage
+  local pct = config and config.window and config.split_ratio
   if pct and pct > 0 and pct < 1 then
     return math.floor(pct * 100)
   end
-  return 30
+  return 50
 end
 
 local function split_direction(config)
@@ -43,13 +43,8 @@ local function spawn_claude(cmd_string, env_table, config, focus)
     table.insert(prog_args, arg)
   end
 
-  local new_id = wez.spawn_split(
-    split_direction(config),
-    split_percent(config),
-    config and config.cwd,
-    env_table,
-    prog_args
-  )
+  local new_id =
+    wez.spawn_split(split_direction(config), split_percent(config), config and config.cwd, env_table, prog_args)
 
   if not new_id then
     vim.notify("Failed to spawn Claude in WezTerm pane", vim.log.levels.ERROR)

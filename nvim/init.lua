@@ -91,7 +91,6 @@ require("my.lang.markdown")
 require("my.lang.java")
 
 require("my.dap")
-require("my.claude")
 require("my.assistant")
 
 -- has to be after lang because other modules add config to it
