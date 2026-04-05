@@ -373,8 +373,9 @@ end
 function M.sidekick_bindings()
   local sk = require("sidekick")
   local cli = require("sidekick.cli")
+  local wez = require("adapter.sidekick.wezterm")
 
-  -- NES: Tab in normal mode only (insert-mode Tab conflicts are separate — pum/inline completions)
+  -- Next Edit Suggestion
   keymap("n", "<Tab>", function()
     if not sk.nes_jump_or_apply() then
       return "<Tab>"
@@ -383,9 +384,15 @@ function M.sidekick_bindings()
 
   -- CLI terminal
   keymap({ "n", "t", "i", "x" }, "<c-.>", cli.focus, "AI CLI focus")
-  keymap("n", "<leader>aa", cli.toggle, "AI CLI toggle")
-  keymap("n", "<leader>as", cli.select, "AI CLI select tool")
-  keymap("n", "<leader>ad", cli.close, "AI CLI detach session")
+  keymap("n", "<leader>aa", cli.show, "AI CLI attach")
+  keymap("n", "<leader>ad", cli.close, "AI CLI detach")
+  keymap("n", "<leader>aq", wez.kill, "AI CLI close")
+  -- keymap("n", "<leader>ac", function()
+  --   cli.toggle({ name = "claude", focus = true })
+  -- end, "AI toggle Claude")
+
+  keymap("n", "<leader>as", cli.select, "AI CLI select agent")
+
   keymap({ "n", "x" }, "<leader>at", function()
     cli.send({ msg = "{this}" })
   end, "AI send this (file + cursor context)")
@@ -396,9 +403,6 @@ function M.sidekick_bindings()
     cli.send({ msg = "{selection}" })
   end, "AI send visual selection")
   keymap({ "n", "x" }, "<leader>ap", cli.prompt, "AI select prompt")
-  keymap("n", "<leader>ac", function()
-    cli.toggle({ name = "claude", focus = true })
-  end, "AI toggle Claude")
 end
 
 function M.rust_bindings(map, rlsp)
