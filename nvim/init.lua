@@ -51,6 +51,11 @@ vim.pack.add({
   },
 
   --
+  -- AI
+  --
+  "https://github.com/coder/claudecode.nvim", -- Claude Code IDE integration
+
+  --
   -- TOOLS
   --
   "https://github.com/lewis6991/gitsigns.nvim", -- show git changes in the gutter
@@ -85,6 +90,7 @@ require("my.lang.markdown")
 require("my.lang.java")
 
 require("my.dap")
+require("my.claude")
 
 -- has to be after lang because other modules add config to it
 require("my.code").setup()

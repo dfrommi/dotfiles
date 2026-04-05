@@ -75,6 +75,8 @@ function M.setup()
   keymap("n", "gO", function()
     picker.lsp_symbols()
   end, "LSP Symbols")
+
+  M.claude_bindings()
 end
 
 --
@@ -304,6 +306,18 @@ function M.mini_ai_textobjects()
       "^().*()$",
     },
   }
+end
+
+--
+-- CLAUDE
+--
+function M.claude_bindings()
+  keymap("n", "<leader>ac", "<cmd>ClaudeCode<cr>", "Toggle Claude")
+  keymap("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", "Focus Claude")
+  keymap("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", "Resume Claude")
+  keymap("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", "Continue Claude")
+  keymap("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", "Add buffer to Claude")
+  keymap("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", "Send to Claude")
 end
 
 function M.git_signs_bindings(map, gs)
