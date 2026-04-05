@@ -60,6 +60,7 @@ vim.pack.add({
   --
   "https://github.com/lewis6991/gitsigns.nvim", -- show git changes in the gutter
   "https://github.com/MeanderingProgrammer/render-markdown.nvim", -- render markdown
+  "https://github.com/folke/sidekick.nvim", -- AI CLI terminal + Copilot NES
 
   --
   -- UI
@@ -91,6 +92,7 @@ require("my.lang.java")
 
 require("my.dap")
 require("my.claude")
+require("my.assistant")
 
 -- has to be after lang because other modules add config to it
 require("my.code").setup()

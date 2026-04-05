@@ -367,6 +367,40 @@ function M.java_bindings(bufnr)
   end, "Goto test")
 end
 
+--
+-- AI / SIDEKICK
+--
+function M.sidekick_bindings()
+  local sk = require("sidekick")
+  local cli = require("sidekick.cli")
+
+  -- NES: Tab in normal mode only (insert-mode Tab conflicts are separate — pum/inline completions)
+  keymap("n", "<Tab>", function()
+    if not sk.nes_jump_or_apply() then
+      return "<Tab>"
+    end
+  end, { desc = "NES: Jump or apply next edit", expr = true })
+
+  -- CLI terminal
+  keymap({ "n", "t", "i", "x" }, "<c-.>", cli.focus, "AI CLI focus")
+  keymap("n", "<leader>aa", cli.toggle, "AI CLI toggle")
+  keymap("n", "<leader>as", cli.select, "AI CLI select tool")
+  keymap("n", "<leader>ad", cli.close, "AI CLI detach session")
+  keymap({ "n", "x" }, "<leader>at", function()
+    cli.send({ msg = "{this}" })
+  end, "AI send this (file + cursor context)")
+  keymap("n", "<leader>af", function()
+    cli.send({ msg = "{file}" })
+  end, "AI send file")
+  keymap("x", "<leader>av", function()
+    cli.send({ msg = "{selection}" })
+  end, "AI send visual selection")
+  keymap({ "n", "x" }, "<leader>ap", cli.prompt, "AI select prompt")
+  keymap("n", "<leader>ac", function()
+    cli.toggle({ name = "claude", focus = true })
+  end, "AI toggle Claude")
+end
+
 function M.rust_bindings(map, rlsp)
   map("n", "J", rlsp("joinLines"), "Join lines")
   -- map("n", "K", rlsp({ "hover", "actions" }), "Hover actions")
