@@ -91,4 +91,75 @@ function M.unsplit(pane_id)
   cli(string.format([[move-pane-to-new-tab --pane-id %d]], pane_id))
 end
 
+function M.current_pane_id()
+  return tonumber(os.getenv("WEZTERM_PANE"))
+end
+
+function M.shares_tab(pane_id_a, pane_id_b)
+  local a = M.pane_info(pane_id_a)
+  local b = M.pane_info(pane_id_b)
+  return a ~= nil and b ~= nil and a.tab_id == b.tab_id
+end
+
+function M.kill_pane(pane_id)
+  cli(string.format([[kill-pane --pane-id %d]], pane_id))
+end
+
+function M.pane_info(pane_id)
+  local out = cli("list --format json")
+  if vim.v.shell_error ~= 0 or not out or out == "" then
+    return nil
+  end
+
+  local ok, items = pcall(vim.json.decode, out)
+  if not ok or type(items) ~= "table" then
+    return nil
+  end
+
+  for _, it in ipairs(items) do
+    if it.pane_id == pane_id then
+      return it
+    end
+  end
+  return nil
+end
+
+-- Spawn a new split pane running prog_args with environment variables.
+-- Returns the new pane_id or nil on failure.
+function M.spawn_split(direction, percent, cwd, env, prog_args)
+  local dir_flag = "--" .. (direction or "right")
+  local parts = { "split-pane", dir_flag }
+
+  if percent then
+    table.insert(parts, "--percent")
+    table.insert(parts, tostring(percent))
+  end
+
+  if cwd then
+    table.insert(parts, "--cwd")
+    table.insert(parts, cwd)
+  end
+
+  table.insert(parts, "--")
+
+  -- Use env command to set environment variables
+  if env and next(env) then
+    table.insert(parts, "/usr/bin/env")
+    for k, v in pairs(env) do
+      table.insert(parts, k .. "=" .. v)
+    end
+  end
+
+  for _, arg in ipairs(prog_args) do
+    table.insert(parts, arg)
+  end
+
+  local out = cli(table.concat(parts, " "))
+  if vim.v.shell_error ~= 0 then
+    return nil
+  end
+
+  return tonumber(vim.trim(out or ""))
+end
+
 return M
