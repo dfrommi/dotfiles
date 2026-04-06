@@ -31,6 +31,8 @@ function M.setup()
   keymap({ "n", "x" }, "<leader>p", [["+p]], "Paste from system clipboard")
   keymap({ "n", "x" }, "<leader>P", [["+P]], "Paste before from system clipboard")
 
+  keymap("n", "<leader><space>", "<C-^>", "Toggle Buffer [<C-^>]")
+
   local file_info = require("my.utils.file_info")
   keymap("n", "<leader>cyf", file_info.yank_relative_file_path, "Yank file path (project relative)")
   keymap(
@@ -82,12 +84,16 @@ end
 --
 function M.smart_splits_bindings()
   local splits = require("smart-splits")
-  keymap("n", "<leader><space>", "<C-^>", "Toggle Buffer [<C-^>]")
   -- CTRL+W S/V to create splits
-  keymap("n", "<C-n>", splits.move_cursor_left, "Go to Left Window [<C-w>h]")
-  keymap("n", "<C-e>", splits.move_cursor_down, "Go to Bottom Window [<C-w>j]")
-  keymap("n", "<C-i>", splits.move_cursor_up, "Go to Top Window [<C-w>k]")
-  keymap("n", "<C-o>", splits.move_cursor_right, "Go to Right Window [<C-w>l]")
+  keymap("n", "<C-n>", splits.move_cursor_left, "Go to Left")
+  keymap("n", "<C-e>", splits.move_cursor_down, "Go to Bottom")
+  keymap("n", "<C-i>", splits.move_cursor_up, "Go to Top")
+  keymap("n", "<C-o>", splits.move_cursor_right, "Go to Right")
+
+  keymap("n", "<A-n>", splits.resize_left, "Resize Left")
+  keymap("n", "<A-e>", splits.resize_down, "Resize Down")
+  keymap("n", "<A-i>", splits.resize_up, "Resize Up")
+  keymap("n", "<A-o>", splits.resize_right, "Resize Right")
 end
 
 --
@@ -357,12 +363,40 @@ end
 -- AI / SIDEKICK
 --
 function M.claude_bindings()
-  keymap("n", "<leader>ac", "<cmd>ClaudeCode<cr>", "Toggle Claude")
-  keymap("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", "Focus Claude")
+  keymap("n", "<leader>aa", "<cmd>ClaudeCode<cr>", "Toggle Claude")
+  keymap("n", "<leader>ag", "<cmd>ClaudeCodeFocus<cr>", "Go to Claude")
   keymap("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", "Resume Claude")
   keymap("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", "Continue Claude")
-  keymap("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", "Add buffer to Claude")
-  keymap("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", "Send to Claude")
+  keymap("n", "<leader>apf", "<cmd>ClaudeCodeAdd %<cr>", "Add buffer to Claude")
+  keymap("v", "<leader>aP", "<cmd>ClaudeCodeSend<cr>", "Send to Claude")
+end
+
+-- CLI terminal
+function M.sidekick_cli_bindings()
+  local cli = require("sidekick.cli")
+  local wez = require("adapter.sidekick.wezterm")
+
+  --keymap({ "n", "t", "i", "x" }, "<c-.>", cli.focus, "AI CLI focus")
+  keymap("n", "<leader>ag", cli.focus, "AI CLI focus")
+  keymap("n", "<leader>aa", cli.show, "AI CLI attach")
+  keymap("n", "<leader>ad", cli.close, "AI CLI detach")
+  keymap("n", "<leader>aq", wez.kill, "AI CLI close")
+  -- keymap("n", "<leader>ac", function()
+  --   cli.toggle({ name = "claude", focus = true })
+  -- end, "AI toggle Claude")
+
+  keymap("n", "<leader>as", cli.select, "AI CLI select agent")
+
+  keymap({ "n", "x" }, "<leader>al", function()
+    cli.send({ msg = "{this}" })
+  end, "AI send line")
+  keymap("n", "<leader>af", function()
+    cli.send({ msg = "{file}" })
+  end, "AI send file")
+  keymap("x", "<leader>av", function()
+    cli.send({ msg = "{selection}" })
+  end, "AI send visual selection")
+  keymap({ "n", "x" }, "<leader>ap", cli.prompt, "AI select command")
 end
 
 -- Next Edit Suggestion
@@ -374,33 +408,6 @@ function M.sidekick_nes_bindings()
       return "<Tab>"
     end
   end, { desc = "NES: Jump or apply next edit", expr = true })
-end
-
--- CLI terminal
-function M.sidekick_cli_bindings()
-  local cli = require("sidekick.cli")
-  local wez = require("adapter.sidekick.wezterm")
-
-  keymap({ "n", "t", "i", "x" }, "<c-.>", cli.focus, "AI CLI focus")
-  keymap("n", "<leader>aa", cli.show, "AI CLI attach")
-  keymap("n", "<leader>ad", cli.close, "AI CLI detach")
-  keymap("n", "<leader>aq", wez.kill, "AI CLI close")
-  -- keymap("n", "<leader>ac", function()
-  --   cli.toggle({ name = "claude", focus = true })
-  -- end, "AI toggle Claude")
-
-  keymap("n", "<leader>as", cli.select, "AI CLI select agent")
-
-  keymap({ "n", "x" }, "<leader>at", function()
-    cli.send({ msg = "{this}" })
-  end, "AI send this (file + cursor context)")
-  keymap("n", "<leader>af", function()
-    cli.send({ msg = "{file}" })
-  end, "AI send file")
-  keymap("x", "<leader>av", function()
-    cli.send({ msg = "{selection}" })
-  end, "AI send visual selection")
-  keymap({ "n", "x" }, "<leader>ap", cli.prompt, "AI select prompt")
 end
 
 function M.rust_bindings(map, rlsp)

@@ -40,8 +40,6 @@ config.window_padding = {
 	bottom = 20,
 }
 
-config.quick_select_remove_styling = true
-
 config.window_decorations = "RESIZE"
 
 local scheme = wezterm.get_builtin_color_schemes()["Catppuccin Mocha"]
@@ -64,33 +62,40 @@ config.keys = {
 		mods = "SHIFT",
 		action = wezterm.action.SendString("\x1b[13;2u"),
 	},
+
 	-- Tab navigation
 	{ key = "[", mods = "CMD", action = wezterm.action.ActivateTabRelative(-1) },
 	{ key = "]", mods = "CMD", action = wezterm.action.ActivateTabRelative(1) },
-	{ key = "n", mods = "LEADER", action = wezterm.action.ActivateTabRelative(-1) },
-	{ key = "o", mods = "LEADER", action = wezterm.action.ActivateTabRelative(1) },
+	{ key = "n", mods = "LEADER", action = wezterm.action.MoveTabRelative(-1) },
+	{ key = "o", mods = "LEADER", action = wezterm.action.MoveTabRelative(1) },
 
 	-- Workspace navigation
 	{ key = "[", mods = "CMD|SHIFT", action = wezterm.action.SwitchWorkspaceRelative(-1) },
 	{ key = "]", mods = "CMD|SHIFT", action = wezterm.action.SwitchWorkspaceRelative(1) },
-	{ key = "e", mods = "LEADER", action = wezterm.action.SwitchWorkspaceRelative(-1) },
-	{ key = "i", mods = "LEADER", action = wezterm.action.SwitchWorkspaceRelative(1) },
-
-	-- Navigate panes (vim-style hjkl)
-	{ key = "h", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Left") },
-	{ key = "j", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Down") },
-	{ key = "k", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Up") },
-	{ key = "l", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Right") },
 
 	-- split
-	{ key = "s", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "v", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "v", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "s", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
+	-- Unsplit: move all panes into individual tabs
+	{
+		key = "u",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(window, pane)
+			local tab = window:active_tab()
+			for _, p in ipairs(tab:panes()) do
+				if p:pane_id() ~= pane:pane_id() then
+					p:move_to_new_tab()
+				end
+			end
+		end),
+	},
 
 	--search
 	{
-		key = "/",
+		key = "f",
 		mods = "LEADER",
-		action = wezterm.action.Search({ CaseInSensitiveString = "" }),
+		action = wezterm.action.Search("CurrentSelectionOrEmptyString"),
 	},
 
 	-- Copy/paste
@@ -164,8 +169,8 @@ config.keys = {
 smart_splits.apply_to_config(config, {
 	direction_keys = { "n", "e", "i", "o" },
 	modifiers = {
-		move = "CTRL", -- modifier to use for pane movement, e.g. CTRL+h to move left
-		resize = "META", -- modifier to use for pane resize, e.g. META+h to resize to the left
+		move = "CTRL",
+		resize = "META",
 	},
 	log_level = "info",
 })

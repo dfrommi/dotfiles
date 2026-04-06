@@ -5,7 +5,7 @@ local M = {}
 
 M.quick_select_url_and_open = wezterm.action.QuickSelectArgs({
 	label = "open url",
-	patterns = { "https?://\\S+" }, -- override matches just to http(s) links
+	patterns = { "https?://[^\\s\"'`<>()\\[\\]{}]+" }, -- override matches just to http(s) links
 	skip_action_on_paste = true,
 	action = wezterm.action_callback(function(window, pane)
 		local url = window:get_selection_text_for_pane(pane)
