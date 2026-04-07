@@ -94,6 +94,15 @@ require("snacks-call-hierarchy").setup({
     input = { keys = keymap.call_hierarchy_keys() },
     list = { keys = keymap.call_hierarchy_keys() },
   },
+  lsp_transform = function(item, lsp_item, client)
+    if client.name == "jdtls" and lsp_item.detail then
+      local class_name = lsp_item.detail:match("([^.]+)$")
+      if class_name then
+        item.name = class_name .. "." .. lsp_item.name
+      end
+      item.display_path = item.detail
+    end
+  end,
 })
 
 keymap.picker_bindings()

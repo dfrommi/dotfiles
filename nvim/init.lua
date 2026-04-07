@@ -10,6 +10,7 @@ vim.pack.add({
   "https://github.com/folke/which-key.nvim", -- keybinding help
   "https://github.com/folke/snacks.nvim", -- item picker popup
   "https://github.com/dfrommi/snacks-call-hierarchy.nvim", -- my extension for call hierarchy on top of snacks
+  --"file:///Users/dennis/my/snacks-call-hierarchy.nvim", -- local version of the above for development
   "https://github.com/echasnovski/mini.files", -- file explorer
   "https://github.com/folke/flash.nvim", -- jump around
   "https://github.com/echasnovski/mini.ai", -- text objects and surrounding text manipulation
