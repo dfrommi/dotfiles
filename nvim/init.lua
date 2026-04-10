@@ -54,14 +54,13 @@ vim.pack.add({
   --
   -- AI
   --
-  "https://github.com/coder/claudecode.nvim", -- Claude Code IDE integration
+  "https://github.com/folke/sidekick.nvim", -- AI CLI terminal + Copilot NES
 
   --
   -- TOOLS
   --
   "https://github.com/lewis6991/gitsigns.nvim", -- show git changes in the gutter
   "https://github.com/MeanderingProgrammer/render-markdown.nvim", -- render markdown
-  "https://github.com/folke/sidekick.nvim", -- AI CLI terminal + Copilot NES
 
   --
   -- UI
@@ -92,7 +91,7 @@ require("my.lang.markdown")
 require("my.lang.java")
 
 require("my.dap")
-require("my.assistant")
+require("my.assistant").setup()
 
 -- has to be after lang because other modules add config to it
 require("my.code").setup()

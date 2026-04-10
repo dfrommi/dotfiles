@@ -49,8 +49,8 @@ function M.relative_dir_path()
 end
 
 function M.selection_line_range()
-  local start_line = vim.api.nvim_buf_get_mark(0, "<")[1]
-  local end_line = vim.api.nvim_buf_get_mark(0, ">")[1]
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
   if start_line > end_line then
     start_line, end_line = end_line, start_line
   end

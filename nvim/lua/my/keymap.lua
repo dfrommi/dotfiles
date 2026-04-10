@@ -360,43 +360,15 @@ function M.java_bindings(bufnr)
 end
 
 --
--- AI / SIDEKICK
+-- AI / COPILOT
 --
-function M.claude_bindings()
-  keymap("n", "<leader>aa", "<cmd>ClaudeCode<cr>", "Toggle Claude")
-  keymap("n", "<leader>ag", "<cmd>ClaudeCodeFocus<cr>", "Go to Claude")
-  keymap("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", "Resume Claude")
-  keymap("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", "Continue Claude")
-  keymap("n", "<leader>apf", "<cmd>ClaudeCodeAdd %<cr>", "Add buffer to Claude")
-  keymap("v", "<leader>aP", "<cmd>ClaudeCodeSend<cr>", "Send to Claude")
-end
-
--- CLI terminal
-function M.sidekick_cli_bindings()
-  local cli = require("sidekick.cli")
-  local wez = require("adapter.sidekick.wezterm")
-
-  --keymap({ "n", "t", "i", "x" }, "<c-.>", cli.focus, "AI CLI focus")
-  keymap("n", "<leader>ag", cli.focus, "AI CLI focus")
-  keymap("n", "<leader>aa", cli.show, "AI CLI attach")
-  keymap("n", "<leader>ad", cli.close, "AI CLI detach")
-  keymap("n", "<leader>aq", wez.kill, "AI CLI close")
-  -- keymap("n", "<leader>ac", function()
-  --   cli.toggle({ name = "claude", focus = true })
-  -- end, "AI toggle Claude")
-
-  keymap("n", "<leader>as", cli.select, "AI CLI select agent")
-
-  keymap({ "n", "x" }, "<leader>al", function()
-    cli.send({ msg = "{this}" })
-  end, "AI send line")
-  keymap("n", "<leader>af", function()
-    cli.send({ msg = "{file}" })
-  end, "AI send file")
-  keymap("x", "<leader>av", function()
-    cli.send({ msg = "{selection}" })
-  end, "AI send visual selection")
-  keymap({ "n", "x" }, "<leader>ap", cli.prompt, "AI select command")
+function M.assistant_bindings(assistant)
+  keymap("n", "<leader>aa", assistant.toggle, "Toggle Copilot")
+  keymap("n", "<leader>ag", assistant.activate, "Go to Copilot")
+  keymap("n", "<leader>aq", assistant.close, "Close Copilot")
+  keymap("n", "<leader>af", assistant.send_file_path, "Send file path to Copilot")
+  keymap("x", "<leader>af", assistant.send_file_path_with_range, "Send file path with range to Copilot")
+  keymap("n", "<leader>aF", assistant.send_dir_path, "Send directory path to Copilot")
 end
 
 -- Next Edit Suggestion
