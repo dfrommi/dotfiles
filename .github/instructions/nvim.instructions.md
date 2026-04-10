@@ -1,4 +1,7 @@
-# Repository Guidelines
+---
+applyTo: nvim/**
+---
+# Neovim Guidelines
 
 ## Project Structure & Module Organization
 
@@ -27,3 +30,4 @@ Follow the existing pattern `[scope] Summary` (scope examples: `nvim`, `fish`, `
 ## Agent-Specific Tips
 
 When extending `lua/my/assistant.lua`, reuse helpers from `lua/my/utils/wezterm.lua` so pane operations stay uniform. If the target WezTerm pane is renamed, update `find_codex()` and document the expectation. Send prompts via `wezterm.send_text` instead of raw escape codes and keep clipboard fallbacks intact for terminals without WezTerm automation.
+
