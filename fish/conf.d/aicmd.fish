@@ -1,10 +1,10 @@
-function _aichat_fish
+function _aicmd_fish
     set -l _old (commandline)
     if test -n $_old
         echo -n "⌛"
         commandline -f repaint
-        commandline (aichat -e $_old)
+        commandline (hunch $_old)
     end
 end
 
-bind ' ae' _aichat_fish
+bind ' aa' _aicmd_fish
