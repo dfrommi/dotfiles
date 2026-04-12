@@ -31,6 +31,51 @@ local function relative_to_root(path, root)
   return path
 end
 
+local function get_lsp_call_hierarchy_item()
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  if not clients or #clients == 0 then
+    return nil, nil
+  end
+
+  local params = vim.lsp.util.make_position_params()
+
+  local responses = vim.lsp.buf_request_sync(bufnr, "textDocument/prepareCallHierarchy", params, 500)
+
+  if not responses then
+    return nil, nil
+  end
+
+  for client_id, resp in pairs(responses) do
+    local item = resp.result and resp.result[1]
+    if item then
+      local client = vim.lsp.get_client_by_id(client_id)
+      return item, client
+    end
+  end
+
+  return nil, nil
+end
+
+local function class_from_uri(uri, class_name)
+  if not uri or not class_name then
+    return nil
+  end
+
+  -- strip "file://"
+  local path = uri:gsub("^file://", "")
+
+  -- extract after /java/
+  local pkg_path = path:match("/java/(.+)/[^/]+%.java$")
+  if not pkg_path then
+    return nil
+  end
+
+  local pkg = pkg_path:gsub("/", ".")
+  return pkg .. "." .. class_name
+end
+
 function M.relative_file_path()
   local file_path = current_file_path()
   if not file_path then
@@ -55,6 +100,44 @@ function M.selection_line_range()
     start_line, end_line = end_line, start_line
   end
   return start_line, end_line
+end
+
+function M.lsp_symbol()
+  local item, client = get_lsp_call_hierarchy_item()
+  if not item or not client then
+    return nil
+  end
+
+  local name = item.name or ""
+  local detail = item.detail or ""
+
+  -- Java formatting
+  if client.name == "jdtls" then
+    local method = name:gsub("%b()", ""):gsub("%s*:.*$", "")
+
+    if detail ~= "" then
+      if method ~= "" and method ~= name then
+        return detail .. "#" .. method
+      else
+        return detail .. "." .. name
+      end
+    end
+
+    -- fallback for top-level class
+    local class_fqn = class_from_uri(item.uri, name)
+
+    if class_fqn then
+      return class_fqn
+    end
+
+    return method
+  else
+    -- generic fallback
+    if detail ~= "" and name ~= "" then
+      return detail .. "." .. name
+    end
+    return name ~= "" and name or detail
+  end
 end
 
 local function yank_text(value)
@@ -85,6 +168,16 @@ function M.yank_relative_dir_path()
   yank_text(M.relative_dir_path())
 end
 
+function M.yank_lsp_symbol()
+  local symbol = M.lsp_symbol()
+  if not symbol then
+    vim.notify("No LSP symbol for current position", vim.log.levels.WARN)
+    return
+  end
+  yank_text(symbol)
+end
+
+-- TODO there is some vim built in function
 function M.root_has_file(...)
   local root = vim.fn.getcwd()
   for _, name in ipairs({ ... }) do

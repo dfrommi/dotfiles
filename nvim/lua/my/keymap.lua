@@ -42,6 +42,7 @@ function M.setup()
     "Yank file path with range (project relative)"
   )
   keymap("n", "<leader>cyF", file_info.yank_relative_dir_path, "Yank directory path (project relative)")
+  keymap("n", "<leader>cys", file_info.yank_lsp_symbol, "Yank LSP symbol")
 
   --
   -- SCROLLING
