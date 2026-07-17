@@ -4,6 +4,10 @@ update:
 gui:
   showFileTree: true
   nerdFontsVersion: 3
+  branchColorPatterns:
+    '^(develop|main|master)': '#f2e0aa'
+    '^feature/': '#afb4fa'
+    '^bugfix/': '#e1859f'
 os:
   edit: 'nvim {{filename}}'
   editAtLine: 'nvim +{{line}} {{filename}}'
@@ -16,3 +20,12 @@ git:
     - externalDiffCommand: difft --color=always
     - colorArg: always
       pager: delta --paging=never
+  commitPrefix:
+    - pattern: "^\\w+\\/(ECACP-\\d+).*"
+      replace: '$1 '
+  commit:
+    autoWrapCommitMessage: false
+mainBranches:
+  - develop
+  - master
+  - main
