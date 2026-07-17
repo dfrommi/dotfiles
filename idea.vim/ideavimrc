@@ -1,0 +1,153 @@
+" Find more examples here: https://jb.gg/share-ideavimrc
+"
+" Find IntelliJ Action names:
+"   Press Сmd-Shift-A and type 'IdeaVim: Track Action Ids'
+"   Popup will then show actions when executed
+"
+" Reload config with Cmd-Shift-i
+
+
+let mapleader=" "
+
+set clipboard+=unnamed
+set clipboard+=ideaput
+
+set scrolloff=10
+set linenumber
+set showmode
+set showcmd
+set visualbell
+
+set ideajoin
+set ideaput
+set ideastatusicon=gray
+set showmode
+
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+""" Plugins
+set commentary
+" set easymotion
+set NERDTree
+set which-key
+" set surround
+" set argtextobj
+
+" TODO
+" - Duplicate line in normal and insert mode also in plain vim = M-d
+" - Movements also in insert-mode
+
+" Zen mode
+" map <leader>z <Action>(ToggleDistractionFreeMode)
+
+" Move lines/selection around
+"nnoremap <A-j> :m .+1<CR>==
+"nnoremap <A-k> :m .-2<CR>==
+"inoremap <A-j> <ESC>:m .+1<CR>==gi
+"inoremap <A-k> <ESC>:m .-2<CR>==gi
+xnoremap J :m '>+1<CR>gv=gv
+xnoremap K :m '<-2<CR>gv=gv
+
+map <leader>ff <Action>(GotoFile)
+map <leader>fg <Action>(FindInPath)
+map <leader>fb <Action>(RecentFiles)
+map <leader>f: <Action>(FindAction)
+map <leader>fs <Action>(GotoClass)
+" map <Leader>xx <Action>(ActivateProblemsViewToolWindow)
+nmap <leader>fe :NERDTreeFocus<CR>
+nmap <leader>* <Action>(FindWordAtCaret)
+map gO <Action>(GotoSymbol)
+
+" FLASH
+nmap s <Action>(flash.search)
+xmap s <Action>(flash.search)
+nmap f <Action>(flash.find)
+xmap f <Action>(flash.find)
+nmap F <Action>(flash.find_backward)
+xmap F <Action>(flash.find_backward)
+nmap t <Action>(flash.till)
+xmap t <Action>(flash.till)
+nmap T <Action>(flash.till_backward)
+xmap T <Action>(flash.till_backward)
+nmap ; <Action>(flash.repeat)
+xmap ; <Action>(flash.repeat)
+nmap , <Action>(flash.repeat_backward)
+xmap , <Action>(flash.repeat_backward)
+
+
+" buffer switch
+" nnoremap [b :bprevious<CR>
+" nnoremap ]b :bnext<CR>
+nmap <leader><space> :b#<CR>
+
+" nmap ]e <Action>(GotoNextError)
+" nmap [e <Action>(GotoPreviousError)
+
+" nnoremap [m <Action>(MethodUp)
+" nnoremap ]m <Action>(MethodDown)
+
+nmap gO    <Action>(FileStructurePopup)
+nmap grr   <Action>(FindUsages)
+nmap grc   <Action>(CallHierarchy)
+nmap grd   <Action>(GotoDeclaration)
+nmap grt   <Action>(GotoTypeDeclaration)
+nmap gri   <Action>(GotoImplementation)
+" nmap gt   <Action>(GotoTest)
+
+nmap <leader><enter> <Action>(ShowIntentionActions)
+nmap gra <Action>(ShowIntentionActions)
+nmap grA <Action>(Refactorings.QuickListPopupAction)
+nmap grn <Action>(RenameElement)
+nmap grN <Action>(RenameFile)
+
+nmap grF <Action>(ReformatCode)<Action>(OptimizeImports)
+nmap grf <Action>(ReformatCode)
+
+" nmap <Leader>co <Action>(OptimizeImports)
+
+"nmap <Leader>*  <Action>(FindUsagesInFile)
+
+"
+" MOVEMENTS
+"
+" nmap <Leader>gg <Action>(RecentFiles)
+
+" nmap <Leader>gh <Action>(Back)
+" nmap <Leader>gl <Action>(Forward)
+" nmap <Leader>gH <Action>(JumpToLastChange)
+" nmap <Leader>gL <Action>(JumpToNextChange)
+
+" nmap <Leader>gK <Action>(GotoSuperMethod)
+" nmap <Leader>gJ <Action>(GotoImplementation)
+
+" <Leader>* ???
+
+" nmap <Leader>gm <Action>(FileStructurePopup)
+
+"
+" EXEXUTE
+"
+" x = execute
+" X = execute in debug mode
+nmap <Leader>xx <Action>(Rerun)
+nmap <Leader>x/ <Action>(RunConfiguration)
+nmap <Leader>X/ <Action>(ChooseDebugConfiguration)
+nmap <Leader>xc <Action>(RunClass)
+nmap <Leader>Xc <Action>(DebugClass)
+" kill
+nmap <Leader>xk <Action>(Stop)
+
+"
+" MISC FIXES
+"
+
+" Keep selection and stay in visual mode on (un)indent
+vnoremap < <gv
+vnoremap > >gv
+
+" forward-delete should not add to default register
+nmap <Del> "_dl
+nmap x "_dl
