@@ -90,6 +90,8 @@ snacks.setup({
   input = {}, -- for openassitant.nvim
 })
 require("snacks-call-hierarchy").setup({
+  max_depth = 30,
+  max_open_requests = 160,
   win = {
     input = { keys = keymap.call_hierarchy_keys() },
     list = { keys = keymap.call_hierarchy_keys() },
