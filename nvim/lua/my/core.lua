@@ -108,30 +108,3 @@ require("snacks-call-hierarchy").setup({
 })
 
 keymap.picker_bindings()
-
-local snacks_lsp_symbols = snacks.picker.lsp_symbols
-
-snacks.picker.lsp_symbols = function(opts)
-  return snacks_lsp_symbols({
-    layout = {
-      preset = "select",
-    },
-    filter = {
-      rust = {
-        "Class",
-        "Constructor",
-        "Enum",
-        "Field",
-        "Function",
-        "Interface",
-        "Method",
-        -- "Module", -- all imports are shown as modules
-        "Namespace",
-        "Package",
-        "Property",
-        "Struct",
-        "Trait",
-      },
-    },
-  })
-end

@@ -62,7 +62,6 @@ function M.setup()
   -- CODE EDITING
   --
   local conform = require("conform")
-  local picker = require("snacks").picker
 
   --:h lsp
   --
@@ -75,9 +74,8 @@ function M.setup()
   keymap("n", "grc", vim.lsp.buf.incoming_calls, "Incoming Calls")
   keymap("n", "grC", vim.lsp.buf.outgoing_calls, "Outgoing Calls")
   -- no need to go via location list for arbitrary collection of symbols. Always pick one, never bulk-operate
-  keymap("n", "gO", function()
-    picker.lsp_symbols()
-  end, "LSP Symbols")
+  local my_picker = require("my.picker")
+  keymap("n", "gO", my_picker.buffer_lsp_symbols, "LSP Symbols")
 end
 
 --
@@ -111,65 +109,33 @@ end
 --
 -- ITEM PICKER
 --
-
-local is_main = function(item, ctx)
-  if ctx.client.name == "jdtls" then
-    return item.path and item.path:find("/src/main/", 1, true) ~= nil
-  end
-
-  if ctx.client.name == "rust-analyzer" then
-    return item.path and item.path:find("/.cargo/", 1, true) == nil and item.path:find("/.rustup/", 1, true) == nil
-  end
-
-  return item.path ~= nil
-end
-
---
--- FIND
---
 function M.picker_bindings()
-  local picker = require("snacks").picker
-  local mini_files = require("mini.files")
+  local picker = require("my.picker")
+
+  -- Shortcut alias for gO
+  keymap("n", "<leader>s", picker.buffer_lsp_symbols, "LSP symbols")
 
   keymap("n", "<leader>ff", picker.files, "Find Files")
-  keymap("n", "<leader>fF", function()
-    picker.files({ dirs = { vim.fn.expand("%:h") } })
-  end, "Find Files (buffer dir)")
+  keymap("n", "<leader>flf", picker.files_in_buffer_dir, "Find local Files (buffer dir)")
   keymap("n", "<leader>fg", picker.grep, "Find in Files")
-  keymap("n", "<leader>fG", function()
-    picker.grep({ dirs = { vim.fn.expand("%:h") } })
-  end, "Find in Files (buffer dir)")
+  keymap("n", "<leader>flg", picker.grep_in_buffer_dir, "Find in local Files (buffer dir)")
   keymap("n", "<leader>fb", picker.buffers, "Find Buffers")
   keymap("n", "<leader>fB", picker.grep_buffers, "Find in Buffers")
-  --vim.keymap.set("n", "<leader>fr", picker.recent, { desc = "Recent" })
   keymap("n", "<leader>fh", picker.help, "Help Pages")
   keymap("n", "<leader>fk", picker.keymaps, "Keymaps")
   keymap("n", "<leader>fm", picker.marks, "Marks")
-  keymap("n", "<leader>fs", picker.lsp_workspace_symbols, "LSP Workspace Symbols")
+
+  keymap("n", "<leader>fs", picker.own_lsp_workspace_symbols, "LSP Workspace Symbols")
+  keymap("n", "<leader>fS", picker.all_lsp_workspace_symbols, "All LSP Workspace Symbols")
   keymap({ "n", "x" }, "<leader>fw", picker.grep_word, "Visual selection or word")
 
-  keymap("n", "<leader>fe", function()
-    mini_files.open(vim.api.nvim_buf_get_name(0))
-  end, "File Explorer (buffer)")
-  keymap("n", "<leader>fE", mini_files.open, "File Explorer (root)")
+  keymap("n", "<leader>fe", picker.explorer_in_buffer_dir, "File Explorer (buffer)")
+  keymap("n", "<leader>fE", picker.explorer, "File Explorer (root)")
 
-  keymap("n", "<leader>fi", function()
-    picker.call_hierarchy_in({
-      lsp_filter = is_main,
-    })
-  end, "Incoming Call Hierarchy (project)")
-  keymap("n", "<leader>fI", function()
-    picker.call_hierarchy_in()
-  end, "Incoming Call Hierarchy")
-
-  keymap("n", "<leader>fo", function()
-    picker.call_hierarchy_out({
-      lsp_filter = is_main,
-    })
-  end, "Outgoing Call Hierarchy (project)")
-  keymap("n", "<leader>fO", function()
-    picker.call_hierarchy_out()
-  end, "Outgoing Call Hierarchy")
+  keymap("n", "<leader>fi", picker.call_hierarchy_in, "Incoming Call Hierarchy")
+  keymap("n", "<leader>fI", picker.call_hierarchy_in_ext, "Incoming Call Hierarchy ext")
+  keymap("n", "<leader>fo", picker.call_hierarchy_out, "Outgoing Call Hierarchy")
+  keymap("n", "<leader>fO", picker.call_hierarchy_out_ext, "Outgoing Call Hierarchy ext")
 end
 
 function M.call_hierarchy_keys()
@@ -321,31 +287,9 @@ function M.git_signs_bindings(map, gs)
 end
 
 function M.java_bindings(bufnr)
-  local picker = require("snacks").picker
-
   local map = function(mode, key, action, desc)
     vim.keymap.set(mode, key, action, { buffer = bufnr, desc = desc, remap = true })
   end
-
-  map("n", "<leader>fs", function()
-    picker.lsp_workspace_symbols({
-      transform = function(item)
-        local path = item.file or item.filename or ""
-        return path:find("/src/main/", 1, true) ~= nil
-      end,
-    })
-  end, "Find classes (main)")
-
-  map("n", "<leader>ft", function()
-    picker.lsp_workspace_symbols({
-      transform = function(item)
-        local path = item.file or item.filename or ""
-        return path:find("/src/test/", 1, true) ~= nil
-      end,
-    })
-  end, "Find classes (test)")
-
-  map("n", "<leader>fS", picker.lsp_workspace_symbols, "Find classes (all)")
 
   map("n", "<leader>cn", function()
     require("java-helpers").create_java_file()
