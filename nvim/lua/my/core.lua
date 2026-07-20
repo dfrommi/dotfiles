@@ -61,6 +61,7 @@ require("mini.files").setup({
     go_in_plus = "<cr>",
   },
 })
+keymap.mini_files_bindings()
 
 -- require("rainbow-delimiters.setup").setup()
 
