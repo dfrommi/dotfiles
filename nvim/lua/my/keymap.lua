@@ -316,21 +316,7 @@ function M.git_signs_bindings(map, gs)
 end
 
 function M.java_bindings(bufnr)
-  local map = function(mode, key, action, desc)
-    vim.keymap.set(mode, key, action, { buffer = bufnr, desc = desc, remap = true })
-  end
-
-  map("n", "<leader>cn", function()
-    require("java-helpers").create_java_file()
-  end, "Create new type")
-
-  map("n", "<leader>tn", function()
-    require("jdtls.tests").generate()
-  end, "Create new test")
-
-  map("n", "<leader>tg", function()
-    require("jdtls.tests").goto_subjects()
-  end, "Goto test")
+  -- Java-specific keymaps are disabled for the isolation pass.
 end
 
 --

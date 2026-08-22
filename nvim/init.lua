@@ -25,10 +25,9 @@ vim.pack.add({
   "https://github.com/mason-org/mason.nvim", -- manage LSP servers, formatters, linters
   "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- automatically install tools, instead of manually via :MasonInstall
   "https://github.com/stevearc/conform.nvim", -- better formatting
-  "https://github.com/mfussenegger/nvim-jdtls", -- Java LSP with extended code actions
-  "https://github.com/NickJAllen/java-helpers.nvim", -- Java file creation and stack traces
   "https://github.com/mrcjkb/rustaceanvim", -- Rust LSP with additional features
   "https://github.com/saecki/crates.nvim", -- Rust crates management
+  "https://github.com/artur-shaik/jc.nvim", -- Java LSP with additional features
 
   --
   -- DEBUGGING
@@ -40,7 +39,6 @@ vim.pack.add({
   -- TESTING
   --
   "https://github.com/nvim-neotest/neotest",
-  "https://github.com/rcasia/neotest-java", -- Java neotest adapter
 
   --
   -- TREESITTER

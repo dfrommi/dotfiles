@@ -10,7 +10,6 @@ code.mason("java-debug-adapter")
 code.mason("java-test")
 code.treesitter("java")
 code.treesitter("groovy") -- build.gradle files
-code.test_adapter(require("neotest-java")({}))
 
 local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
 local lombok = mason_path .. "/jdtls/lombok.jar"
@@ -25,11 +24,8 @@ local bundles =
   vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true, true)
 vim.list_extend(bundles, vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", true, true))
 
-require("java-helpers").setup({
-  new_file = {
-    should_format = false,
-  },
-})
+require("jc").setup()
+code.test_adapter(require("jc").neotest_adapter())
 
 code.lsp("jdtls", {
   config = {
@@ -43,7 +39,6 @@ code.lsp("jdtls", {
     },
   },
   on_attach = function(client, bufnr)
-    require("jdtls").setup_dap({ hotcodereplace = "auto" })
     require("my.keymap").java_bindings(bufnr)
   end,
 })
