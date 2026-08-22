@@ -16,10 +16,11 @@ os:
 git:
   autoFetch: false
   autoRefresh: false
-  pagers:
-    - externalDiffCommand: difft --color=always
+  diffRenderers:
+    - command: difft --color=always
+      type: extDiff
     - colorArg: always
-      pager: delta --paging=never
+      command: delta --paging=never
   commitPrefix:
     - pattern: "^\\w+\\/(ECACP-\\d+).*"
       replace: '$1 '
