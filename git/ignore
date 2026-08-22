@@ -25,3 +25,17 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.pi
+
+
+bin/
+.classpath
+.settings
+.jdtls
+.project
+.factorypath
+
+.idea
+.codegraph
+
