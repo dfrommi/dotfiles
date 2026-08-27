@@ -55,6 +55,50 @@ config.disable_default_key_bindings = true
 -- Leader key mode (like tmux)
 config.leader = { key = "\\", mods = "CTRL", timeout_milliseconds = 1000 }
 
+local function basename(path)
+	return path and path:match("[^/]+$")
+end
+
+local function process_matches(pane, process_name)
+	local info = pane:get_foreground_process_info()
+	if not info then
+		return false
+	end
+
+	return basename(info.executable) == process_name
+		or basename(info.name) == process_name
+		or (info.argv and basename(info.argv[1]) == process_name)
+end
+
+local function activate_tab_with_process(window, pane, process_name)
+	local active_cwd = pane:get_current_working_dir()
+	if not active_cwd then
+		return
+	end
+
+	local active_path = active_cwd.file_path
+	if not active_path then
+		return
+	end
+
+	for _, tab in ipairs(window:mux_window():tabs()) do
+		for _, candidate in ipairs(tab:panes()) do
+			local cwd = candidate:get_current_working_dir()
+
+			if process_matches(candidate, process_name) and cwd and cwd.file_path == active_path then
+				tab:activate()
+				return
+			end
+		end
+	end
+end
+
+local function activate_process_tab(process_name)
+	return wezterm.action_callback(function(window, pane)
+		activate_tab_with_process(window, pane, process_name)
+	end)
+end
+
 config.keys = {
 	-- Shift-Enter fix/workaound
 	{
@@ -64,6 +108,9 @@ config.keys = {
 	},
 
 	-- Tab navigation
+	{ key = "g", mods = "LEADER", action = activate_process_tab("lazygit") },
+	{ key = "e", mods = "LEADER", action = activate_process_tab("nvim") },
+	{ key = "p", mods = "LEADER", action = activate_process_tab("pi") },
 	{ key = "[", mods = "CMD", action = wezterm.action.ActivateTabRelative(-1) },
 	{ key = "]", mods = "CMD", action = wezterm.action.ActivateTabRelative(1) },
 	{ key = "n", mods = "LEADER", action = wezterm.action.MoveTabRelative(-1) },
