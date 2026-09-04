@@ -21,9 +21,9 @@ git:
       type: extDiff
     - colorArg: always
       command: delta --paging=never
-  commitPrefix:
-    - pattern: "^\\w+\\/(ECACP-\\d+).*"
-      replace: '$1 '
+  # commitPrefix:
+  #   - pattern: "^\\w+\\/(ECACP-\\d+).*"
+  #     replace: '$1 '
   commit:
     autoWrapCommitMessage: false
 mainBranches:
