@@ -205,7 +205,7 @@ config.keys = {
 			description = "Enter new workspace title:",
 			action = wezterm.action_callback(function(window, pane, line)
 				if line then
-					window:active_workspace():set_title(line)
+					wezterm.mux.rename_workspace(window:active_workspace(), line)
 				end
 			end),
 		}),
