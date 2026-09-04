@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+TICKET_REGEXP='^([A-Za-z]+/)?([A-Za-z]+-[0-9]+)-.+$'
+
+MSG_FILE="$1"
+SOURCE="$2"
+
+# Don't modify merge commits.
+if [[ "$SOURCE" == "merge" ]]; then
+    exit 0
+fi
+
+BRANCH=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || exit 0
+
+if [[ "$BRANCH" =~ $TICKET_REGEXP ]]; then
+    TICKET="${BASH_REMATCH[2]}"
+else
+    exit 0
+fi
+
+# Don't add it if the ticket already occurs anywhere in the message.
+if grep -Fq "$TICKET" "$MSG_FILE"; then
+    exit 0
+fi
+
+printf '\nRefs: %s\n' "$TICKET" >> "$MSG_FILE"
