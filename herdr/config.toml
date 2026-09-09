@@ -1,0 +1,61 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+
+[keys]
+#prefix = "ctrl+\\"
+
+help = "prefix+?"
+detach = "prefix+q"
+goto = [ "prefix+g" ]
+#open_notification_target = "prefix+g"
+toggle_sidebar = "prefix+m"
+
+#Scrollback
+# edit_scrollback
+# copy_mode
+
+# Workspace
+new_workspace = "prefix+shift+w"
+rename_workspace = "prefix+shift+r"
+close_workspace = "prefix+shift+x"
+previous_workspace = "cmd+shift+["
+next_workspace = "cmd+shift+]"
+
+# Tab
+new_tab = "prefix+w"
+rename_tab = "prefix+r"
+close_tab = "prefix+x"
+previous_tab = "cmd+["
+next_tab = "cmd+]"
+move_tab_previous = "prefix+n"
+move_tab_next = "prefix+o"
+
+split_vertical = "prefix+v"
+split_horizontal = "prefix+s"
+
+# Agent
+#previous_agent
+#next_agent
+
+
+[terminal]
+default_shell = "fish"
+shell_mode = "login"
+
+
+[ui]
+# agent_panel_sort = "spaces"
+sidebar_width = 32
+sidebar_max_width = 42
+prompt_new_tab_name = false
+
+#tab_bar_position = "bottom"
+
+pane_borders = true
+pane_outer_borders = true
+
+agent_panel_sort = "spaces"
+[theme.custom]
+sidebar_bg = "#181824"
