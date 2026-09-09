@@ -1,0 +1,11 @@
+theme = Catppuccin Mocha
+#font-family = Hack Nerd Font Mono
+font-size = 14
+
+# Do not handle terminal shortcuts in Ghostty. Herdr is the multiplexer/UI.
+keybind = clear
+#window-decoration = false
+
+macos-titlebar-style = hidden
+
+window-padding-color = extend-always
