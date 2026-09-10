@@ -110,9 +110,11 @@ function M.setup()
   keymap.sidekick_nes_bindings()
   keymap.assistant_bindings(M)
 
-  local existing = find_copilot_in_current_tab()
-  if existing then
-    assistant_pane_id = existing
+  if nvim_pane_id then
+    local existing = find_copilot_in_current_tab()
+    if existing then
+      assistant_pane_id = existing
+    end
   end
 end
 
