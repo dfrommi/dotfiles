@@ -322,16 +322,6 @@ end
 --
 -- AI / COPILOT
 --
-function M.assistant_bindings(assistant)
-  keymap("n", "<leader>aa", assistant.toggle, "Toggle Copilot")
-  keymap("n", "<leader>ag", assistant.activate, "Go to Copilot")
-  keymap("n", "<leader>aq", assistant.close, "Close Copilot")
-  keymap("n", "<leader>af", assistant.send_file_path, "Send file path to Copilot")
-  keymap("x", "<leader>af", assistant.send_file_path_with_range, "Send file path with range to Copilot")
-  keymap("n", "<leader>aF", assistant.send_dir_path, "Send directory path to Copilot")
-  keymap("n", "<leader>as", assistant.send_lsp_symbol, "Send LSP symbol to Copilot")
-end
-
 -- Next Edit Suggestion
 function M.sidekick_nes_bindings()
   local sk = require("sidekick")

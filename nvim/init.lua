@@ -89,7 +89,8 @@ require("my.lang.markdown")
 require("my.lang.java")
 
 require("my.dap")
-require("my.assistant").setup()
+require("sidekick").setup()
+require("my.keymap").sidekick_nes_bindings()
 
 -- has to be after lang because other modules add config to it
 require("my.code").setup()
