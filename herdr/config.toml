@@ -57,5 +57,9 @@ pane_borders = true
 pane_outer_borders = true
 
 agent_panel_sort = "spaces"
+
 [theme.custom]
 sidebar_bg = "#181824"
+
+[advanced]
+scrollback_limit_bytes = 100000000
