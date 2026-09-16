@@ -1,0 +1,31 @@
+#!/bin/sh
+set -eu
+
+current_pane=${HERDR_PANE_ID:-}
+
+target=$(
+  herdr agent list |
+    jq -c --arg current_pane "$current_pane" '
+      .result.agents
+      | map(select(
+          (.focused // false) != true
+          and .pane_id != $current_pane
+          and (.agent_status == "blocked" or .agent_status == "done" or .agent_status == "idle")
+        ))
+      | sort_by(
+          (if .agent_status == "blocked" then 3
+           elif .agent_status == "done" then 2
+           else 1 end),
+          (.state_change_seq // 0)
+        )
+      | last
+      | if . then {pane_id, tab_id} else empty end
+  '
+)
+
+if [ -n "$target" ]; then
+  pane_id=$(printf '%s\n' "$target" | jq -r '.pane_id')
+  tab_id=$(printf '%s\n' "$target" | jq -r '.tab_id')
+  herdr tab focus "$tab_id" >/dev/null
+  exec herdr agent focus "$pane_id" >/dev/null
+fi

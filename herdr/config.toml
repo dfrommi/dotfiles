@@ -38,6 +38,9 @@ move_tab_next = "prefix+o"
 split_vertical = "prefix+v"
 split_horizontal = "prefix+s"
 
+previous_agent = "prefix+l"
+next_agent = "prefix+h"
+
 [[keys.command]]
 key = "ctrl+n"
 type = "plugin_action"
@@ -79,8 +82,10 @@ type = "plugin_action"
 command = "herdr-splits.resize-right"
 
 # Agent
-#previous_agent
-#next_agent
+[[keys.command]]
+key = "prefix+a"
+type = "shell"
+command = "~/.config/herdr/bin/focus-priority-agent"
 
 
 [terminal]
