@@ -4,6 +4,8 @@ font-size = 14
 
 # Do not handle terminal shortcuts in Ghostty. Herdr is the multiplexer/UI.
 keybind = clear
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
 #window-decoration = false
 
 macos-titlebar-style = hidden
