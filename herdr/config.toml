@@ -1,3 +1,6 @@
+# Required plugins (install manually):
+# herdr plugin install lmilojevicc/herdr-splits.nvim 
+
 onboarding = false
 
 [theme]
@@ -34,6 +37,46 @@ move_tab_next = "prefix+o"
 
 split_vertical = "prefix+v"
 split_horizontal = "prefix+s"
+
+[[keys.command]]
+key = "ctrl+n"
+type = "plugin_action"
+command = "herdr-splits.nav-left"
+
+[[keys.command]]
+key = "ctrl+e"
+type = "plugin_action"
+command = "herdr-splits.nav-down"
+
+[[keys.command]]
+key = "ctrl+i"
+type = "plugin_action"
+command = "herdr-splits.nav-up"
+
+[[keys.command]]
+key = "ctrl+o"
+type = "plugin_action"
+command = "herdr-splits.nav-right"
+
+[[keys.command]]
+key = "alt+n"
+type = "plugin_action"
+command = "herdr-splits.resize-left"
+
+[[keys.command]]
+key = "alt+e"
+type = "plugin_action"
+command = "herdr-splits.resize-down"
+
+[[keys.command]]
+key = "alt+i"
+type = "plugin_action"
+command = "herdr-splits.resize-up"
+
+[[keys.command]]
+key = "alt+o"
+type = "plugin_action"
+command = "herdr-splits.resize-right"
 
 # Agent
 #previous_agent

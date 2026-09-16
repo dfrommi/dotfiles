@@ -81,8 +81,8 @@ end
 --
 -- WINDOW MANAGEMENT
 --
-function M.smart_splits_bindings()
-  local splits = require("smart-splits")
+function M.herdr_splits_bindings()
+  local splits = require("herdr-splits")
   -- CTRL+W S/V to create splits
   keymap("n", "<C-n>", splits.move_cursor_left, "Go to Left")
   keymap("n", "<C-e>", splits.move_cursor_down, "Go to Bottom")

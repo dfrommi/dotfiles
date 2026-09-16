@@ -65,8 +65,11 @@ keymap.mini_files_bindings()
 
 -- require("rainbow-delimiters.setup").setup()
 
-require("smart-splits").setup({})
-keymap.smart_splits_bindings()
+require("herdr-splits").setup({
+  nav_keys = { left = "<C-n>", down = "<C-e>", up = "<C-i>", right = "<C-o>" },
+  resize_keys = { left = "<M-n>", down = "<M-e>", up = "<M-i>", right = "<M-o>" },
+})
+keymap.herdr_splits_bindings()
 
 require("flash").setup({})
 keymap.flash_bindings()

@@ -68,7 +68,7 @@ vim.pack.add({
     name = "catppuccin",
   },
   "https://github.com/nvim-lualine/lualine.nvim", -- nice looking status line at the bottom
-  "https://github.com/mrjones2014/smart-splits.nvim", -- integrate with wezterm splits
+  "https://github.com/lmilojevicc/herdr-splits.nvim", -- integrate with Herdr splits
 
   --
   -- DEPENDENCIES
