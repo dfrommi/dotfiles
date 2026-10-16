@@ -1,5 +1,6 @@
 local M = {}
 
+local snacks = require("snacks")
 local picker = require("snacks").picker
 local mini_files = require("mini.files")
 
@@ -9,6 +10,10 @@ end
 
 function M.explorer_in_buffer_dir()
   mini_files.open(vim.api.nvim_buf_get_name(0))
+end
+
+function M.file_tree()
+  snacks.explorer()
 end
 
 function M.files()

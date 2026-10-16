@@ -131,6 +131,7 @@ function M.picker_bindings()
 
   keymap("n", "<leader>fe", picker.explorer_in_buffer_dir, "File Explorer (buffer)")
   keymap("n", "<leader>fE", picker.explorer, "File Explorer (root)")
+  keymap("n", "<leader>ft", picker.file_tree, "File Tree")
 
   keymap("n", "<leader>fi", picker.call_hierarchy_in, "Incoming Call Hierarchy")
   keymap("n", "<leader>fI", picker.call_hierarchy_in_ext, "Incoming Call Hierarchy ext")

@@ -89,7 +89,7 @@ require("gitsigns").setup({
 local snacks = require("snacks")
 snacks.setup({
   picker = {}, -- enable picker
-  --explorer = {}, -- enable explorer
+  explorer = {}, -- enable explorer
   indent = {},
   input = {}, -- for openassitant.nvim
 })
