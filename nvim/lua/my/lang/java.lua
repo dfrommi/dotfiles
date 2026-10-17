@@ -24,7 +24,9 @@ local bundles =
   vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true, true)
 vim.list_extend(bundles, vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", true, true))
 
-require("jc").setup()
+require("jc").setup({
+  keys_prefix = "<leader>c",
+})
 code.test_adapter(require("jc").neotest_adapter())
 
 code.lsp("jdtls", {

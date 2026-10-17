@@ -31,6 +31,8 @@ function M.setup()
   keymap({ "n", "x" }, "<leader>p", [["+p]], "Paste from system clipboard")
   keymap({ "n", "x" }, "<leader>P", [["+P]], "Paste before from system clipboard")
 
+  keymap("n", "<esc>", "<cmd>nohlsearch<cr>", "Clear search highlight")
+
   keymap("n", "<leader><space>", "<C-^>", "Toggle Buffer [<C-^>]")
 
   local file_info = require("my.utils.file_info")
@@ -310,18 +312,31 @@ function M.mini_ai_textobjects()
 end
 
 function M.git_signs_bindings(map, gs)
-  map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+  map("n", "<leader>gr", gs.reset_hunk, "Reset Hunk")
+  map("v", "<leader>gr", function()
+    gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+  end)
+
   map("n", "<leader>gR", gs.reset_buffer, "Reset Buffer")
-  map("n", "<leader>gb", gs.blame_line, "Blame Line")
-  map("n", "<leader>gB", ":Gitsigns blame<CR>", "Blame Buffer")
-  map("n", "<leader>g[", function()
+
+  map("n", "<leader>gb", function()
+    gs.blame_line({ full = true })
+  end, "Blame Line")
+  map("n", "<leader>gB", gs.blame, "Blame Buffer")
+
+  map("n", "[g", function()
     gs.nav_hunk("prev")
   end, "Previous Hunk")
-  map("n", "<leader>g]", function()
+  map("n", "]g", function()
     gs.nav_hunk("next")
   end, "Next Hunk")
+
   map("n", "<leader>gd", gs.preview_hunk_inline, "Diff Hunk Inline")
-  -- map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+
+  map("n", "<leader>gq", gs.setqflist)
+  map("n", "<leader>gQ", function()
+    gs.setqflist("all")
+  end)
 end
 
 function M.java_bindings(bufnr)
