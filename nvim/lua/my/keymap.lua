@@ -5,13 +5,6 @@ local function keymap(mode, key, action, opts)
   vim.keymap.set(mode, key, action, options)
 end
 
--- optional action. Keypress propagated if action not returning true-ish value
-local keymap_opt = function(mode, key, action, description)
-  keymap(mode, key, function()
-    return action() and "" or key
-  end, { desc = description, expr = true })
-end
-
 function M.setup()
   --
   -- CORE
@@ -149,27 +142,6 @@ function M.call_hierarchy_keys()
     ["go"] = { "call_hierarchy_outgoing", desc = "Re-root: outgoing calls" },
     ["gt"] = { "call_hierarchy_toggle_direction", desc = "Toggle direction" },
   }
-end
-
---
--- COMPLETION
---
-function M.code_completion_bindings(cmp)
-  -- Inline completion: thumb keys right hand
-  keymap_opt("i", "<S-CR>", cmp.inline.accept, "Inline completion accept")
-  keymap_opt("i", "<M-BS>", cmp.inline.accept_interactive, "Inline completion interactive")
-  keymap_opt("i", "<M-DEL>", cmp.inline.next, "Inline completion next")
-
-  --keymap_opt("i", "<Tab>", cmp.pum.accept, "Accept completion")
-  keymap_opt("i", "<S-Tab>", cmp.pum.show_or_accept, "LSP completion show/accept")
-  keymap_opt("i", "<C-e>", cmp.pum.dismiss, "Dismiss completion")
-  keymap_opt("i", "<CR>", cmp.pum_accept_if_selected, "Confirm selected completion")
-
-  --partial completion of suggestions
-  keymap("n", "<leader>ak", cmp.start_interactive, "AI suggestion keep")
-  keymap("x", "<CR>", cmp.apply_interactive, "Confirm AI suggestion keep")
-  keymap("v", "<Tab>", "w", "Select next word") -- for convenient tab tab tab to expand selection in AI suggest
-  keymap("v", "<S-Tab>", "b", "Select next word") -- for convenient tab tab tab to expand selection in AI suggest
 end
 
 --

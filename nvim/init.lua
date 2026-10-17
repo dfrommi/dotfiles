@@ -30,6 +30,15 @@ vim.pack.add({
   "https://github.com/artur-shaik/jc.nvim", -- Java LSP with additional features
 
   --
+  -- COMPLETION
+  --
+  {
+    src = "https://github.com/saghen/blink.cmp",
+    version = vim.version.range("1.*"),
+  },
+  "https://github.com/fang2hou/blink-copilot", -- Copilot source for blink.cmp
+
+  --
   -- DEBUGGING
   --
   "https://github.com/mfussenegger/nvim-dap", -- Debug Adapter Protocol client
