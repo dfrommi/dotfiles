@@ -15,10 +15,31 @@ local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
 local lombok = mason_path .. "/jdtls/lombok.jar"
 
 local style_path = vim.fn.getcwd() .. "/code-style.xml"
-local jdtls_settings = { java = { format = { enabled = false } } }
+
+-- https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+local jdtls_settings = {
+  java = {
+    eclipse = {
+      downloadSources = true,
+    },
+    configuration = {
+      updateBuildConfiguration = "automatic",
+    },
+    format = {
+      enabled = false,
+    },
+  },
+}
+
 if vim.uv.fs_stat(style_path) then
-  jdtls_settings = { java = { format = { settings = { url = style_path } } } }
+  jdtls_settings.java.format = { settings = { url = style_path } }
 end
+
+local extended_capabilites = {
+  executeClientCommandSupport = true,
+  advancedOrganizeImportsSupport = true,
+  classFileContentsSupport = true,
+}
 
 local bundles =
   vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true, true)
@@ -38,6 +59,7 @@ code.lsp("jdtls", {
     settings = jdtls_settings,
     init_options = {
       bundles = bundles,
+      extendedClientCapabilities = extended_capabilites,
     },
   },
   on_attach = function(client, bufnr)
