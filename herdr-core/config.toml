@@ -1,0 +1,3 @@
+# Migrated from ~/.config/herdr/config.toml.
+# herdr-core starts local shells as login fish sessions.
+shell = ["/opt/homebrew/bin/fish", "-l"]
