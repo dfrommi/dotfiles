@@ -57,6 +57,7 @@
     "ctrl-9": "space.select:9",
     "ctrl-b ?": "app.help",
     "ctrl-b g": "mod.open:picker",
+    "ctrl-b z": "mod.open:worktrunk",
     "ctrl-b m": "layout.toggle:sidebar",
     "ctrl-b shift-w": "space.new",
     "ctrl-b shift-r": "space.rename",
