@@ -57,9 +57,10 @@ export default class CopilotQuota extends View {
       .gap(4)
       .bg(t.chrome)
       .text_size(12);
-    const badge = (text, color, background) =>
-      div().px(6).rounded(5).font_semibold().text_color(color).bg(background).child(String(text));
-    const arrow = () => div().text_color(t.dim).child("→");
+    const badge = (text, color) =>
+      div().px(2).rounded(5).font_semibold().text_color(color).child(String(text));
+    const arrow = () => div().px(8).text_color(t.dim).child("→");
+    const at = () => div().px(8).text_color(t.dim).child("@");
 
     if (this.error) return root.child(div().text_color(t.dim).child("Copilot unavailable"));
     if (!this.data) return root.child(div().text_color(t.dim).child("Copilot …"));
@@ -78,19 +79,20 @@ export default class CopilotQuota extends View {
 
     const usage = h_flex()
       .items_center()
-      .gap(5)
+      .gap(8)
       .child(svg("icons/copilot.svg").size(15).flex_none().text_color(t.accent))
-      .child(badge(Math.round(used), t.foreground, t.raised))
-      .child(badge(`[${Math.round(targetPerDay)}/d]`, t.muted, t.surface));
-    const outlook = h_flex()
-      .items_center()
-      .gap(5)
-      .child(badge(signed(Math.round(difference)), paceColor, t.surface))
-      .child(badge(`[${oneDecimal(daysAhead)}d]`, paceColor, t.surface))
-      .child(arrow())
-      .child(badge(Math.round(estimate), estimateColor, t.surface))
-      .child(badge(`[${signed(Math.round(overage))}]`, estimateColor, t.surface));
+      .child(
+        h_flex()
+          .items_center()
+          .child(badge(Math.round(used), t.foreground))
+          .child(badge(`[${signed(Math.round(difference))}]`, t.muted))
+          .child(arrow())
+          .child(badge(Math.round(estimate), t.foreground))
+          .child(badge(`[${signed(Math.round(overage))}]`, t.muted))
+          .child(at())
+          .child(badge(`${Math.round(targetPerDay)}/d`, t.muted)),
+      );
 
-    return root.child(usage).child(outlook);
+    return root.child(usage)
   }
 }
