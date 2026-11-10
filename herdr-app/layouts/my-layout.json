@@ -46,21 +46,18 @@
                 "weight": 1
               },
               "min": 90
+            },
+            {
+              "id": "copilot-quota",
+              "type": "block",
+              "content": {
+                "mod": "copilot-quota"
+              },
+              "size": {
+                "px": 58
+              }
             }
           ]
-        },
-        {
-          "id": "sidebar-footer",
-          "type": "block",
-          "content": {
-            "mod": "workspace-chrome",
-            "props": {
-              "footer": true
-            }
-          },
-          "size": {
-            "px": 69
-          }
         }
       ],
       "size": {
@@ -96,7 +93,6 @@
               "content": {
                 "tab": "active",
                 "pane": {
-
                   "background": "background",
                   "border": {
                     "width": 1,
@@ -148,16 +144,6 @@
           ],
           "padding": 8,
           "gap": 8
-        },
-        {
-          "id": "status",
-          "type": "block",
-          "content": {
-            "mod": "workspace-status"
-          },
-          "size": {
-            "px": 28
-          }
         }
       ],
       "resizable": false
@@ -165,8 +151,8 @@
   ],
   "background": "canvas",
   "terminal_padding": [
-    14,
-    12
+    10,
+    5
   ],
   "divider": {
     "width": 1,
